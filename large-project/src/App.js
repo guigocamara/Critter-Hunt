@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import LoginPage from './pages/LoginPage';
-function App() 
-{
+import CardPage from './pages/CardPage';
+function App() {
   return (
-    <LoginPage />
+    <CardPage />
   );
 }
 export default App;
