@@ -2,6 +2,20 @@ import React, { useState } from 'react';
 function CardUI()
 {
     
+    const app_name = 'critterhunt';
+
+    function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
+
     var card = '';
     var search = '';
     const [message,setMessage] = useState('');
@@ -21,8 +35,7 @@ function CardUI()
         let js = JSON.stringify(obj);
         try
         {
-            const response = await 
-fetch('http://localhost:5000/api/addcard',
+            const response = await fetch(buildPath('api/addcard'),
             {method:'POST',body:js,headers:{'Content-Type': 
 'application/json'}});
             let txt = await response.text();
@@ -49,8 +62,7 @@ fetch('http://localhost:5000/api/addcard',
         let js = JSON.stringify(obj);
         try
         {
-            const response = await 
-fetch('http://localhost:5000/api/searchcards',
+            const response = await fetch(buildPath('api/searchcards'),
             {method:'POST',body:js,headers:{'Content-Type': 
 'application/json'}});
             let txt = await response.text();
