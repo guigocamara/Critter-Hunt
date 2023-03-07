@@ -139,14 +139,31 @@ app.post('/api/addcard', async (req, res, next) =>
 
 */
 
+app.use(cors());
+app.use(bodyParser.json());
+app.use((req, res, next) => 
+{
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+);
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PATCH, DELETE, OPTIONS'
+  );
+  next();
+});
+
 app.post('/api/login', async (req, res, next) => 
 {
-  // incoming: login, password
-  // outgoing: id, firstName, lastName, error
- var error = '';
-  const { login, password } = req.body;
+  // incoming: username, password
+  // outgoing: username, password, favorite, error
+  var error = '';
+  console.log(req.body);
+  const { username, password } = req.body;
   const db = client.db("CritterHunt");
-  const results = await db.collection('Users').find({login:login,password:password}).toArray();
+  const results = await db.collection('Users').find({username:username,password:password}).toArray();
   var id = '';
   var fn = '';
   var ln = '';
@@ -160,6 +177,7 @@ app.post('/api/login', async (req, res, next) =>
   var ret = { username:id, password:fn, favorite:ln, error:''};
   res.status(200).json(ret);
 });
+
 /*
 app.post('/api/searchcards', async (req, res, next) => 
 {
@@ -184,21 +202,7 @@ $options:'r'}}).toArray();
 });
 */
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use((req, res, next) => 
-{
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-);
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PATCH, DELETE, OPTIONS'
-  );
-  next();
-});
+
 
 if (process.env.NODE_ENV === 'production') 
 {
