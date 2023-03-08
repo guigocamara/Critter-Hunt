@@ -12,6 +12,7 @@ const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url);
 client.connect(console.log("mongodb connected"));
 
+/*
 var cardList = 
 [
   'Roy Campanella',
@@ -135,27 +136,49 @@ app.post('/api/addcard', async (req, res, next) =>
   var ret = { error: error };
   res.status(200).json(ret);
 });
+
+*/
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use((req, res, next) => 
+{
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+);
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PATCH, DELETE, OPTIONS'
+  );
+  next();
+});
+
 app.post('/api/login', async (req, res, next) => 
 {
-  // incoming: login, password
-  // outgoing: id, firstName, lastName, error
- var error = '';
-  const { login, password } = req.body;
-  const db = client.db("COP4331Cards");
-  const results = await db.collection('Users').find({Login:login,Password:password}).toArray();
-  var id = -1;
+  // incoming: username, password
+  // outgoing: username, password, favorite, error
+  var error = '';
+  console.log(req.body);
+  const { username, password } = req.body;
+  const db = client.db("CritterHunt");
+  const results = await db.collection('Users').find({username:username,password:password}).toArray();
+  var id = '';
   var fn = '';
   var ln = '';
   
   if( results.length > 0 )
   {
-    id = results[0].UserID;
-    fn = results[0].FirstName;
-    ln = results[0].LastName;
+    id = results[0].username;
+    fn = results[0].password;
+    ln = results[0].favorite;
   }
-  var ret = { id:id, firstName:fn, lastName:ln, error:''};
+  var ret = { username:id, password:fn, favorite:ln, error:''};
   res.status(200).json(ret);
 });
+
+/*
 app.post('/api/searchcards', async (req, res, next) => 
 {
   // incoming: userId, search
@@ -177,30 +200,17 @@ $options:'r'}}).toArray();
   var ret = {results:_ret, error:error};
   res.status(200).json(ret);
 });
+*/
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use((req, res, next) => 
-{
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-);
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PATCH, DELETE, OPTIONS'
-  );
-  next();
-});
+
 
 if (process.env.NODE_ENV === 'production') 
 {
   // Set static folder
-  app.use(express.static('frontend/build'));
+  app.use(express.static('large-project/build'));
   app.get('*', (req, res) => 
  {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'large-project', 'build', 'index.html'));
   });
 }
 
