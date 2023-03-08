@@ -1,15 +1,15 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-exports.createToken = function ( fn, ln, id )
+exports.createToken = function ( us, pa, fa )
 {
-    return _createToken( fn, ln, id );
+    return _createToken( us, pa, fa );
 }
-_createToken = function ( fn, ln, id )
+_createToken = function ( us, pa, fa )
 {
     try
     {
       const expiration = new Date();
-      const user = {userId:id,firstName:fn,lastName:ln};
+      const user = {username:us, password:pa, favorite:fa};
       const accessToken =  jwt.sign( user, process.env.ACCESS_TOKEN_SECRET);
       // In order to exoire with a value other than the default, use the 
        // following
@@ -19,7 +19,7 @@ _createToken = function ( fn, ln, id )
                        '24h'
                       '365d'
       */
-      var ret = {accessToken:accessToken, fn:fn, ln:ln, id:id};
+      var ret = {accessToken:accessToken, us:us, pa:pa, fa:fa};
     }
     catch(e)
     {
@@ -46,8 +46,8 @@ exports.isExpired = function( token )
 exports.refresh = function( token )
 {
   var ud = jwt.decode(token,{complete:true});
-  var userId = ud.payload.id;
-  var firstName = ud.payload.firstName;
-  var lastName = ud.payload.lastName;
-  return _createToken( firstName, lastName, userId );
+  var username = ud.payload.us;
+  var password = ud.payload.pa;
+  var favorite = ud.payload.FA;
+  return _createToken( username, password, favorite );
 }

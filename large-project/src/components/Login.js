@@ -37,11 +37,11 @@ function Login()
                 var jwt = require('jsonwebtoken');
     
                 var ud = jwt.decode(storage.retrieveToken(),{complete:true});
-                var userId = ud.payload.userId;
-                var firstName = ud.payload.firstName;
-                var lastName = ud.payload.lastName;
+                var username = ud.payload.username;
+                var password = ud.payload.password;
+                var favorite = ud.payload.favorite;
                   
-                var user = {firstName:firstName,lastName:lastName,id:userId}
+                var user = {username:username,password:password,favorite:favorite}
                 localStorage.setItem('user_data', JSON.stringify(user));
                 window.location.href = '/cards';
             }
