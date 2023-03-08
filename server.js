@@ -12,6 +12,8 @@ const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url);
 client.connect(console.log("mongodb connected"));
 
+// Test
+
 /*
 var cardList = 
 [
