@@ -197,7 +197,7 @@ app.post('/api/signUp', async (req, res) =>
 
     const newUser = {username, password};
     const results = await Users.insertOne(newUser);
-
+    
     res.status(201).send({message: 'new user succesfully created', userId: results.insertedId});
   }
   catch (err)
