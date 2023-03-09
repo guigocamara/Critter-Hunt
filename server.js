@@ -206,7 +206,7 @@ app.post('/api/signUp', async (req, res) =>
     res.status(500).send({message: 'error'});
   }
 });
-
+//test
 /*
 app.post('/api/searchcards', async (req, res, next) => 
 {
