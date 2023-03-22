@@ -91,6 +91,111 @@ exports.setApp = function (app, client) {
   });
   */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  app.post('/api/login', async (req, res, next) => 
+  {
+    // incoming: username, password
+    // outgoing: username, password, favorite, error
+    var error = '';
+    console.log(req.body);
+    const { username, password } = req.body;
+    const db = client.db("CritterHunt");
+    const results = await db.collection('Users').find({username:username,password:password}).toArray();
+    var id = '';
+    var fn = '';
+    var ln = '';
+    
+    if( results.length > 0 )
+    {
+      id = results[0].username;
+      fn = results[0].password;
+      ln = results[0].favorite;
+    }
+    var ret = { username:id, password:fn, favorite:ln, error:''};
+    res.status(200).json(ret);
+  });
+  
+
+
+  app.post('/api/signUp', async (req, res) =>
+  {
+    try 
+    {
+      const client = await MongoClient.connect(url);
+      const db = client.db("CritterHunt");
+      const Users = db.collection('Users');
+      const {username,password } = req.body;
+  
+      const existingUser =await Users.findOne({ $or: [{username}]});
+      if(existingUser)
+      {
+        return res.status(400).send({message: 'Username taken. try again'});
+      }
+  
+      const newUser = {username, password};
+      const results = await Users.insertOne(newUser);
+      
+      res.status(201).send({message: 'new user succesfully created', userId: results.insertedId});
+    }
+    catch (err)
+    {
+      console.log(err);
+      res.status(500).send({message: 'error'});
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //new login api
   app.post('/api/login', async (req, res, next) => {
     // incoming: login, password
@@ -129,7 +234,33 @@ exports.setApp = function (app, client) {
   });
 
 
+ app.post('/api/signUp', async (req, res) =>
+  {
+    try 
+    {
+      const client = await MongoClient.connect(url);
+      
+      
+      const {username,password } = req.body;
+  
+      const existingUser = await User.findOne({ $or: [{username}]});
 
+      if(existingUser)
+      {
+        return res.status(400).send({message: 'Username taken. try again'});
+      }
+  
+      const newUser = {username, password};
+      const results = await User.insertOne(newUser);
+      
+      res.status(201).send({message: 'new user succesfully created', userId: results.insertedId});
+    }
+    catch (err)
+    {
+      console.log(err);
+      res.status(500).send({message: 'error'});
+    }
+  });
 
 
   /*
