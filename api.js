@@ -128,7 +128,65 @@ exports.setApp = function (app, client) {
     res.status(200).json(ret);
   });
 
+  app.post('/api/signUp', async (req, res, next) => {
 
+  var error = '';
+
+  const { username, password, favorite } = req.body;
+
+  const existingUser = await User.findOne({ username });
+
+  if(existingUser)
+  {
+    return res.status(400).json({message: 'usernmane already take. Please try another one!'});
+  }
+
+  else
+  {
+    const newUser = new User({username: username, password: password, favorite: favorite});
+    try
+    {    
+      await newUser.save();
+      const token = require('./createJWT.js');
+      const ret = token.createToken(username, password, favorite);
+      res.status(200).json(ret);
+    }
+    catch (e)
+    {
+      ret = { error: e.message };
+    }
+  }
+});
+
+/*
+ app.post('/api/signUp', async (req, res) =>
+  {
+    try 
+    {
+      const client = await MongoClient.connect(url);
+      
+      
+      const {username,password } = req.body;
+  
+      const existingUser = await User.findOne({ $or: [{username}]});
+
+      if(existingUser)
+      {
+        return res.status(400).send({message: 'Username taken. try again'});
+      }
+  
+      const newUser = {username, password};
+      const results = await User.insertOne(newUser);
+      
+      res.status(200).send({message: 'new user succesfully created', userId: results.insertedId});
+    }
+    catch (err)
+    {
+      console.log(err);
+      res.status(500).send({message: 'error'});
+    }
+  });
+*/
 
 
 
