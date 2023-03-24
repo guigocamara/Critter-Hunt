@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function signUp() {
+function Signup() {
     var bp = require('./Path.js');
     var storage = require('../tokenStorage.js');
     var signUpName;
