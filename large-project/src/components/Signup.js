@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function Login() {
+function signUp() {
     var bp = require('./Path.js');
     var storage = require('../tokenStorage.js');
-    var loginName;
-    var loginPassword;
+    var signUpName;
+    var signUpPassword;
+    var favoriteAnimal;
     const [message, setMessage] = useState('');
-    const doLogin = async event => {
+    const dosignUp = async event => {
         event.preventDefault();
-        var obj = { username: loginName.value, password: loginPassword.value };
+        var obj = { username: signUpName.value, password: signUpPassword.value, favorite: favoriteAnimal.value };
         var js = JSON.stringify(obj);
         var config =
         {
             method: 'post',
-            url: bp.buildPath('api/login'),
+            url: bp.buildPath('api/signUp'),
             headers:
             {
                 'Content-Type': 'application/json'
@@ -26,7 +27,7 @@ function Login() {
                 var res = response.data;
                 if (res.error) {
                     console.log(res.error);
-                    setMessage('User/Password combination incorrect');
+                    setMessage('usernmane already take. Please try another one!');
                 }
                 else {
                     storage.storeToken(res);
@@ -48,17 +49,19 @@ function Login() {
     }
     return (
         <div id="loginDiv">
-            <span id="inner-title">PLEASE LOG IN</span><br />
-            <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br
+            <span id="inner-title">Sign up</span><br />
+            <input type="text" id="signUpName" placeholder="Username" ref={(c) => signUpName = c} /><br
             />
-            <input type="password" id="loginPassword" placeholder="Password" ref={(c) =>
-                loginPassword = c} /><br />
-            <input type="submit" id="loginButton" class="buttons" value="Do It"
-                onClick={doLogin} />
-            <span id="loginResult">{message}</span>
+            <input type="password" id="signUpPassword" placeholder="Password" ref={(c) =>
+                signUpPassword = c} /><br />
+            <input type="text" id="favoriteAnimal" placeholder="favoriteAnimal" ref={(c) =>
+                favoriteAnimal = c} /><br />
+            <input type="submit" id="signUpButton" class="buttons" value="Do It"
+                onClick={dosignUp} />
+            <span id="signUpResult">{message}</span>
         </div>
 
 
     );
 };
-export default Login;
+export default Signup;
