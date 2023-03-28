@@ -56,7 +56,7 @@ function Signup() {
                 signUpPassword = c} /><br />
             <input type="text" id="favoriteAnimal" placeholder="favoriteAnimal" ref={(c) =>
                 favoriteAnimal = c} /><br />
-            <input type="submit" id="signUpButton" class="buttons" value="Do It"
+            <input type="submit" id="signUpButton" value="Do It"
                 onClick={dosignUp} />
             <span id="signUpResult">{message}</span>
         </div>
