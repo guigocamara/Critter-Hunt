@@ -111,7 +111,7 @@ exports.setApp = function (app, client) {
     {
       error = e.toString();
     }
-    //This needs to be changed (effects frontend)
+    //This needs to be changed (effects frontend). For cards this was just a list of strings being displayed on the frontend.
     postList.push( critter );
 
     var refreshedToken = null;
