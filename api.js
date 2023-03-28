@@ -83,7 +83,7 @@ exports.setApp = function (app, client) {
     // outgoing: error
 
     let token = require('./createJWT.js');
-    const { userid, critter, likes, jwtToken } = req.body;
+    const { critterid, crittername, author, likes, comments, location, picture, jwtToken } = req.body;
     try
       {
         if( token.isExpired(jwtToken))
@@ -99,7 +99,7 @@ exports.setApp = function (app, client) {
     }
 
     //const newCard = { Card: card, UserId: userId };
-    const newPost = new Post({ critter: critter, likes: likes, userid: userid });
+    const newPost = new Post({  critterid: critterid, crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
     var error = '';
     try 
     {
@@ -112,7 +112,7 @@ exports.setApp = function (app, client) {
       error = e.toString();
     }
     //This needs to be changed (effects frontend). For cards this was just a list of strings being displayed on the frontend.
-    postList.push( critter );
+    postList.push( crittername );
 
     var refreshedToken = null;
     try
