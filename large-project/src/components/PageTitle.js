@@ -2,7 +2,7 @@ import React from 'react';
 function PageTitle()
 {
    return(
-     <h1 id="title">Start critter huntin!</h1>
+     <h1 id="title">Hunt critter with Critter Hunt!</h1>
    );
 };
 
