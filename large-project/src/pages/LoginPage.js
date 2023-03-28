@@ -7,7 +7,7 @@ const LoginPage = () =>
     return(
       <div>
         <PageTitle />
-        <Login />
+        <Login/>
         <Signup />
       </div>
     );
