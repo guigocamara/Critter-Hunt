@@ -5,6 +5,7 @@ const User = require("./models/user.js");
 //load card model
 
 //const Card = require("./models/card.js");
+const Post = require("./models/post.js");
 
 exports.setApp = function (app, client) {
 
@@ -76,14 +77,13 @@ exports.setApp = function (app, client) {
   });
 
 
-  app.post('/api/addcard', async (req, res, next) =>
+  app.post('/api/addpost', async (req, res, next) =>
   {
     // incoming: userId, color
     // outgoing: error
 
     let token = require('./createJWT.js');
-    const { userId, card, jwtToken } = req.body;
-
+    const { userid, critter, likes, jwtToken } = req.body;
     try
       {
         if( token.isExpired(jwtToken))
@@ -99,19 +99,20 @@ exports.setApp = function (app, client) {
     }
 
     //const newCard = { Card: card, UserId: userId };
-    const newCard = new Card({ Card: card, UserId: userId });
+    const newPost = new Post({ critter: critter, likes: likes, userid: userid });
     var error = '';
     try 
     {
       // const db = client.db();
       // const result = db.collection('Cards').insertOne(newCard);
-      newCard.save();
+      newPost.save();
     }
       catch (e) 
     {
       error = e.toString();
     }
-    cardList.push( card );
+    //This needs to be changed (effects frontend)
+    postList.push( critter );
 
     var refreshedToken = null;
     try
