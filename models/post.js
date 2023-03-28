@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // Create Schema
-const PostShema = new Schema({
+const PostSchema = new Schema({
   likes: {
     type: Number,
     required: true
@@ -19,11 +19,11 @@ const PostShema = new Schema({
     required: true,
   },
   comments:  {
-    type: Array,
+    type: String,
     required: true,
   },
   comments:  {
-    type: Array,
+    type: String,
     required: true,
   },
   picture:  {
@@ -31,4 +31,4 @@ const PostShema = new Schema({
     required: true,
   },
 });
-module.exports = Post = mongoose.model('Posts', CardSchema);
+module.exports = Post = mongoose.model('Posts', PostSchema);

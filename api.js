@@ -84,19 +84,19 @@ exports.setApp = function (app, client) {
 
     let token = require('./createJWT.js');
     const { critterid, crittername, author, likes, comments, location, picture, jwtToken } = req.body;
-    try
-      {
-        if( token.isExpired(jwtToken))
-        {
-          var r = {error:'The JWT is no longer valid', jwtToken: ''};
-          res.status(200).json(r);
-          return;
-        }
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
+    //try
+     // {
+        // if( token.isExpired(jwtToken))
+        // {
+        //   var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        //   res.status(200).json(r);
+        //   return;
+        // }
+  //  }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
 
     //const newCard = { Card: card, UserId: userId };
     const newPost = new Post({  critterid: critterid, crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
@@ -112,17 +112,18 @@ exports.setApp = function (app, client) {
       error = e.toString();
     }
     //This needs to be changed (effects frontend). For cards this was just a list of strings being displayed on the frontend.
-    postList.push( crittername );
 
-    var refreshedToken = null;
-    try
-    {
-      refreshedToken = token.refresh(jwtToken);
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
+   // cardList.push( crittername );
+
+    // var refreshedToken = null;
+    // try
+    // {
+    //   refreshedToken = token.refresh(jwtToken);
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
     
     var ret = { error: error, jwtToken: refreshedToken };
     res.status(200).json(ret);
