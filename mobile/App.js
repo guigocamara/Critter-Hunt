@@ -1,5 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//import Login from './Screens/Login';
 
 export default function App() {
   const requestOptions = {
@@ -24,12 +27,17 @@ export default function App() {
     }
   }
 
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button title="post" onPress={postExample} />
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+
+        <Button title="post" onPress={postExample} />
+
+      </View>
+    </NavigationContainer>
+
   );
 }
 
