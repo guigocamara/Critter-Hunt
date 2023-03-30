@@ -213,10 +213,7 @@ exports.setApp = function (app, client) {
 
   
   app.post('/api/searchposts', async (req, res, next) => 
-  {
-    // incoming: userId, search
-    // outgoing: results[], error
-  
+  {  
     var error = '';
     
     //userid was being read in here, but why?
@@ -267,5 +264,30 @@ exports.setApp = function (app, client) {
     // var ret = { results:_ret, error: error, jwtToken: refreshedToken };
     
     // res.status(200).json(ret);
+  });
+
+
+
+
+
+
+
+
+
+
+
+  app.post('/api/updatepost', async (req, res, next) => 
+  {  
+    var error = '';
+    
+    const { postsId, newLikes, newComments } = req.body;
+    const filter = { _id: postsId };
+    const update = { likes: newLikes, comments: newComments }
+    const opts = { new: true };
+
+    //Searches for a post with the specfic post id, and then updates the likes and comments to the new likes and comments.
+    const ret = await Post.findOneAndUpdate(filter, update, opts);
+
+    res.status(200).json(ret);
   });
 }
