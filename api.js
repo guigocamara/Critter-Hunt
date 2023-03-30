@@ -79,11 +79,10 @@ exports.setApp = function (app, client) {
 
   app.post('/api/addpost', async (req, res, next) =>
   {
-    // incoming: userId, color
-    // outgoing: error
 
     let token = require('./createJWT.js');
     const { critterid, crittername, author, likes, comments, location, picture, jwtToken } = req.body;
+    //Try catch block is to make sure user is logged in.
     //try
      // {
         // if( token.isExpired(jwtToken))
@@ -98,23 +97,23 @@ exports.setApp = function (app, client) {
     //   console.log(e.message);
     // }
 
-    //const newCard = { Card: card, UserId: userId };
     const newPost = new Post({  critterid: critterid, crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
     var error = '';
     try 
     {
-      // const db = client.db();
-      // const result = db.collection('Cards').insertOne(newCard);
       newPost.save();
+      //Temporary retruning code for the newpost
+      var ret = { newPost };
+      res.status(200).json(ret);
     }
       catch (e) 
     {
       error = e.toString();
     }
     //This needs to be changed (effects frontend). For cards this was just a list of strings being displayed on the frontend.
-
    // cardList.push( crittername );
 
+    // This try catch block still has to do with logged in user.
     // var refreshedToken = null;
     // try
     // {
@@ -125,8 +124,8 @@ exports.setApp = function (app, client) {
     //   console.log(e.message);
     // }
     
-    var ret = { error: error, jwtToken: refreshedToken };
-    res.status(200).json(ret);
+    //var ret = { error: error, jwtToken: refreshedToken };
+    //res.status(200).json(ret);
   });
 
 /*

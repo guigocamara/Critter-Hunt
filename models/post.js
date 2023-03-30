@@ -22,13 +22,9 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
-  comments:  {
-    type: String,
-    required: true,
-  },
   picture:  {
     type: String,
     required: true,
   },
 });
-module.exports = Post = mongoose.model('Posts', PostSchema);
+module.exports = Post = mongoose.model('Posts', PostSchema, 'Posts');
