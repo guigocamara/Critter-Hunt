@@ -9,6 +9,15 @@ const Post = require("./models/post.js");
 
 exports.setApp = function (app, client) {
 
+
+  /*COMMENTS
+    For now we are leaving out some of the calls to the jwtTokens in the api calls. This needs to be reimplemented once combined witht the frontend!
+  */
+
+
+
+
+
   app.post('/api/login', async (req, res, next) => {
     // incoming: login, password
     // outgoing: username, password, favorite, error
@@ -77,6 +86,19 @@ exports.setApp = function (app, client) {
   });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   app.post('/api/addpost', async (req, res, next) =>
   {
 
@@ -128,58 +150,62 @@ exports.setApp = function (app, client) {
     //res.status(200).json(ret);
   });
 
-/*
-app.post('/api/addcard', async (req, res, next) =>
+
+
+
+
+
+
+  
+  app.delete('/api/deletepost', async (req, res, next) => 
   {
-    // incoming: userId, color
-    // outgoing: error
+        //Try catch block is to make sure user is logged in.
+    //try
+     // {
+        // if( token.isExpired(jwtToken))
+        // {
+        //   var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        //   res.status(200).json(r);
+        //   return;
+        // }
+  //  }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
 
-    let token = require('./createJWT.js');
-    const { userId, card, jwtToken } = req.body;
-
-    try
-      {
-        if( token.isExpired(jwtToken))
-        {
-          var r = {error:'The JWT is no longer valid', jwtToken: ''};
-          res.status(200).json(r);
-          return;
-        }
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
-
-    //const newCard = { Card: card, UserId: userId };
-    const newCard = new Card({ Card: card, UserId: userId });
-    var error = '';
+    const { postsId } = req.body;
     try 
     {
-      // const db = client.db();
-      // const result = db.collection('Cards').insertOne(newCard);
-      newCard.save();
-    }
-      catch (e) 
-    {
-      error = e.toString();
-    }
-    cardList.push( card );
+      const deletedPost = await Post.findByIdAndDelete(postsId);
 
-    var refreshedToken = null;
-    try
+      if (!deletedPost) 
+      {
+        return res.status(400).json({ message: "no post found" });
+      }
+      res.status(200).json({ message: "Post deleted." });
+    } 
+    catch (e)
     {
-      refreshedToken = token.refresh(jwtToken);
+      ret = { error: e.message };
     }
-    catch(e)
-    {
-      console.log(e.message);
-    }
+
+    // This try catch block still has to do with logged in user.
+    // var refreshedToken = null;
+    // try
+    // {
+    //   refreshedToken = token.refresh(jwtToken);
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
     
-    var ret = { error: error, jwtToken: refreshedToken };
-    res.status(200).json(ret);
+    //var ret = { error: error, jwtToken: refreshedToken };
+    //res.status(200).json(ret);
   });
-  */
+
+
 
   /*
   app.post('/api/searchcards', async (req, res, next) => 
