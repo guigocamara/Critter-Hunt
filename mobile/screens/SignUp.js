@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import React, { useState } from 'react';
 
 
-export default function Login({ navigation }) {
+export default function SignUp({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -50,7 +50,6 @@ export default function Login({ navigation }) {
                 secureTextEntry
             />
             <Button title="Login" onPress={doLogin} />
-            <Button title="Create Account" onPress={() => navigation.navigate('SignUp')} />
             <StatusBar style="auto" />
         </View>
     );
