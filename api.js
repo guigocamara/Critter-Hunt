@@ -207,54 +207,61 @@ exports.setApp = function (app, client) {
 
 
 
-  /*
-  app.post('/api/searchcards', async (req, res, next) => 
+
+
+
+
+  
+  app.post('/api/searchposts', async (req, res, next) => 
   {
     // incoming: userId, search
     // outgoing: results[], error
   
     var error = '';
-  
-    const { userId, search, jwtToken } = req.body;
-    try
-    {
-      if( token.isExpired(jwtToken))
-      {
-        var r = {error:'The JWT is no longer valid', jwtToken: ''};
-        res.status(200).json(r);
-        return;
-      }
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
+    
+    //userid was being read in here, but why?
+    const { search, jwtToken } = req.body;
+    // try
+    // {
+    //   if( token.isExpired(jwtToken))
+    //   {
+    //     var r = {error:'The JWT is no longer valid', jwtToken: ''};
+    //     res.status(200).json(r);
+    //     return;
+    //   }
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
     
     var _search = search.trim();
     
-    const db = client.db();
+    //const db = client.db();
     //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
-    const results = await Card.find({ "Card": { $regex: _search + '.*', $options: 'r' } });
+    const results = await Post.find({ "crittername": { $regex: _search + '.*', $options: 'r' } });
     
     var _ret = [];
     for( var i=0; i<results.length; i++ )
     {
-      _ret.push( results[i].Card );
+      _ret.push( results[i]._id );
     }
     
-    var refreshedToken = null;
-    try
-    {
-      refreshedToken = token.refresh(jwtToken);
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
-  
-    var ret = { results:_ret, error: error, jwtToken: refreshedToken };
-    
+    var ret = { _ret };
     res.status(200).json(ret);
+
+    // var refreshedToken = null;
+    // try
+    // {
+    //   refreshedToken = token.refresh(jwtToken);
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
+  
+    // var ret = { results:_ret, error: error, jwtToken: refreshedToken };
+    
+    // res.status(200).json(ret);
   });
-  */
 }
