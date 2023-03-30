@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, } from 'react-native';
+import { Button, StyleSheet, Text, View, } from 'react-native';
+import React, { useState, useEffect } from 'react';
 
-export default function Welcome() {
+
+export default function Welcome({ route, navigation }) {
+    const { username } = route.params;
 
     return (
         <View style={styles.container}>
-            <Text>Welcome!</Text>
+            <Text>Welcome, {JSON.stringify(username)}</Text>
+            <Button title="Log out" onPress={() => navigation.navigate('Login')} />
             <StatusBar style="auto" />
         </View>
     );
