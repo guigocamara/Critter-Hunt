@@ -8,7 +8,7 @@ export default function Welcome({ route, navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text>Welcome, {JSON.stringify(username)}</Text>
+            <Text>Welcome, {username}</Text>
             <Button title="Log out" onPress={() => navigation.navigate('Login')} />
             <StatusBar style="auto" />
         </View>
