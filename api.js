@@ -5,93 +5,19 @@ const User = require("./models/user.js");
 //load card model
 
 //const Card = require("./models/card.js");
+const Post = require("./models/post.js");
 
 exports.setApp = function (app, client) {
 
-  /*
-  app.post('/api/addcard', async (req, res, next) =>
-  {
-    // incoming: userId, color
-    // outgoing: error
 
-    let token = require('./createJWT.js');
-    const { userId, card, jwtToken } = req.body;
-
-    
-
-
-    try
-      {
-        if( token.isExpired(jwtToken))
-        {
-          var r = {error:'The JWT is no longer valid', jwtToken: ''};
-          res.status(200).json(r);
-          return;
-        }
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
-
-    //const newCard = { Card: card, UserId: userId };
-    const newCard = new Card({ Card: card, UserId: userId });
-    var error = '';
-    try 
-    {
-      // const db = client.db();
-      // const result = db.collection('Cards').insertOne(newCard);
-      newCard.save();
-    }
-      catch (e) 
-    {
-      error = e.toString();
-    }
-    cardList.push( card );
-
-    var refreshedToken = null;
-    try
-    {
-      refreshedToken = token.refresh(jwtToken);
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
-    
-    var ret = { error: error, jwtToken: refreshedToken };
-    res.status(200).json(ret);
-  });
+  /*COMMENTS
+    For now we are leaving out some of the calls to the jwtTokens in the api calls. This needs to be reimplemented once combined witht the frontend!
   */
 
 
 
-  /* our old api for login from main
-  app.post('/api/login', async (req, res, next) => 
-  {
-    // incoming: username, password
-    // outgoing: username, password, favorite, error
-    var error = '';
-    console.log(req.body);
-    const { username, password } = req.body;
-    const db = client.db("CritterHunt");
-    const results = await db.collection('Users').find({username:username,password:password}).toArray();
-    var id = '';
-    var fn = '';
-    var ln = '';
-    
-    if( results.length > 0 )
-    {
-      id = results[0].username;
-      fn = results[0].password;
-      ln = results[0].favorite;
-    }
-    var ret = { username:id, password:fn, favorite:ln, error:''};
-    res.status(200).json(ret);
-  });
-  */
 
-  //new login api
+
   app.post('/api/login', async (req, res, next) => {
     // incoming: login, password
     // outgoing: username, password, favorite, error
@@ -128,116 +54,240 @@ exports.setApp = function (app, client) {
     res.status(200).json(ret);
   });
 
+
   app.post('/api/signUp', async (req, res, next) => {
 
-  var error = '';
+    var error = '';
 
-  const { username, password, favorite } = req.body;
+    const { username, password, favorite } = req.body;
 
-  const existingUser = await User.findOne({ username });
+    const existingUser = await User.findOne({ username });
 
-  if(existingUser)
+    if(existingUser)
+    {
+      return res.status(400).json({message: 'usernmane already take. Please try another one!'});
+    }
+
+    else
+    {
+      const newUser = new User({username: username, password: password, favorite: favorite});
+      try
+      {    
+        await newUser.save();
+        const token = require('./createJWT.js');
+        const ret = token.createToken(username, password, favorite);
+        res.status(200).json(ret);
+      }
+      catch (e)
+      {
+        ret = { error: e.message };
+      }
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  app.post('/api/addpost', async (req, res, next) =>
   {
-    return res.status(400).json({message: 'usernmane already take. Please try another one!'});
-  }
 
-  else
-  {
-    const newUser = new User({username: username, password: password, favorite: favorite});
-    try
-    {    
-      await newUser.save();
-      const token = require('./createJWT.js');
-      const ret = token.createToken(username, password, favorite);
+    let token = require('./createJWT.js');
+    const { critterid, crittername, author, likes, comments, location, picture, jwtToken } = req.body;
+    //Try catch block is to make sure user is logged in.
+    //try
+     // {
+        // if( token.isExpired(jwtToken))
+        // {
+        //   var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        //   res.status(200).json(r);
+        //   return;
+        // }
+  //  }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
+
+    const newPost = new Post({  critterid: critterid, crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
+    var error = '';
+    try 
+    {
+      newPost.save();
+      //Temporary retruning code for the newpost
+      var ret = { newPost };
       res.status(200).json(ret);
     }
+      catch (e) 
+    {
+      error = e.toString();
+    }
+    //This needs to be changed (effects frontend). For cards this was just a list of strings being displayed on the frontend.
+   // cardList.push( crittername );
+
+    // This try catch block still has to do with logged in user.
+    // var refreshedToken = null;
+    // try
+    // {
+    //   refreshedToken = token.refresh(jwtToken);
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
+    
+    //var ret = { error: error, jwtToken: refreshedToken };
+    //res.status(200).json(ret);
+  });
+
+
+
+
+
+
+
+  
+  app.delete('/api/deletepost', async (req, res, next) => 
+  {
+        //Try catch block is to make sure user is logged in.
+    //try
+     // {
+        // if( token.isExpired(jwtToken))
+        // {
+        //   var r = {error:'The JWT is no longer valid', jwtToken: ''};
+        //   res.status(200).json(r);
+        //   return;
+        // }
+  //  }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
+
+    const { postsId } = req.body;
+    try 
+    {
+      const deletedPost = await Post.findByIdAndDelete(postsId);
+
+      if (!deletedPost) 
+      {
+        return res.status(400).json({ message: "no post found" });
+      }
+      res.status(200).json({ message: "Post deleted." });
+    } 
     catch (e)
     {
       ret = { error: e.message };
     }
-  }
-});
 
-/*
- app.post('/api/signUp', async (req, res) =>
-  {
-    try 
-    {
-      const client = await MongoClient.connect(url);
-      
-      
-      const {username,password } = req.body;
-  
-      const existingUser = await User.findOne({ $or: [{username}]});
-
-      if(existingUser)
-      {
-        return res.status(400).send({message: 'Username taken. try again'});
-      }
-  
-      const newUser = {username, password};
-      const results = await User.insertOne(newUser);
-      
-      res.status(200).send({message: 'new user succesfully created', userId: results.insertedId});
-    }
-    catch (err)
-    {
-      console.log(err);
-      res.status(500).send({message: 'error'});
-    }
+    // This try catch block still has to do with logged in user.
+    // var refreshedToken = null;
+    // try
+    // {
+    //   refreshedToken = token.refresh(jwtToken);
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
+    
+    //var ret = { error: error, jwtToken: refreshedToken };
+    //res.status(200).json(ret);
   });
-*/
 
 
 
-  /*
-  app.post('/api/searchcards', async (req, res, next) => 
-  {
-    // incoming: userId, search
-    // outgoing: results[], error
+
+
+
+
   
+  app.post('/api/searchposts', async (req, res, next) => 
+  {  
     var error = '';
-  
-    const { userId, search, jwtToken } = req.body;
-    try
-    {
-      if( token.isExpired(jwtToken))
-      {
-        var r = {error:'The JWT is no longer valid', jwtToken: ''};
-        res.status(200).json(r);
-        return;
-      }
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
+    
+    //userid was being read in here, but why?
+    const { search, jwtToken } = req.body;
+    // try
+    // {
+    //   if( token.isExpired(jwtToken))
+    //   {
+    //     var r = {error:'The JWT is no longer valid', jwtToken: ''};
+    //     res.status(200).json(r);
+    //     return;
+    //   }
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
     
     var _search = search.trim();
     
-    const db = client.db();
+    //const db = client.db();
     //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
-    const results = await Card.find({ "Card": { $regex: _search + '.*', $options: 'r' } });
+    let results = await Post.find({ "crittername": { $regex: _search + '.*', $options: 'r' } });
     
     var _ret = [];
+    if(results.length == 0){
+      results = await Post.find({ "": { $regex: _search + '.*', $options: 'r' } });
+    }
+
     for( var i=0; i<results.length; i++ )
     {
-      _ret.push( results[i].Card );
+      _ret.push( results[i] );
     }
     
-    var refreshedToken = null;
-    try
-    {
-      refreshedToken = token.refresh(jwtToken);
-    }
-    catch(e)
-    {
-      console.log(e.message);
-    }
+    var ret = { _ret };
+    res.status(200).json(ret);
+
+    // var refreshedToken = null;
+    // try
+    // {
+    //   refreshedToken = token.refresh(jwtToken);
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
   
-    var ret = { results:_ret, error: error, jwtToken: refreshedToken };
+    // var ret = { results:_ret, error: error, jwtToken: refreshedToken };
     
+    // res.status(200).json(ret);
+  });
+
+
+
+
+
+
+
+
+
+
+
+  app.post('/api/updatepost', async (req, res, next) => 
+  {  
+    var error = '';
+    
+    const { postsId, newLikes, newComments } = req.body;
+    const filter = { _id: postsId };
+    const update = { likes: newLikes, comments: newComments }
+    const opts = { new: true };
+
+    //Searches for a post with the specfic post id, and then updates the likes and comments to the new likes and comments.
+    const ret = await Post.findOneAndUpdate(filter, update, opts);
+
     res.status(200).json(ret);
   });
-  */
 }
