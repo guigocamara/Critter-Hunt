@@ -13,9 +13,9 @@ export default function SignUp({ navigation }) {
         body: JSON.stringify({ username: username, password: password })
     };
 
-    const doLogin = async () => {
+    const doSignUp = async () => {
         try {
-            await fetch('http://critterhunt.herokuapp.com/api/login', requestOptions)
+            await fetch('http://critterhunt.herokuapp.com/api/signUp', requestOptions)
                 .then(response => {
                     response.json()
                         .then(data => {
@@ -49,7 +49,7 @@ export default function SignUp({ navigation }) {
                 value={password}
                 secureTextEntry
             />
-            <Button title="Login" onPress={doLogin} />
+            <Button title="Create new account" onPress={doSignUp} />
             <StatusBar style="auto" />
         </View>
     );
