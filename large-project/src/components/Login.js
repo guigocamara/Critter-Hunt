@@ -56,18 +56,18 @@ function Login() {
                           <img src="ProfilePictureMaker.png" alt="IMG">
                       </div>
 
-                      <form class="login-form">
+                      <a class="login-form">
                           <span class="login-form-title">Login</span>
 
                           <div class="wrap-input">
-                              <input type="text" class="input" name="Username" placeholder="Username" required>
+                              <input type="text" class="input" id="loginName" name="Username" placeholder="Username" required>
                               <span class="focus-input"></span>
                               <span class="symbol-input">
                                   <i class="fa fa-user" aria-hidden="true"></i>
                               </span>
                           </div>
                           <div class="wrap-input">
-                              <input type="password" class="input" name="pass" placeholder="Password" required>
+                              <input type="password" class="input" id="loginPassword" name="pass" placeholder="Password" required>
                               <span class="focus-input"></span>
                               <span class="symbol-input">
                                   <i class="fa fa-lock" aria-hidden="true"></i>
@@ -75,7 +75,7 @@ function Login() {
                           </div>
 
                           <div class="login-form-btn-container">
-                              <button class="login-form-btn">Login</button>
+                              <button class="login-form-btn"  onClick={doLogin} >Login</button>
                           </div>
 
                         <div class="text-center p-t-1">
@@ -83,10 +83,10 @@ function Login() {
                             <a href="#" class="txt2"> Username / Password ?</a>
                         </div>
                         <div class="text-center p-t-2">
-                            <a href="#" class="txt2">Create Your Account <i class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
+                            <a href="/Signup" class="txt2">Create Your Account <i class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
                         </div>
 
-                      </form>
+                      </a>
 
                   </div>
               </div>
