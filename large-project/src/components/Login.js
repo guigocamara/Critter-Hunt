@@ -73,7 +73,7 @@ function Login() {
                               <span className="focus-input"></span>
                               <span className="symbol-input">
                                   <i className="fa fa-lock" aria-hidden="true"></i>
-                              </span> </input>
+                              </span> </input>j
                           </div>
 
                           <div className="login-form-btn-container">
