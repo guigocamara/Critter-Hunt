@@ -47,19 +47,20 @@ function Login() {
             });
     }
     return (
-      <div id="loginDiv" className="bg-green-200 flex-row text-center h-50 ml-10 mr-10">
+            <div id="loginDiv" className="bg-green-200 flex-row text-center h-50 ml-10 mr-10">
 
-  <div className="text-xl">
-      <span className="" id="inner-title">PLEASE LOG IN</span><br />
-      <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br
-      />
-      <input type="password" id="loginPassword" placeholder="Password" ref={(c) =>
-          loginPassword = c} /><br />
-      <input type="submit" id="loginButton" value="Do It"
-          onClick={doLogin} />
-      <span id="loginResult">{message}</span>
-  </div>
-</div>
+                <div className="text-xl">
+                    <span className="" id="inner-title">PLEASE LOG IN</span><br />
+                    <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br
+                    />
+                    <input type="password" id="loginPassword" placeholder="Password" ref={(c) =>
+                        loginPassword = c} /><br />
+                    <input type="submit" id="loginButton" value="Do It"
+                        onClick={doLogin} />
+                    <span id="loginResult">{message}</span>
+                </div>
+            </div>
+
 
     );
 };

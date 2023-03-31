@@ -1,15 +1,14 @@
 import React from 'react';
-import Headers from '../components/Headers';
 import PageTitle from '../components/PageTitle';
-import './style.css';
 import Login from '../components/Login';
-
+import Signup from '../components/Signup';
 const LoginPage = () =>
 {
     return(
       <div>
-        <Headers />
+        <PageTitle />
         <Login/>
+        <Signup />
       </div>
     );
 };
