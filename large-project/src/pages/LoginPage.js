@@ -7,8 +7,8 @@ const LoginPage = () =>
 {
     return(
 
-      <Headers />
       <div>
+        <Headers />
         <PageTitle />
 
         <div className="Main-container">
@@ -25,18 +25,18 @@ const LoginPage = () =>
         <Login/>
 
         <div className="text-center p-t-1">
-            <span className="txt1">Forgot</span>
-            <a href="#" className="txt2"> Username / Password ?</a>
+        <span className="txt1">Forgot</span>
+        <a href="#" className="txt2"> Username / Password ?</a>
         </div>
         <div className="text-center p-t-2">
-            <a href="/Signup" className="txt2">Create Your Account <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a>
+        <a href="/Signup" className="txt2">Create Your Account <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a>
         </div>
 
-      </a>
+        </a>
 
-  </div>
-</div>
-</div>
+        </div>
+        </div>
+        </div>
         <Signup />
       </div>
     );
