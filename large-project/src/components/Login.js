@@ -47,19 +47,52 @@ function Login() {
             });
     }
     return (
-            <div id="loginDiv" className="bg-green-200 flex-row text-center h-50 ml-10 mr-10">
 
-                <div className="text-xl">
-                    <span className="" id="inner-title">PLEASE LOG IN</span><br />
-                    <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br
-                    />
-                    <input type="password" id="loginPassword" placeholder="Password" ref={(c) =>
-                        loginPassword = c} /><br />
-                    <input type="submit" id="loginButton" value="Do It"
-                        onClick={doLogin} />
-                    <span id="loginResult">{message}</span>
+        <div className="Main-container">
+            <div className="container-login">
+              <span className="page-title">Hunt Critter with Critter Hunt!</span>
+                <div className="wrap-login">
+                    <div className="login-pic">
+                        <img src="ProfilePictureMaker.png" alt="IMG"> </img>
+                    </div>
+
+                    <a className="login-form">
+                        <span className="login-form-title">Login</span>
+
+                        <div className="wrap-input">
+                          <input type="text" className="input" id="loginName" placeholder="Username" required ref={(c) => loginName = c} /><br
+                          />
+                            <span className="focus-input"></span>
+                            <span className="symbol-input">
+                                <i className="fa fa-user" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div className="wrap-input">
+                        <input type="password" className="password" id="loginPassword" placeholder="Password" required ref={(c) => loginPassword = c} /><br
+                        />
+                            <span className="focus-input"></span>
+                            <span className="symbol-input">
+                                <i className="fa fa-lock" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        <div className="login-form-btn-container">
+                            <button className="login-form-btn">Login</button>
+                        </div>
+
+                      <div className="text-center p-t-1">
+                          <span className="txt1">Forgot</span>
+                          <a href="#" className="txt2"> Username / Password ?</a>
+                      </div>
+                      <div className="text-center p-t-2">
+                          <a href="/Signup" className="txt2">Create Your Account <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a>
+                      </div>
+
+                    </a>
+
                 </div>
             </div>
+        </div>
 
 
     );
