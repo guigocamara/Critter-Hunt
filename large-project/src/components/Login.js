@@ -48,19 +48,24 @@ function Login() {
     }
     return (
 
-        <div type="Main-container">
-            <div type="container-login">
-              <span type="page-title">Hunt Critter with Critter Hunt!</span>
-                <div type="wrap-login">
-                    <div type="login-pic">
-                        <img src="ProfilePictureMaker.png" alt="IMG"> </img>
-                    </div>
 
-                </div>
-            </div>
-        </div>
-
-
+                        <div className="wrap-input">
+                          <input type="text" className="input" id="loginName" placeholder="Username" required ref={(c) => loginName = c} /><br/>
+                            <span className="focus-input"></span>
+                            <span className="symbol-input">
+                                <i className="fa fa-user" aria-hidden="true"></i>
+                            </span>
+                        </div>/
+                        <div className="wrap-input">
+                        <input type="password" className="password" id="loginPassword" placeholder="Password" required ref={(c) => loginPassword = c} /><br/>
+                            <span className="focus-input"></span>
+                            <span className="symbol-input">
+                                <i className="fa fa-lock" aria-hidden="true"></i>
+                            </span>
+                        </div>/
+                        <div className="login-form-btn-container">
+                            <button className="login-form-btn"  onClick={doLogin} >Login</button>
+                        </div>
     );
 };
 export default Login;
