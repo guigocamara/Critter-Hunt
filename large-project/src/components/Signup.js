@@ -48,8 +48,19 @@ function Signup() {
             });
     }
     return (
-      
 
+      <div id="loginDiv">
+  <span id="inner-title">Sign up</span><br />
+  <input type="text" id="signUpName" placeholder="Username" ref={(c) => signUpName = c} /><br
+  />
+  <input type="password" id="signUpPassword" placeholder="Password" ref={(c) =>
+      signUpPassword = c} /><br />
+  <input type="text" id="favoriteAnimal" placeholder="favoriteAnimal" ref={(c) =>
+      favoriteAnimal = c} /><br />
+  <input type="submit" id="signUpButton" value="Do It"
+      onClick={dosignUp} />
+  <span id="signUpResult">{message}</span>
+</div>
 
     );
 };
