@@ -47,6 +47,16 @@ function Login() {
             });
     }
     return (
+
+      <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/e48d166edc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Critter Hunt Login</title>
+</head>
+
       <body>
           <div class="Main-container">
               <div class="container-login">
@@ -79,7 +89,7 @@ function Login() {
                           </div>
 
                           <span id="loginResult">{message}</span>
-                          
+
                         <div class="text-center p-t-1">
                             <span class="txt1">Forgot</span>
                             <a href="#" class="txt2"> Username / Password ?</a>
