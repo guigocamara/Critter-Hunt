@@ -66,14 +66,14 @@ function Signup() {
                         <span class="focus-input"></span>
                         <span class="symbol-input">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                        </span>
+                        </span> </input>
                     </div>
                     <div class="wrap-input">
                         <input type="text" class="input" name="Email" placeholder="Email" required>
                         <span class="focus-input"></span>
                         <span class="symbol-input">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
-                        </span>
+                        </span> </input>
                     </div>
 
                     <div class="wrap-input">
@@ -81,20 +81,21 @@ function Signup() {
                         <span class="focus-input"></span>
                         <span class="symbol-input">
                             <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
+                        </span>  </input>
                     </div>
                     <div class="wrap-input">
                         <input type="text" class="input" name="favoriteAnimal" id="favoriteAnimal" placeholder="Favorite critter" required>
                         <span class="focus-input"></span>
                         <span class="symbol-input">
                             <i class="fa fa-github-alt" aria-hidden="true"></i>
-                        </span>
+                        </span> </input>
                     </div>
 
                     <div class="login-form-btn-container">
                         <button class="login-form-btn">Sign up!</button>
                     </div>
 
+                    <span id="signUpResult">{message}</span>
                   <div class="text-center p-t-2">
                       <a href="#/" class="txt2">Have an Account? Go login <i class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
                   </div>

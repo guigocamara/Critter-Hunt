@@ -64,20 +64,22 @@ function Login() {
                               <span class="focus-input"></span>
                               <span class="symbol-input">
                                   <i class="fa fa-user" aria-hidden="true"></i>
-                              </span>
+                              </span> </input>
                           </div>
                           <div class="wrap-input">
                               <input type="password" class="input" id="loginPassword" name="pass" placeholder="Password" required>
                               <span class="focus-input"></span>
                               <span class="symbol-input">
                                   <i class="fa fa-lock" aria-hidden="true"></i>
-                              </span>
+                              </span> </input>
                           </div>
 
                           <div class="login-form-btn-container">
                               <button class="login-form-btn"  onClick={doLogin} >Login</button>
                           </div>
 
+                          <span id="loginResult">{message}</span>
+                          
                         <div class="text-center p-t-1">
                             <span class="txt1">Forgot</span>
                             <a href="#" class="txt2"> Username / Password ?</a>
