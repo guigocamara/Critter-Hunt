@@ -48,11 +48,11 @@ function Login() {
     }
     return (
 
-        <div className="Main-container">
-            <div className="container-login">
-              <span className="page-title">Hunt Critter with Critter Hunt!</span>
-                <div className="wrap-login">
-                    <div className="login-pic">
+        <div type="Main-container">
+            <div type="container-login">
+              <span type="page-title">Hunt Critter with Critter Hunt!</span>
+                <div type="wrap-login">
+                    <div type="login-pic">
                         <img src="ProfilePictureMaker.png" alt="IMG"> </img>
                     </div>
 
