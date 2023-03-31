@@ -1,14 +1,13 @@
 import React from 'react';
 import PageTitle from '../components/PageTitle';
 import './style.css';
-import Login from '../components/Login';
-
-const LoginPage = () =>
+import Signup from '../components/Signup';
+const SignupPage = () =>
 {
     return(
       <div>
-        <Login/>
+        <Signup />
       </div>
     );
 };
-export default LoginPage;
+export default SignupPage;

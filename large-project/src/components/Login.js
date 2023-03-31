@@ -47,19 +47,52 @@ function Login() {
             });
     }
     return (
-            <div id="loginDiv" className="bg-green-200 flex-row text-center h-50 ml-10 mr-10">
-            
-                <div className="text-xl">
-                    <span className="" id="inner-title">PLEASE LOG IN</span><br />
-                    <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br
-                    />
-                    <input type="password" id="loginPassword" placeholder="Password" ref={(c) =>
-                        loginPassword = c} /><br />
-                    <input type="submit" id="loginButton" value="Do It"
-                        onClick={doLogin} />
-                    <span id="loginResult">{message}</span>
-                </div>
-            </div>
+      <body>
+          <div class="Main-container">
+              <div class="container-login">
+                <span class="page-title">Hunt Critter with Critter Hunt!</span>
+                  <div class="wrap-login">
+                      <div class="login-pic">
+                          <img src="ProfilePictureMaker.png" alt="IMG">
+                      </div>
+
+                      <form class="login-form">
+                          <span class="login-form-title">Login</span>
+
+                          <div class="wrap-input">
+                              <input type="text" class="input" name="Username" placeholder="Username" required>
+                              <span class="focus-input"></span>
+                              <span class="symbol-input">
+                                  <i class="fa fa-user" aria-hidden="true"></i>
+                              </span>
+                          </div>
+                          <div class="wrap-input">
+                              <input type="password" class="input" name="pass" placeholder="Password" required>
+                              <span class="focus-input"></span>
+                              <span class="symbol-input">
+                                  <i class="fa fa-lock" aria-hidden="true"></i>
+                              </span>
+                          </div>
+
+                          <div class="login-form-btn-container">
+                              <button class="login-form-btn">Login</button>
+                          </div>
+
+                        <div class="text-center p-t-1">
+                            <span class="txt1">Forgot</span>
+                            <a href="#" class="txt2"> Username / Password ?</a>
+                        </div>
+                        <div class="text-center p-t-2">
+                            <a href="#" class="txt2">Create Your Account <i class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
+                        </div>
+
+                      </form>
+
+                  </div>
+              </div>
+          </div>
+
+      </body>
 
 
     );
