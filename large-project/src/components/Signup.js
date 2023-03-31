@@ -48,64 +48,78 @@ function Signup() {
             });
     }
     return (
-      <body>
-          <div class="Main-container">
-              <div class="container-login">
-                <span class="page-title">Hunt Critter with Critter Hunt!</span>
-                  <div class="wrap-login">
-                      <div class="login-pic">
-                          <img src="ProfilePictureMaker.png" alt="IMG">
-                      </div>
+        <div id="loginDiv">
+            <span id="inner-title">Sign up</span><br />
+            <input type="text" id="signUpName" placeholder="Username" ref={(c) => signUpName = c} /><br
+            />
+            <input type="password" id="signUpPassword" placeholder="Password" ref={(c) =>
+                signUpPassword = c} /><br />
+            <input type="text" id="favoriteAnimal" placeholder="favoriteAnimal" ref={(c) =>
+                favoriteAnimal = c} /><br />
+            <input type="submit" id="signUpButton" value="Do It"
+                onClick={dosignUp} />
+            <span id="signUpResult">{message}</span>
+        </div>
 
-                      <form class="login-form">
-                          <span class="login-form-title">Sign up</span>
 
-                          <div class="wrap-input">
-                              <input type="text" class="input" name="Username" placeholder="Username" required>
-                              <span class="focus-input"></span>
-                              <span class="symbol-input">
-                                  <i class="fa fa-user" aria-hidden="true"></i>
-                              </span>
-                          </div>
-                          <div class="wrap-input">
-                              <input type="text" class="input" name="Email" placeholder="Email" required>
-                              <span class="focus-input"></span>
-                              <span class="symbol-input">
-                                  <i class="fa fa-envelope" aria-hidden="true"></i>
-                              </span>
-                          </div>
+        <body>
+    <div class="Main-container">
+        <div class="container-login">
+          <span class="page-title">Hunt Critter with Critter Hunt!</span>
+            <div class="wrap-login">
+                <div class="login-pic">
+                    <img src="ProfilePictureMaker.png" alt="IMG">
+                </div>
 
-                          <div class="wrap-input">
-                              <input type="password" class="input" name="pass" placeholder="Password" required>
-                              <span class="focus-input"></span>
-                              <span class="symbol-input">
-                                  <i class="fa fa-lock" aria-hidden="true"></i>
-                              </span>
-                          </div>
-                          <div class="wrap-input">
-                              <input type="text" class="input" name="favoriteAnimal" placeholder="Favorite critter" required>
-                              <span class="focus-input"></span>
-                              <span class="symbol-input">
-                                  <i class="fa fa-github-alt" aria-hidden="true"></i>
-                              </span>
-                          </div>
+                <form class="login-form">
+                    <span class="login-form-title">Sign up</span>
 
-                          <div class="login-form-btn-container">
-                              <button class="login-form-btn" onClick={dosignUp} >Signup</button>
+                    <div class="wrap-input">
+                        <input type="text" class="input" name="Username" id="signUpPassword" placeholder="Username" required>
+                        <span class="focus-input"></span>
+                        <span class="symbol-input">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="wrap-input">
+                        <input type="text" class="input" name="Email" placeholder="Email" required>
+                        <span class="focus-input"></span>
+                        <span class="symbol-input">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
 
-                          </div>
+                    <div class="wrap-input">
+                        <input type="password" class="input" name="pass" id="signUpPassword" placeholder="Password" required>
+                        <span class="focus-input"></span>
+                        <span class="symbol-input">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="wrap-input">
+                        <input type="text" class="input" name="favoriteAnimal" id="favoriteAnimal" placeholder="Favorite critter" required>
+                        <span class="focus-input"></span>
+                        <span class="symbol-input">
+                            <i class="fa fa-github-alt" aria-hidden="true"></i>
+                        </span>
+                    </div>
 
-                        <div class="text-center p-t-2">
-                            <a href="#/" class="txt2">Have an Account? Go login <i class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
-                        </div>
+                    <div class="login-form-btn-container">
+                        <button class="login-form-btn">Sign up!</button>
+                    </div>
 
-                      </form>
-
+                  <div class="text-center p-t-2">
+                      <a href="#/" class="txt2">Have an Account? Go login <i class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
                   </div>
-              </div>
-          </div>
 
-      </body>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
 
     );
 };

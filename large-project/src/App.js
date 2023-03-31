@@ -8,8 +8,8 @@ function App() {
   return (
 
 
-    useScript("https://kit.fontawesome.com/e48d166edc.js");
-    
+    useScript("https://kit.fontawesome.com/e48d166edc.js",);
+
     <BrowserRouter>
     <Routes>
       <Route path="/" index element={<LoginPage />} />
