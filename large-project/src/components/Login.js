@@ -53,7 +53,7 @@ function Login() {
                 <span class="page-title">Hunt Critter with Critter Hunt!</span>
                   <div class="wrap-login">
                       <div class="login-pic">
-                          <img src="ProfilePictureMaker.png" alt="IMG">
+                          <img src="ProfilePictureMaker.png" alt="IMG"> </img>
                       </div>
 
                       <a class="login-form">
