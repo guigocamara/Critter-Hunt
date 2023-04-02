@@ -10,6 +10,7 @@ export default function Welcome({ route, navigation }) {
         <View style={styles.container}>
             <Text>Welcome, {username}</Text>
             <Button title="Log out" onPress={() => navigation.navigate('Login')} />
+            <Button title="Go to camera" onPress={() => navigation.navigate('Camera')} />
             <StatusBar style="auto" />
         </View>
     );
