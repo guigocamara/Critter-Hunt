@@ -4,7 +4,7 @@ import { Camera, CameraType } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import CamButton from './cameraComponents/CamButton';
 
-export default function CameraScreen() {
+export default function CameraScreen({ navigation }) {
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [image, setImage] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -60,7 +60,7 @@ export default function CameraScreen() {
                         paddingHorizontal: 50
                     }}>
                         <CamButton title={"Retake"} icon="retweet" onPress={() => setImage(null)} color={'#06301A'} />
-                        <CamButton title={"Post"} icon="check" color={'#06301A'} />
+                        <CamButton title={"Post"} icon="check" onPress={() => navigation.navigate('AddPost', { image_uri: image })} color={'#06301A'} />
                     </View>
                     :
                     <CamButton icon="camera" onPress={takePicture} color={'#06301A'} />
