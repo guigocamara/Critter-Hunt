@@ -3,15 +3,12 @@ import { Button, StyleSheet, Text, View, } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
 
-export default function Welcome({ route, navigation }) {
-    const { username } = route.params;
+export default function Profile({ route, navigation }) {
+    
 
     return (
         <View style={styles.container}>
-            <Text>Welcome, {username}</Text>
-            <Button title="Log out" onPress={() => navigation.navigate('Login')} />
-            <Button title="Go to camera" onPress={() => navigation.navigate('Camera')} />
-            <Button title="Go to profile" onPress={() => navigation.navigate('Profile')} />
+            <Text>Profile screen</Text>
             <StatusBar style="auto" />
         </View>
     );
