@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, Image } from 'react-native';
+import { Button, StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
 
@@ -7,14 +7,32 @@ export default function AddPost({ route, navigation }) {
     const { image_uri } = route.params;
 
     return (
-        <View style={styles.container}>
-            <Image
-                source={{
-                    uri: image_uri,
-                }}
-                style={styles.img}
-            />
-        </View>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+            <View
+                style={styles.top}
+            >
+                <Image
+                    style={styles.img}
+                    source={{ uri: image_uri }}
+                />
+            </View>
+            <View style={styles.bottom}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='Title'
+                />
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='Description'
+                />
+                <Button title='SUBMIT' />
+            </View>
+
+        </KeyboardAvoidingView>
+
     );
 }
 
@@ -22,13 +40,29 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-
+    },
+    top: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    bottom: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     img: {
-        height: "60%",
-        width: "100%"
-    }
+        height: 300,
+        width: 300
+    },
+    textInput: {
+        height: 40,
+        width: '80%',
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 20,
+        paddingLeft: 10,
+    },
 });
 // From CameraScreen, get the image that was taken.
 // Have a text box for a title, a description, and a post button.
