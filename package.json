@@ -14,6 +14,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "google-map-react": "^2.2.0",
     "heroku": "^7.68.3",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.0",
