@@ -2,7 +2,6 @@ import React from 'react';
 import PageTitle from '../components/PageTitle';
 import LoggedInName from '../components/LoggedInName';
 import CardUI from '../components/CardUI';
-import Map from '../components/MapSection';
 
 const location = {
     address: 'UCF',
@@ -17,7 +16,6 @@ const CardPage = () =>
             <PageTitle />
             <LoggedInName />
             <CardUI />
-            <Map location={location} zoomLevel={10}/>
         </div>
     );
 }

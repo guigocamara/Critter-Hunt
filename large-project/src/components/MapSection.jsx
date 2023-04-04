@@ -2,7 +2,7 @@ import React from 'react'
 import GoogleMapReact from 'google-map-react'
 import './map.css'
 import { Icon } from '@iconify/react'
-import locationIcon from '@iconify/icons-mdi/map-marker'
+//import locationIcon from '@iconify/icons-mdi/map-marker'
 
 const Map = ({ location, zoomLevel }) => (
     <div className="map">
@@ -26,7 +26,7 @@ const Map = ({ location, zoomLevel }) => (
 
 const LocationPin = ({ text }) => (
     <div className="pin">
-        <Icon icon={locationIcon} className="pin-icon" />
+        <Icon icon= "mdi-light:home" className="pin-icon" />
             <p className="pin-text">{text}</p>
     </div>
 )
