@@ -103,7 +103,7 @@ exports.setApp = function (app, client) {
   {
 
     let token = require('./createJWT.js');
-    const { critterid, crittername, author, likes, comments, location, picture, jwtToken } = req.body;
+    const { crittername, author, likes, comments, location, picture, jwtToken } = req.body;
     //Try catch block is to make sure user is logged in.
     //try
      // {
@@ -119,7 +119,7 @@ exports.setApp = function (app, client) {
     //   console.log(e.message);
     // }
 
-    const newPost = new Post({  critterid: critterid, crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
+    const newPost = new Post({  crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
     var error = '';
     try 
     {

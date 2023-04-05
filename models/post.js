@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // Create Schema
@@ -6,25 +7,25 @@ const PostSchema = new Schema({
     type: Number,
     required: true
   },
-  critterid:  {
-    type: String,
-    required: true,
-  },
   crittername:  {
     type: String,
     required: true,
   },
   author:  {
-    type: String,
+    type: ObjectId,
     required: true,
   },
   comments:  {
-    type: String,
+    type: [String],
     required: true,
   },
   picture:  {
     type: String,
     required: true,
   },
+  location: {
+    type: [String],
+    required: true,
+  }
 });
 module.exports = Post = mongoose.model('Posts', PostSchema, 'Posts');
