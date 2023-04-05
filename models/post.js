@@ -16,7 +16,7 @@ const PostSchema = new Schema({
     required: true,
   },
   comments:  {
-    type: [String],
+    type: [ObjectId],
     required: true,
   },
   picture:  {
