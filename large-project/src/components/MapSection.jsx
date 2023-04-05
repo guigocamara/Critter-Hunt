@@ -8,7 +8,7 @@ const Map = ({ location, zoomLevel }) => (
     <div className="map">
       <h2 className="map-h2">View your critters!</h2>
   
-      <div className="google-map">
+      <div className="google-map" relative w-{3/4}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyDJfd1QdAaC7kcziP2wamEwZ5od_o7xCRU' }}
           defaultCenter={location}

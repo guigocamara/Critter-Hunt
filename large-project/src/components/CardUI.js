@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 //import axios from 'axios';
 
 function CardUI() {
+
+    function goToMaps() {
+        window.location.href = '/map';
+    }
     var bp = require('./Path.js');
     var card = '';
     var search = '';
@@ -76,6 +80,7 @@ function CardUI() {
                 ref={(c) => card = c} />
             <button type="button" id="addCardButton" class="buttons"
                 onClick={addCard}> Add Card </button><br />
+            <button type = "button" id = "maps-button" class = "buttons" onClick={goToMaps}>Go to Maps</button>
             <span id="cardAddResult">{message}</span>
         </div>
     );

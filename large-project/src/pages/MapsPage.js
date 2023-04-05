@@ -13,6 +13,9 @@ const MapsPage = () =>
 {
     return(
       <div>
+        <div>
+            
+        </div>
         <Map location={location} zoomLevel={10}/>
       </div>
     );
