@@ -6,9 +6,9 @@ import { Icon } from '@iconify/react'
 
 const Map = ({ location, zoomLevel }) => (
     <div className="map">
-      <h2 className="map-h2">View your critters!</h2>
+      <h2 className="map-h2">View your critterszzzzz!</h2>
   
-      <div className="google-map" relative w-{3/4}>
+      <div className="google-map">
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyDJfd1QdAaC7kcziP2wamEwZ5od_o7xCRU' }}
           defaultCenter={location}
