@@ -19,15 +19,59 @@ async function deleteValueFor(key) {
 
 export default function AddPost({ route, navigation }) {
     const [postTitle, setPostTitle] = useState('');
-    const [postDesc, setPostDesc] = useState('');
+    const [username, setUsername] = useState('');
+    const [location, setLocation] = useState([0, 0]);
+    const [picture, setPicture] = useState(''); // store the actual image somehow
+    const { image_uri } = route.params;
 
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: postTitle, postDesc: postDesc })
+        body: JSON.stringify({
+            critterid: "N/A",
+            likes: 0,
+            comments: "N/A",
+            crittername: postTitle,
+            author: username,
+            location: location,
+            picture: image_uri
+        })
     };
 
-    const { image_uri } = route.params;
+    const doPost = async () => {
+        try {
+            await fetch('http://critterhunt.herokuapp.com/api/addpost', requestOptions)
+                .then(response => {
+                    response.json()
+                        .then(data => {
+                            if (data.error) {
+                                Alert.alert("Error", data.error);
+                            }
+                            else {
+                                console.log("Successfully posted!");
+                                navigation.navigate('Welcome');
+                            }
+                        });
+                })
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    const getUsername = async () => {
+        let result = await SecureStore.getItemAsync('userData');
+        if (result) {
+            let userData = JSON.parse(result);
+            setUsername(userData.username);
+        } else {
+            setUsername('');
+        }
+    }
+
+    useEffect(() => {
+        getUsername();
+    }, [])
 
     return (
         <KeyboardAvoidingView
@@ -45,18 +89,12 @@ export default function AddPost({ route, navigation }) {
             <View style={styles.bottom}>
                 <TextInput
                     style={styles.textInput}
-                    placeholder='Title'
+                    placeholder='Critter Name'
                     onChangeText={setPostTitle}
                     value={postTitle}
                 />
-                <TextInput
-                    style={styles.textInput}
-                    placeholder='Description'
-                    onChangeText={setPostDesc}
-                    value={postDesc}
-                />
-                <Button title='Submit' onPress={() => getValueFor("accessToken")} />
-                <Button title='Clear' onPress={() => deleteValueFor("accessToken")} />
+
+                <Button title='Submit' onPress={() => doPost()} />
 
             </View>
 
@@ -93,11 +131,3 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
 });
-// From CameraScreen, get the image that was taken.
-// Have a text box for a title, a description, and a post button.
-// When the post button is pressed, send a post request to the api.
-// Cropped image on top, title, description, button center aligned and on the bottom.
-// No image? Choose one from ur library or something
-// title is required, description isn't
-// What about critter ID?
-// what about location?
