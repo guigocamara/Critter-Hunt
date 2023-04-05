@@ -1,9 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import * as SecureStore from 'expo-secure-store';
+
+async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    if (result) {
+        alert("🔐 Here's your value 🔐 \n" + result);
+    } else {
+        alert('No values stored under that key.');
+    }
+}
+
+async function deleteValueFor(key) {
+    await SecureStore.deleteItemAsync(key);
+}
 
 
 export default function AddPost({ route, navigation }) {
+    const [postTitle, setPostTitle] = useState('');
+    const [postDesc, setPostDesc] = useState('');
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: postTitle, postDesc: postDesc })
+    };
+
     const { image_uri } = route.params;
 
     return (
@@ -23,12 +46,18 @@ export default function AddPost({ route, navigation }) {
                 <TextInput
                     style={styles.textInput}
                     placeholder='Title'
+                    onChangeText={setPostTitle}
+                    value={postTitle}
                 />
                 <TextInput
                     style={styles.textInput}
                     placeholder='Description'
+                    onChangeText={setPostDesc}
+                    value={postDesc}
                 />
-                <Button title='SUBMIT' />
+                <Button title='Submit' onPress={() => getValueFor("accessToken")} />
+                <Button title='Clear' onPress={() => deleteValueFor("accessToken")} />
+
             </View>
 
         </KeyboardAvoidingView>
@@ -49,7 +78,7 @@ const styles = StyleSheet.create({
     bottom: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     img: {
         height: 300,

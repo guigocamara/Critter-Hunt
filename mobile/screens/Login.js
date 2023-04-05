@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, Alert } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import * as SecureStore from 'expo-secure-store';
 
+async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
+}
 
 export default function Login({ navigation }) {
     const [username, setUsername] = useState('');
@@ -23,7 +27,8 @@ export default function Login({ navigation }) {
                                 Alert.alert("Error", data.error);
                             }
                             else {
-                                navigation.navigate('Welcome', { username: data.us });
+                                save("accessToken", data.accessToken);
+                                navigation.navigate('Welcome', { username: data.accessToken });
                             }
                         });
                 })
@@ -32,6 +37,11 @@ export default function Login({ navigation }) {
             console.error(error);
         }
     }
+
+    // When this component renders, there should be a call to secure store to check for the token
+    useEffect(() => {
+
+    }, [])
 
     return (
         <View style={styles.container}>
