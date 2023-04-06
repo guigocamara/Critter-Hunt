@@ -59,7 +59,7 @@ exports.setApp = function (app, client) {
 
     var error = '';
 
-    const { username, password, favorite } = req.body;
+    const { username, password, email } = req.body;
 
     const existingUser = await User.findOne({ username });
 
@@ -70,12 +70,12 @@ exports.setApp = function (app, client) {
 
     else
     {
-      const newUser = new User({username: username, password: password, favorite: favorite});
+      const newUser = new User({username: username, password: password, email: email});
       try
       {    
         await newUser.save();
         const token = require('./createJWT.js');
-        const ret = token.createToken(username, password, favorite);
+        const ret = token.createToken(username, password, email);
         res.status(200).json(ret);
       }
       catch (e)
@@ -103,7 +103,7 @@ exports.setApp = function (app, client) {
   {
 
     let token = require('./createJWT.js');
-    const { critterid, crittername, author, likes, comments, location, picture, jwtToken } = req.body;
+    const { crittername, author, likes, comments, location, picture, jwtToken } = req.body;
     //Try catch block is to make sure user is logged in.
     //try
      // {
@@ -119,7 +119,7 @@ exports.setApp = function (app, client) {
     //   console.log(e.message);
     // }
 
-    const newPost = new Post({  critterid: critterid, crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
+    const newPost = new Post({  crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
     var error = '';
     try 
     {
@@ -174,10 +174,10 @@ exports.setApp = function (app, client) {
     //   console.log(e.message);
     // }
 
-    const { postsId } = req.body;
+    const { PostsId } = req.body;
     try 
     {
-      const deletedPost = await Post.findByIdAndDelete(postsId);
+      const deletedPost = await Post.findByIdAndDelete(PostsId);
 
       if (!deletedPost) 
       {
@@ -290,4 +290,110 @@ exports.setApp = function (app, client) {
 
     res.status(200).json(ret);
   });
+
+
+
+
+
+
+
+
+
+  app.post('/api/forgotpassword', async (req, res) => 
+  {
+    const { email } = req.body;
+  
+    // find user by email
+    const user = await User.findOne({ email: email });
+
+    if (!user) 
+    {
+      return res.status(404).json({ error: 'User not found' });
+    }
+  
+    //generate token function
+    const crypto = require('crypto');
+
+    // Generate a random token with the specified length
+    function generateResetToken(length = 20) 
+    {
+      return crypto.randomBytes(length).toString('hex');
+    }
+
+
+    // generate reset token
+    const resetToken = generateResetToken();
+
+    // save reset token to user document
+    user.resetToken = resetToken;
+    await user.save();
+
+  
+    const nodemailer = require('nodemailer');
+
+    function sendResetEmail(email, resetLink) 
+    {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.zoho.com',
+        port: 465,
+        secure: true,
+        auth: 
+        {
+          user: 'critterhunt@zohomail.com',
+          pass: 'Critterhunt1234!'
+        }
+      });
+
+      const mailOptions = 
+      {
+        from: 'critterhunt@zohomail.com',
+        to: email,
+        subject: 'Password reset request',
+        text: `Please click on the following link to reset your password: ${resetLink} \nreset token: ${resetToken} `,
+        html: `<p>Please click on the following link to reset your password:</p><p><a href="${resetLink}">${resetLink}</a></p>
+                <br><p>reset token: ${resetToken} </p>`
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => 
+      {
+        if (error) 
+        {
+          console.log(error);
+        } 
+        else 
+        {
+          console.log(`Email sent: ${info.response}`);
+        }
+      });
+    }
+
+
+
+    // send email with reset link
+    const resetLink = `http://localhost:3000/api/resetpassword?token=${resetToken}`;
+    sendResetEmail(email, resetLink);
+  
+    res.json({ message: 'Password reset email sent' });
+  });
+
+  app.post('/api/resetpassword', async (req, res) => 
+  {
+    const { token, password } = req.body;
+  
+    // find user by reset token
+    const user = await User.findOne({ resetToken: token });
+  
+    // check if token is expired
+    // if (Date.now() > user.resetTokenExpiration) {
+    //   return res.status(400).json({ message: 'Reset token expired' });
+    // }
+  
+    // update user with new password and clear reset token
+    await user.updateOne({ password, token: null, resetTokenExpiration: null });
+  
+    res.json({ message: 'Password reset successfully' });
+  });
+  
+  
+
 }
