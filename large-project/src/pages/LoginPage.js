@@ -8,7 +8,6 @@ const LoginPage = () =>
     return(
 
       <div>
-        <Headers />
         <PageTitle />
         <Login/>
         <Signup />
