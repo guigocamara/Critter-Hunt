@@ -365,6 +365,22 @@ app.delete('/api/deletecomment', async (req, res, next) =>
     res.status(200).json(result);
   });
 
+  
+  app.post('/api/getpost', async (req, res, next) => 
+  {  
+    
+    const { postsId, jwtToken } = req.body;
+    
+
+    let result = await Post.findById( postsId );
+    if(result == null){
+      return res.status(400).json({ message: "No post found" });
+    }
+    
+    res.status(200).json(result);
+  });
+
+
 
 
 
