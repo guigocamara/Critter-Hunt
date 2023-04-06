@@ -7,6 +7,10 @@ const User = require("./models/user.js");
 //const Card = require("./models/card.js");
 const Post = require("./models/post.js");
 
+const Comment = require("./models/comment.js");
+
+const Critter = require("./models/critter.js");
+
 exports.setApp = function (app, client) {
 
 
@@ -290,6 +294,135 @@ exports.setApp = function (app, client) {
 
     res.status(200).json(ret);
   });
+
+
+
+
+
+  app.post('/api/addcomment', async (req, res, next) =>
+  {
+
+    const { author, parentpost, content, likes } = req.body;
+
+    const newComment = new Comment({  author: author, parentpost: parentpost, content: content, likes: likes });
+    var error = '';
+    try 
+    {
+      newComment.save();
+      //Temporary retruning code for the newpost
+      var ret = { newComment };
+      res.status(200).json(ret);
+    }
+      catch (e) 
+    {
+      error = e.toString();
+    }
+  });
+
+
+  app.delete('/api/deletecomment', async (req, res, next) => 
+  {
+    const { commentsId } = req.body;
+    try 
+    {
+      const deletedComment = await Comment.findByIdAndDelete(commentsId);
+
+      if (!deletedComment) 
+      {
+        return res.status(400).json({ message: "no comment found" });
+      }
+      res.status(200).json({ message: "Comment deleted." });
+    } 
+    catch (e)
+    {
+      ret = { error: e.message };
+    }
+  });
+
+  app.post('/api/getcomment', async (req, res, next) => 
+  {  
+    
+    const { commentsId, jwtToken } = req.body;
+    
+
+    let result = await Comment.findById( commentsId );
+    if(result == null){
+      return res.status(400).json({ message: "No comment found" });
+    }
+    
+    res.status(200).json(result);
+  });
+
+
+  app.post('/api/getpost', async (req, res, next) => 
+  {  
+    
+    const { postsId, jwtToken } = req.body;
+    
+
+    let result = await Post.findById( postsId );
+    if(result == null){
+      return res.status(400).json({ message: "No post found" });
+    }
+    
+    res.status(200).json(result);
+  });
+
+
+  app.post('/api/addcritter', async (req, res, next) =>
+  {
+
+    const { crittername, category, likes, foodcount } = req.body;
+
+    const newCritter = new Critter({  crittername: crittername, category: category, likes: likes, foodcount: foodcount });
+    var error = '';
+    try 
+    {
+      newCritter.save();
+      //Temporary retruning code for the newpost
+      var ret = { newCritter };
+      res.status(200).json(ret);
+    }
+      catch (e) 
+    {
+      error = e.toString();
+    }
+  });
+
+  app.post('/api/searchcritters', async (req, res, next) => 
+  {  
+    var error = '';
+    
+    //userid was being read in here, but why?
+    const { search, jwtToken } = req.body;
+    
+    var _search = search.trim();
+    
+    //const db = client.db();
+    //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
+    let results = await Critter.find({ "crittername": { $regex: _search + '.*', $options: 'r' } });
+    
+    var _ret = [];
+    if(results.length == 0){
+      results = await Critter.find({ "": { $regex: _search + '.*', $options: 'r' } });
+    }
+
+    for( var i=0; i<results.length; i++ )
+    {
+      _ret.push( results[i] );
+    }
+    
+    var ret = { _ret };
+    res.status(200).json(ret);
+
+  });
+
+
+
+
+
+
+
 
 
 
