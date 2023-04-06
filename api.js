@@ -7,6 +7,8 @@ const User = require("./models/user.js");
 //const Card = require("./models/card.js");
 const Post = require("./models/post.js");
 
+const Comment = require("./models/comment.js");
+
 exports.setApp = function (app, client) {
 
 
@@ -276,18 +278,87 @@ exports.setApp = function (app, client) {
 
 
 
-  app.post('/api/updatepost', async (req, res, next) => 
-  {  
-    var error = '';
-    
-    const { postsId, newLikes, newComments } = req.body;
-    const filter = { _id: postsId };
-    const update = { likes: newLikes, comments: newComments }
-    const opts = { new: true };
+app.post('/api/updatepost', async (req, res, next) => 
+{  
+  var error = '';
+  
+  const { postsId, newLikes, newComments } = req.body;
+  const filter = { _id: postsId };
+  const update = { likes: newLikes, comments: newComments }
+  const opts = { new: true };
 
-    //Searches for a post with the specfic post id, and then updates the likes and comments to the new likes and comments.
-    const ret = await Post.findOneAndUpdate(filter, update, opts);
+  //Searches for a post with the specfic post id, and then updates the likes and comments to the new likes and comments.
+  const ret = await Post.findOneAndUpdate(filter, update, opts);
 
+  res.status(200).json(ret);
+});
+
+
+
+
+
+app.post('/api/addcomment', async (req, res, next) =>
+{
+
+  const { author, parentpost, content, likes } = req.body;
+
+  const newComment = new Comment({  author: author, parentpost: parentpost, content: content, likes: likes });
+  var error = '';
+  try 
+  {
+    newComment.save();
+    //Temporary retruning code for the newpost
+    var ret = { newComment };
     res.status(200).json(ret);
+  }
+    catch (e) 
+  {
+    error = e.toString();
+  }
+});
+
+
+app.delete('/api/deletecomment', async (req, res, next) => 
+  {
+    const { commentsId } = req.body;
+    try 
+    {
+      const deletedComment = await Comment.findByIdAndDelete(commentsId);
+
+      if (!deletedComment) 
+      {
+        return res.status(400).json({ message: "no comment found" });
+      }
+      res.status(200).json({ message: "Comment deleted." });
+    } 
+    catch (e)
+    {
+      ret = { error: e.message };
+    }
+
+    // This try catch block still has to do with logged in user.
+    // var refreshedToken = null;
+    // try
+    // {
+    //   refreshedToken = token.refresh(jwtToken);
+    // }
+    // catch(e)
+    // {
+    //   console.log(e.message);
+    // }
+    
+    //var ret = { error: error, jwtToken: refreshedToken };
+    //res.status(200).json(ret);
   });
+
+
+
+
+
+
+
+
+
+
+
 }
