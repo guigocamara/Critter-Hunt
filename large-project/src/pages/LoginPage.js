@@ -9,9 +9,7 @@ const LoginPage = () =>
     return(
 
       <div>
-        <Headers />
         <PageTitle />
-
         <div className="Main-container">
           <div className="container-login">
             <span className="page-title">Hunt Critter with Critter Hunt!</span>
