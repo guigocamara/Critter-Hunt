@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, Alert } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import * as SecureStore from 'expo-secure-store';
+import jwt_decode from 'jwt-decode';
 
+async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
+}
 
 export default function Login({ navigation }) {
     const [username, setUsername] = useState('');
@@ -23,7 +28,13 @@ export default function Login({ navigation }) {
                                 Alert.alert("Error", data.error);
                             }
                             else {
-                                navigation.navigate('Welcome', { username: data.us });
+                                // decode accessToken into an object with user information 
+                                let userData = jwt_decode(data.accessToken);
+                                // convert the information to a string to be able to save it
+                                userData = JSON.stringify(userData);
+                                // save the string to secure local storage
+                                save("userData", userData);
+                                navigation.navigate('Welcome');
                             }
                         });
                 })
@@ -33,6 +44,15 @@ export default function Login({ navigation }) {
         }
     }
 
+    // Possible auto login
+    /*
+    useEffect(() => {
+        getUserData();
+        if (isLoggedIn) {
+            navigation.navigate("Welcome");
+        }
+    }, [])
+    */
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Username</Text>
