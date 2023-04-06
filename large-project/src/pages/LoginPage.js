@@ -14,7 +14,7 @@ const LoginPage = () =>
           <div className="container-login"> 
             <span className="page-title">Hunt Critter with Critter Hunt!</span>
             <div className="wrap-login">
-              <div className="login-pic"><img src="ProfilePictureMaker.png" alt="IMG"> </div>
+              <div className="login-pic"><img src="ProfilePictureMaker.png" alt="IMG"> </img>
               <a className="login-form">
                 <span className="login-form-title">Login</span>
                 <Login/>
