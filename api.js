@@ -43,9 +43,11 @@ exports.setApp = function (app, client) {
       us = results[0].username;
       pa = results[0].password;
       fa = results[0].favorite;
+      const userId = results[0]._id; //added to retriev userId
       try {
         const token = require("./createJWT.js");
         ret = token.createToken(us, pa, fa);
+        ret.userId = userId;//added to retriev userId
       }
       catch (e) {
         ret = { error: e.message };
@@ -78,8 +80,10 @@ exports.setApp = function (app, client) {
       try
       {    
         await newUser.save();
+        const userId = newUser._id; //added to retriev userId
         const token = require('./createJWT.js');
         const ret = token.createToken(username, password, email);
+        ret.userId = userId; //added to retriev userId
         res.status(200).json(ret);
       }
       catch (e)
