@@ -23,6 +23,7 @@
     "mongoose": "^7.0.1",
     "mongoose-int32": "^0.6.0",
     "npm": "^9.6.0",
+    "react-geocode": "^0.2.3",
     "react-jwt": "^1.1.8"
   },
   "devDependencies": {
