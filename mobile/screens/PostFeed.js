@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, TextInput, Alert } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, Alert, SafeAreaView, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
+const Item = ({ title }) => (
+    <View style={styles.item}>
+        <Text style={styles.title}>{title}</Text>
+    </View>
+);
 
 export default function PostFeed({ navigation }) {
     const [results, setResults] = useState('');
@@ -22,11 +27,7 @@ export default function PostFeed({ navigation }) {
                                 Alert.alert("Error", data.error);
                             }
                             else {
-                                let feedstring = "";
-                                for (let i = 0; i < data._ret.length; i++) {
-                                    feedstring += data._ret[i].crittername + "\n";
-                                }
-                                setResults(feedstring);
+                                setResults(data._ret);
                             }
                         });
                 })
@@ -36,36 +37,35 @@ export default function PostFeed({ navigation }) {
         }
     }
 
+
+
     useEffect(() => {
         getPosts();
     }, [])
 
     return (
-        <View style={styles.container}>
-            <Text>{results}</Text>
-        </View>
+        <SafeAreaView style={styles.container}>
+            <FlatList
+                data={results}
+                renderItem={({ item }) => <Item title={item.crittername} />}
+                keyExtractor={item => item._id}
+            />
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //justifyContent: 'center',
-        paddingHorizontal: 20,
+        marginTop: StatusBar.currentHeight || 0,
     },
-    label: {
-        fontSize: 18,
-        marginBottom: 5,
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 15,
-        paddingLeft: 5,
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 32,
     },
-})
+});
