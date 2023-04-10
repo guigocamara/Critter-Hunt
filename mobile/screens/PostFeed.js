@@ -1,9 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, TextInput, Alert, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Alert, SafeAreaView, FlatList, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
 const Item = ({ title }) => (
     <View style={styles.item}>
+        <Image
+            style={styles.image}
+            source={{ uri: 'https://media.discordapp.net/attachments/1094306153313353948/1095103189822480524/image.png' }}
+        />
         <Text style={styles.title}>{title}</Text>
     </View>
 );
@@ -49,6 +53,7 @@ export default function PostFeed({ navigation }) {
                 data={results}
                 renderItem={({ item }) => <Item title={item.crittername} />}
                 keyExtractor={item => item._id}
+                numColumns={2}
             />
         </SafeAreaView>
     );
@@ -58,14 +63,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: StatusBar.currentHeight || 0,
+        backgroundColor: '#14AE5C'
     },
     item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
+        backgroundColor: '#ffffff',
+        padding: 5,
         marginVertical: 8,
         marginHorizontal: 16,
+        width: 155,
+        borderRadius: 10
     },
     title: {
-        fontSize: 32,
+        fontSize: 12,
+        fontWeight: "bold"
     },
+    image: {
+        width: 145,
+        height: 145
+    }
 });
