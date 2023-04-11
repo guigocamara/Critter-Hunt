@@ -13,9 +13,9 @@ const LoginPage = () =>
             <span className="page-title">Hunt Critter with Critter Hunt!</span>
             <div className="wrap-login">
 
-              <div className="login-pic"> <img src= {ProfilePictureMaker} alt="IMG"> </img> </div>
+              <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
               <a className="login-form">
-              
+
                 <Login/>
 
 
