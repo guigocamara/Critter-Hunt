@@ -39,8 +39,9 @@ body, html{
 }
 .login-pic{
     width: 316px;
+    height: 316px;
 }
-.login-pic img{
+.login-pic IMG {
     max-width: 100%;
 }
 .login-form{
@@ -221,6 +222,7 @@ button:hover{
 
 .login-pic{
     width: 35%;
+    height: 35%;
 }
 .login-form{
     width: 50%;
