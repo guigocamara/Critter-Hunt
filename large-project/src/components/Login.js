@@ -48,20 +48,24 @@ function Login() {
     }
     return (
 
-
-      <div id="loginDiv">
-
-          <div className="text-xl">
-              <span className="" id="inner-title">PLEASE LOG IN</span><br />
-              <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br
-              />
-              <input type="password" id="loginPassword" placeholder="Password" ref={(c) =>
-                  loginPassword = c} /><br />
-              <input type="submit" id="loginButton" value="Do It"
-                  onClick={doLogin} />
-              <span id="loginResult">{message}</span>
+          <span class="login-form-title">Login</span>
+          <div class="wrap-input">
+            <input type="text" className="input" name="Username" id="loginName" placeholder="Username" required ref={(c) => loginName = c} /><br/>
+            <span class="focus-input"></span>
+            <span class="symbol-input"> <i class="fa fa-user" aria-hidden="true"></i> </span>
           </div>
-      </div>
+
+
+          <div class="wrap-input">
+            <input type="password" className="input" name="pass" id="loginPassword" placeholder="Password" required ref={(c) => loginPassword = c} /><br />
+            <span class="focus-input"></span>
+            <span class="symbol-input"> <i class="fa fa-lock" aria-hidden="true"></i> </span>
+          </div>
+
+        <div class="login-form-btn-container">
+          <button class="login-form-btn" onClick={doLogin} >Login</button>
+        </div>
+
     );
 };
 export default Login;
