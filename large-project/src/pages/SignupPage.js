@@ -1,7 +1,7 @@
 import React from 'react';
 import Signup from '../components/Signup';
 import './style.css';
-import SnakePicture from './SnakePicture.png'
+import ProfilePictureMaker from './ProfilePictureMaker.png'
 const SignupPage = () =>
 {
     return(
@@ -11,7 +11,7 @@ const SignupPage = () =>
             <span className="page-title">Hunt Critter with Critter Hunt!</span>
             <div className="wrap-login">
 
-              <img src={SnakePicture} className="login-pic" alt="IMG" />
+              <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
               <a className="login-form">
 
                 <Signup/>
