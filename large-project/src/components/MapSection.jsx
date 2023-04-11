@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import GoogleMapReact from 'google-map-react'
 import Geocode from 'react-geocode'
 //import './map.css'
@@ -14,32 +14,16 @@ Geocode.setLanguage('en');
 // converts address to coordinates and adds pin to map
 function addAddress(critter_name, address) {
   console.log("entered");
-  // Geocode.fromAddress(address).then( 
-  //   (response) => {
-  //     const { lat, lng } = response.results[0].geometry.location;
-  //     console.log(lat, lng);
-  //   }
-  // );
-
-  //var geocoder = new Geocode();
-
-  var geocoder = new new Geocoder();
-  var address = "UCF";
-
-  geocoder.geocode( { 'address': address}, function(results, status) {
-
-  if (status == google.maps.GeocoderStatus.OK) {
-    var latitude = results[0].geometry.location.lat();
-    var longitude = results[0].geometry.location.lng();
-    console.log(latitude, longitude);
-  } 
-})
-
-
-  // var latitide = results[0].geometry.location.lat();
-  // var longitude = results[0].geometry.location.lng();
+  Geocode.fromAddress(address).then( 
+    (response) => {
+      const { lat, lng } = response.results[0].geometry.location;
+      console.log(lat, lng);
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
 }
-
 
 
 const Map = ({ location, zoomLevel }) => (
