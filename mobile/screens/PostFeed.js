@@ -1,15 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Alert, SafeAreaView, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, Alert, SafeAreaView, FlatList, Image, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
-const Item = ({ title }) => (
-    <View style={styles.item}>
-        <Image
-            style={styles.image}
-            source={{ uri: 'https://media.discordapp.net/attachments/1094306153313353948/1095103189822480524/image.png' }}
-        />
-        <Text style={styles.title}>{title}</Text>
-    </View>
+const Item = ({ title, navigation }) => (
+    <Pressable onPress={() => Alert.alert(title)}>
+        <View style={styles.item}>
+            <Image
+                style={styles.image}
+                source={{ uri: 'https://media.discordapp.net/attachments/1094306153313353948/1095103189822480524/image.png' }}
+            />
+            <Text style={styles.title}>{title}</Text>
+        </View>
+    </Pressable>
 );
 
 export default function PostFeed({ navigation }) {
