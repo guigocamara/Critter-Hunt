@@ -11,7 +11,7 @@ function Signup() {
     const [message, setMessage] = useState('');
     const dosignUp = async event => {
         event.preventDefault();
-        var obj = { username: signUpName.value, password: signUpPassword.value, email: Email.value, favorite: favoriteAnimal.value };
+        var obj = { username: signUpName.value, password: signUpPassword.value, email: email.value, favorite: favoriteAnimal.value };
         var js = JSON.stringify(obj);
         var config =
         {
@@ -61,7 +61,7 @@ function Signup() {
           </div>
 
           <div className="wrap-input">
-            <input type="text" className="input" name="Email" id="emailAdress" placeholder="Email" ref={(c) => Email = c} /><br/>
+            <input type="text" className="input" name="Email" id="emailAdress" placeholder="Email" ref={(c) => email = c} /><br/>
             <span className="focus-input"></span>
             <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true">< /i> </span>
           </div>
