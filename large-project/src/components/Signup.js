@@ -58,11 +58,11 @@ function Signup() {
             <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true">< /i> </span>
           </div>
 
-          
+
 
 
           <div className="wrap-input">
-            <input type="password" className="input" name="pass" id="signUpPassword" placeholder="Password" required ref={(c) => loginPassword = c} /><br />
+            <input type="password" className="input" name="pass" id="signUpPassword" placeholder="Password" required ref={(c) => signUpPassword = c} /><br />
             <span className="focus-input"></span>
             <span className="symbol-input"> <i className="fa fa-lock" aria-hidden="true"></i> </span>
           </div>
