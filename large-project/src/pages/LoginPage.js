@@ -9,7 +9,7 @@ const LoginPage = () =>
       <div>
         <div className="Main-container">
           <div className="container-login">
-            <span className="page-title">Hunt Critter with Critter Hunt!</span
+            <span className="page-title">Hunt Critter with Critter Hunt!</span> 
             <div className="login-pic"><img src="ProfilePictureMaker.png" alt="IMG"> </img> </div>
           </div>
         </div>
