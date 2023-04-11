@@ -49,7 +49,7 @@ function Login() {
     return (
 
 
-      <div id="loginDiv" className="bg-green-200 flex-row text-center h-50 ml-10 mr-10">
+      <div id="loginDiv">
 
           <div className="text-xl">
               <span className="" id="inner-title">PLEASE LOG IN</span><br />
