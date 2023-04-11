@@ -3,6 +3,7 @@ import PageTitle from '../components/PageTitle';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import './style.css';
+import ProfilePictureMaker from './ProfilePictureMaker.png'
 const LoginPage = () =>
 {
     return(
@@ -10,18 +11,21 @@ const LoginPage = () =>
         <div className="Main-container">
           <div className="container-login">
             <span className="page-title">Hunt Critter with Critter Hunt!</span>
-            <div class="wrap-login">
-              <a class="login-form">
+            <div className="wrap-login">
+
+              <div className="login-pic"> <img src= {ProfilePictureMaker} alt="IMG"> </img> </div>
+              <a className="login-form">
+              
                 <Login/>
 
 
-                <div class="text-center p-t-1">
-                  <span class="txt1">Forgot</span>
-                  <a href="#" class="txt2"> Username / Password ?</a>
+                <div className="text-center p-t-1">
+                  <span className="txt1">Forgot</span>
+                  <a href="#" className="txt2"> Username / Password ?</a>
                 </div>
 
                 <div class="text-center p-t-2">
-                  <a href="/Signup" class="txt2">Create Your Account <i class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
+                  <a href="/Signup" className="txt2">Create Your Account <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a>
                 </div>
               </a>
             </div>
