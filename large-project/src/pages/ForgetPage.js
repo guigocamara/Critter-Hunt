@@ -18,12 +18,11 @@ const ForgetPage = () =>
               <span className="login-form-title">Enter your email</span>
 
                 <div className="wrap-input">
-                    <input type="text" class="input" name="Email" placeholder="Email" required> <input>
+                    <input type="text" class="input" name="Email" placeholder="Email" required> </input>
                     <span class="focus-input"></span>
-                    <span class="symbol-input">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                    </span>
+                    <span class="symbol-input"> <i class="fa fa-envelope" aria-hidden="true"></i> </span>
                 </div>
+                
                 <div className="login-form-btn-container">
                   <button className="login-form-btn" >Send Email Token</button>
                 </div>
