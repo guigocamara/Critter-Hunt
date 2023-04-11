@@ -48,22 +48,24 @@ function Login() {
     }
     return (
 
-          <span class="login-form-title">Login</span>
-          <div class="wrap-input">
-            <input type="text" className="input" name="Username" id="loginName" placeholder="Username" required ref={(c) => loginName = c} /><br/>
-            <span class="focus-input"></span>
-            <span class="symbol-input"> <i class="fa fa-user" aria-hidden="true"></i> </span>
+          <div>
+            <span className="login-form-title">Login</span>
+            <div className="wrap-input">
+              <input type="text" className="input" name="Username" id="loginName" placeholder="Username" required ref={(c) => loginName = c} /><br/>
+              <span className="focus-input"></span>
+              <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true">< /i> </span>
+            </div>
+
+
+            <div className="wrap-input">
+              <input type="password" className="input" name="pass" id="loginPassword" placeholder="Password" required ref={(c) => loginPassword = c} /><br />
+              <span className="focus-input"></span>
+              <span className="symbol-input"> <i className="fa fa-lock" aria-hidden="true"></i> </span>
+            </div>
+
+          <div className="login-form-btn-container">
+            <button className="login-form-btn" onClick={doLogin} >Login</button>
           </div>
-
-
-          <div class="wrap-input">
-            <input type="password" className="input" name="pass" id="loginPassword" placeholder="Password" required ref={(c) => loginPassword = c} /><br />
-            <span class="focus-input"></span>
-            <span class="symbol-input"> <i class="fa fa-lock" aria-hidden="true"></i> </span>
-          </div>
-
-        <div class="login-form-btn-container">
-          <button class="login-form-btn" onClick={doLogin} >Login</button>
         </div>
 
     );

@@ -15,7 +15,7 @@ const LoginPage = () =>
 
               <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
               <a className="login-form">
-
+    
                 <Login/>
 
 
