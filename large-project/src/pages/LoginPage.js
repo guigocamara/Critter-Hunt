@@ -1,7 +1,5 @@
 import React from 'react';
-import PageTitle from '../components/PageTitle';
 import Login from '../components/Login';
-import Signup from '../components/Signup';
 import './style.css';
 import ProfilePictureMaker from './ProfilePictureMaker.png'
 const LoginPage = () =>
@@ -15,7 +13,7 @@ const LoginPage = () =>
 
               <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
               <a className="login-form">
-    
+
                 <Login/>
 
 

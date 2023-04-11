@@ -8,7 +8,9 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" index element={<LoginPage />} />
+      <Route path="/Signup" index element={<CardPage />} />
       <Route path="/cards" index element={<CardPage />} />
+
     </Routes>
   </BrowserRouter>
 );
