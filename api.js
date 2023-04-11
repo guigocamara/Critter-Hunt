@@ -7,10 +7,6 @@ const User = require("./models/user.js");
 //const Card = require("./models/card.js");
 const Post = require("./models/post.js");
 
-const Comment = require("./models/comment.js");
-
-const Critter = require("./models/critter.js");
-
 exports.setApp = function (app, client) {
 
 
@@ -43,11 +39,9 @@ exports.setApp = function (app, client) {
       us = results[0].username;
       pa = results[0].password;
       fa = results[0].favorite;
-      const userId = results[0]._id; //added to retriev userId
       try {
         const token = require("./createJWT.js");
         ret = token.createToken(us, pa, fa);
-        ret.userId = userId;//added to retriev userId
       }
       catch (e) {
         ret = { error: e.message };
@@ -65,7 +59,7 @@ exports.setApp = function (app, client) {
 
     var error = '';
 
-    const { username, password, email } = req.body;
+    const { username, password, favorite } = req.body;
 
     const existingUser = await User.findOne({ username });
 
@@ -76,14 +70,12 @@ exports.setApp = function (app, client) {
 
     else
     {
-      const newUser = new User({username: username, password: password, email: email});
+      const newUser = new User({username: username, password: password, favorite: favorite});
       try
       {
         await newUser.save();
-        const userId = newUser._id; //added to retriev userId
         const token = require('./createJWT.js');
-        const ret = token.createToken(username, password, email);
-        ret.userId = userId; //added to retriev userId
+        const ret = token.createToken(username, password, favorite);
         res.status(200).json(ret);
       }
       catch (e)
@@ -111,7 +103,7 @@ exports.setApp = function (app, client) {
   {
 
     let token = require('./createJWT.js');
-    const { crittername, author, likes, comments, location, picture, jwtToken } = req.body;
+    const { critterid, crittername, author, likes, comments, location, picture, jwtToken } = req.body;
     //Try catch block is to make sure user is logged in.
     //try
      // {
@@ -127,7 +119,7 @@ exports.setApp = function (app, client) {
     //   console.log(e.message);
     // }
 
-    const newPost = new Post({  crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
+    const newPost = new Post({  critterid: critterid, crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
     var error = '';
     try
     {
@@ -182,10 +174,10 @@ exports.setApp = function (app, client) {
     //   console.log(e.message);
     // }
 
-    const { PostsId } = req.body;
+    const { postsId } = req.body;
     try
     {
-      const deletedPost = await Post.findByIdAndDelete(PostsId);
+      const deletedPost = await Post.findByIdAndDelete(postsId);
 
       if (!deletedPost)
       {
@@ -298,239 +290,4 @@ exports.setApp = function (app, client) {
 
     res.status(200).json(ret);
   });
-
-
-
-
-
-  app.post('/api/addcomment', async (req, res, next) =>
-  {
-
-    const { author, parentpost, content, likes } = req.body;
-
-    const newComment = new Comment({  author: author, parentpost: parentpost, content: content, likes: likes });
-    var error = '';
-    try
-    {
-      newComment.save();
-      //Temporary retruning code for the newpost
-      var ret = { newComment };
-      res.status(200).json(ret);
-    }
-      catch (e)
-    {
-      error = e.toString();
-    }
-  });
-
-
-  app.delete('/api/deletecomment', async (req, res, next) =>
-  {
-    const { commentsId } = req.body;
-    try
-    {
-      const deletedComment = await Comment.findByIdAndDelete(commentsId);
-
-      if (!deletedComment)
-      {
-        return res.status(400).json({ message: "no comment found" });
-      }
-      res.status(200).json({ message: "Comment deleted." });
-    }
-    catch (e)
-    {
-      ret = { error: e.message };
-    }
-  });
-
-  app.post('/api/getcomment', async (req, res, next) =>
-  {
-
-    const { commentsId, jwtToken } = req.body;
-
-
-    let result = await Comment.findById( commentsId );
-    if(result == null){
-      return res.status(400).json({ message: "No comment found" });
-    }
-
-    res.status(200).json(result);
-  });
-
-
-  app.post('/api/getpost', async (req, res, next) =>
-  {
-
-    const { postsId, jwtToken } = req.body;
-
-
-    let result = await Post.findById( postsId );
-    if(result == null){
-      return res.status(400).json({ message: "No post found" });
-    }
-
-    res.status(200).json(result);
-  });
-
-
-  app.post('/api/addcritter', async (req, res, next) =>
-  {
-
-    const { crittername, category, likes, foodcount } = req.body;
-
-    const newCritter = new Critter({  crittername: crittername, category: category, likes: likes, foodcount: foodcount });
-    var error = '';
-    try
-    {
-      newCritter.save();
-      //Temporary retruning code for the newpost
-      var ret = { newCritter };
-      res.status(200).json(ret);
-    }
-      catch (e)
-    {
-      error = e.toString();
-    }
-  });
-
-  app.post('/api/searchcritters', async (req, res, next) =>
-  {
-    var error = '';
-
-    //userid was being read in here, but why?
-    const { search, jwtToken } = req.body;
-
-    var _search = search.trim();
-
-    //const db = client.db();
-    //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
-    let results = await Critter.find({ "crittername": { $regex: _search + '.*', $options: 'r' } });
-
-    var _ret = [];
-    if(results.length == 0){
-      results = await Critter.find({ "": { $regex: _search + '.*', $options: 'r' } });
-    }
-
-    for( var i=0; i<results.length; i++ )
-    {
-      _ret.push( results[i] );
-    }
-
-    var ret = { _ret };
-    res.status(200).json(ret);
-
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  app.post('/api/forgotpassword', async (req, res) =>
-  {
-    const { email } = req.body;
-
-    // find user by email
-    const user = await User.findOne({ email: email });
-
-    if (!user)
-    {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    //generate token function
-    const crypto = require('crypto');
-
-    // Generate a random token with the specified length
-    function generateResetToken(length = 20)
-    {
-      return crypto.randomBytes(length).toString('hex');
-    }
-
-
-    // generate reset token
-    const resetToken = generateResetToken();
-
-    // save reset token to user document
-    user.resetToken = resetToken;
-    await user.save();
-
-
-    const nodemailer = require('nodemailer');
-
-    function sendResetEmail(email, resetLink)
-    {
-      const transporter = nodemailer.createTransport({
-        host: 'smtp.zoho.com',
-        port: 465,
-        secure: true,
-        auth:
-        {
-          user: 'critterhunt@zohomail.com',
-          pass: 'Critterhunt1234!'
-        }
-      });
-
-      const mailOptions =
-      {
-        from: 'critterhunt@zohomail.com',
-        to: email,
-        subject: 'Password reset request',
-        text: `Please click on the following link to reset your password: ${resetLink} \nreset token: ${resetToken} `,
-        html: `<p>Please click on the following link to reset your password:</p><p><a href="${resetLink}">${resetLink}</a></p>
-                <br><p>reset token: ${resetToken} </p>`
-      };
-
-      transporter.sendMail(mailOptions, (error, info) =>
-      {
-        if (error)
-        {
-          console.log(error);
-        }
-        else
-        {
-          console.log(`Email sent: ${info.response}`);
-        }
-      });
-    }
-
-
-
-    // send email with reset link
-    const resetLink = `http://localhost:3000/api/resetpassword?token=${resetToken}`;
-    sendResetEmail(email, resetLink);
-
-    res.json({ message: 'Password reset email sent' });
-  });
-
-  app.post('/api/resetpassword', async (req, res) =>
-  {
-    const { token, password } = req.body;
-
-    // find user by reset token
-    const user = await User.findOne({ resetToken: token });
-
-    // check if token is expired
-    // if (Date.now() > user.resetTokenExpiration) {
-    //   return res.status(400).json({ message: 'Reset token expired' });
-    // }
-
-    // update user with new password and clear reset token
-    await user.updateOne({ password, token: null, resetTokenExpiration: null });
-
-    res.json({ message: 'Password reset successfully' });
-  });
-
-
-
 }

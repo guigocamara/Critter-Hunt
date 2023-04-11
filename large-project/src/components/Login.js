@@ -66,6 +66,9 @@ function Login() {
           <div className="login-form-btn-container">
             <button className="login-form-btn" onClick={doLogin} >Login</button>
           </div>
+
+          <span id="loginResult">{message}</span>
+
         </div>
 
     );
