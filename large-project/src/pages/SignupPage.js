@@ -1,7 +1,7 @@
 import React from 'react';
 import Signup from '../components/Signup';
 import './style.css';
-import ProfilePictureMaker from './ProfilePictureMaker.png'
+import SnakePicture from './SnakePicture.png'
 const SignupPage = () =>
 {
     return(
