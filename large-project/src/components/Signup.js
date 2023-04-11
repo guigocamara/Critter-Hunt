@@ -48,19 +48,36 @@ function Signup() {
             });
     }
     return (
-        <div id="loginDiv">
-            <span id="inner-title">Sign up</span><br />
-            <input type="text" id="signUpName" placeholder="Username" ref={(c) => signUpName = c} /><br
-            />
-            <input type="password" id="signUpPassword" placeholder="Password" ref={(c) =>
-                signUpPassword = c} /><br />
-            <input type="text" id="favoriteAnimal" placeholder="favoriteAnimal" ref={(c) =>
-                favoriteAnimal = c} /><br />
-            <input type="submit" id="signUpButton" value="Do It"
-                onClick={dosignUp} />
-            <span id="signUpResult">{message}</span>
-        </div>
 
+
+        <div>
+          <span className="login-form-title">Sign up</span>
+          <div className="wrap-input">
+            <input type="text" className="input" name="Username" id="signUpName" placeholder="Username" required ref={(c) => signUpName = c} /><br/>
+            <span className="focus-input"></span>
+            <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true">< /i> </span>
+          </div>
+
+
+
+
+          <div className="wrap-input">
+            <input type="password" className="input" name="pass" id="signUpPassword" placeholder="Password" required ref={(c) => signUpPassword = c} /><br />
+            <span className="focus-input"></span>
+            <span className="symbol-input"> <i className="fa fa-lock" aria-hidden="true"></i> </span>
+          </div>
+
+          <div className="wrap-input">
+            <input type="text" className="input" name="favoriteAnimal" id="favoriteAnimal" placeholder="Favorite Critter " ref={(c) => favoriteAnimal = c} /><br/>
+            <span className="focus-input"></span>
+            <span className="symbol-input"> <i className="fa fa-github-alt" aria-hidden="true">< /i> </span>
+          </div>
+
+
+        <div className="login-form-btn-container">
+          <button className="login-form-btn" onClick={dosignUp} >Sign up</button>
+        </div>
+      </div>
 
 
 

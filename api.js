@@ -72,7 +72,7 @@ exports.setApp = function (app, client) {
     {
       const newUser = new User({username: username, password: password, favorite: favorite});
       try
-      {    
+      {
         await newUser.save();
         const token = require('./createJWT.js');
         const ret = token.createToken(username, password, favorite);
@@ -121,14 +121,14 @@ exports.setApp = function (app, client) {
 
     const newPost = new Post({  critterid: critterid, crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
     var error = '';
-    try 
+    try
     {
       newPost.save();
       //Temporary retruning code for the newpost
       var ret = { newPost };
       res.status(200).json(ret);
     }
-      catch (e) 
+      catch (e)
     {
       error = e.toString();
     }
@@ -145,7 +145,7 @@ exports.setApp = function (app, client) {
     // {
     //   console.log(e.message);
     // }
-    
+
     //var ret = { error: error, jwtToken: refreshedToken };
     //res.status(200).json(ret);
   });
@@ -156,8 +156,8 @@ exports.setApp = function (app, client) {
 
 
 
-  
-  app.delete('/api/deletepost', async (req, res, next) => 
+
+  app.delete('/api/deletepost', async (req, res, next) =>
   {
         //Try catch block is to make sure user is logged in.
     //try
@@ -175,16 +175,16 @@ exports.setApp = function (app, client) {
     // }
 
     const { postsId } = req.body;
-    try 
+    try
     {
       const deletedPost = await Post.findByIdAndDelete(postsId);
 
-      if (!deletedPost) 
+      if (!deletedPost)
       {
         return res.status(400).json({ message: "no post found" });
       }
       res.status(200).json({ message: "Post deleted." });
-    } 
+    }
     catch (e)
     {
       ret = { error: e.message };
@@ -200,7 +200,7 @@ exports.setApp = function (app, client) {
     // {
     //   console.log(e.message);
     // }
-    
+
     //var ret = { error: error, jwtToken: refreshedToken };
     //res.status(200).json(ret);
   });
@@ -211,11 +211,11 @@ exports.setApp = function (app, client) {
 
 
 
-  
-  app.post('/api/searchposts', async (req, res, next) => 
-  {  
+
+  app.post('/api/searchposts', async (req, res, next) =>
+  {
     var error = '';
-    
+
     //userid was being read in here, but why?
     const { search, jwtToken } = req.body;
     // try
@@ -231,13 +231,13 @@ exports.setApp = function (app, client) {
     // {
     //   console.log(e.message);
     // }
-    
+
     var _search = search.trim();
-    
+
     //const db = client.db();
     //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
     let results = await Post.find({ "crittername": { $regex: _search + '.*', $options: 'r' } });
-    
+
     var _ret = [];
     if(results.length == 0){
       results = await Post.find({ "": { $regex: _search + '.*', $options: 'r' } });
@@ -247,7 +247,7 @@ exports.setApp = function (app, client) {
     {
       _ret.push( results[i] );
     }
-    
+
     var ret = { _ret };
     res.status(200).json(ret);
 
@@ -260,9 +260,9 @@ exports.setApp = function (app, client) {
     // {
     //   console.log(e.message);
     // }
-  
+
     // var ret = { results:_ret, error: error, jwtToken: refreshedToken };
-    
+
     // res.status(200).json(ret);
   });
 
@@ -276,10 +276,10 @@ exports.setApp = function (app, client) {
 
 
 
-  app.post('/api/updatepost', async (req, res, next) => 
-  {  
+  app.post('/api/updatepost', async (req, res, next) =>
+  {
     var error = '';
-    
+
     const { postsId, newLikes, newComments } = req.body;
     const filter = { _id: postsId };
     const update = { likes: newLikes, comments: newComments }
