@@ -18,7 +18,7 @@ const SignupPage = () =>
 
 
                 <div class="text-center p-t-2">
-                  <a href="/Signup" className="txt2">Have an Account? Go login <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a>
+                  <a href="/" className="txt2">Have an Account? Go login <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a>
                 </div>
               </a>
             </div>
