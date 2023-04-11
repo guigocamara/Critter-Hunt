@@ -17,7 +17,8 @@ const ForgetPage = () =>
               <span className="login-form-title">Did you forget your password?</span>
               <span className="login-form-title">Enter your email</span>
               <div className="wrap-input">
-                <input type="text" className="input" name="Email" id="Email" placeholder="Email" required ref={(c) => Email = c} /><br/>
+                <input type="text" className="input" name="Email" id="Email" placeholder="Email"> </input>
+
                 <span className="focus-input"></span>
                 <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true">< /i> </span>
               </div>
