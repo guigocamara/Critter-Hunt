@@ -11,7 +11,7 @@ const SignupPage = () =>
             <span className="page-title">Hunt Critter with Critter Hunt!</span>
             <div className="wrap-login">
 
-              <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
+              <img src={SnakePicture} className="login-pic" alt="IMG" />
               <a className="login-form">
 
                 <Signup/>
