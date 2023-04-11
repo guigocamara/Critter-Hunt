@@ -39,11 +39,11 @@ body, html{
 }
 .login-pic{
     width: 316px;
-    height: 316px;
+    height: auto;
 }
 .login-pic img{
     max-width: 100%;
-    max-height: 100%;
+    height: auto;
 }
 .login-form{
     width: 290px;
