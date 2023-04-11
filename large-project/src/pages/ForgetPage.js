@@ -16,13 +16,14 @@ const ForgetPage = () =>
 
               <span className="login-form-title">Did you forget your password?</span>
               <span className="login-form-title">Enter your email</span>
-              <div className="wrap-input">
-                <input type="text" className="input" name="Email" id="Email" placeholder="Email"> </input>
-
-                <span className="focus-input"></span>
-                <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true">< /i> </span>
-              </div>
-
+              
+                <div className="wrap-input">
+                    <input type="text" class="input" name="Email" placeholder="Email" required>
+                    <span class="focus-input"></span>
+                    <span class="symbol-input">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </span>
+                </div>
 
                 <div className="text-center p-t-1">
                   <span className="txt1">Have an account?</span>
