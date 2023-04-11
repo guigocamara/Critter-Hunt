@@ -18,7 +18,7 @@ const ForgetPage = () =>
               <span className="login-form-title">Enter your email</span>
 
                 <div className="wrap-input">
-                    <input type="text" class="input" name="Email" placeholder="Email" required>
+                    <input type="text" class="input" name="Email" placeholder="Email" required> <input>
                     <span class="focus-input"></span>
                     <span class="symbol-input">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
