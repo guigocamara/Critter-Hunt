@@ -19,7 +19,7 @@ const LoginPage = () =>
 
                 <div className="text-center p-t-1">
                   <span className="txt1">Forgot</span>
-                  <a href="#" className="txt2"> Username / Password ?</a>
+                  <a href="/ForgetPage" className="txt2"> Username / Password ?</a>
                 </div>
 
                 <div class="text-center p-t-2">

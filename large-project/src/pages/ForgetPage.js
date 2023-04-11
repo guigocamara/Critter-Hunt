@@ -2,7 +2,7 @@ import React from 'react';
 import Login from '../components/Login';
 import './style.css';
 import PenguinPicture from './PenguinPicture.png'
-const LoginPage = () =>
+const ForgetPage = () =>
 {
     return(
       <div>
@@ -39,4 +39,4 @@ const LoginPage = () =>
       </div>
     );
 };
-export default LoginPage;
+export default ForgetPage;
