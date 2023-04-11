@@ -9,10 +9,10 @@ const LoginPage = () =>
       <div>
         <div className="Main-container">
           <div className="container-login">
-            <span className="page-title">Hunt Critter with Critter Hunt!</span> 
+            <span className="page-title">Hunt Critter with Critter Hunt!</span>
+            <Login/>
           </div>
         </div>
-        <Login/>
         <Signup />
       </div>
     );
