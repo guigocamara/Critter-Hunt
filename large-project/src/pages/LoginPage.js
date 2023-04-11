@@ -30,7 +30,6 @@ const LoginPage = () =>
 
           </div>
         </div>
-        <Signup />
       </div>
     );
 };
