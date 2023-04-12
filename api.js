@@ -67,11 +67,22 @@ exports.setApp = function (app, client) {
 
     const { username, password, email } = req.body;
 
+    if(!username || !password || !email)
+    {
+      return res.status(400).json({message: 'Please fill all the required fields'});
+    }
+
     const existingUser = await User.findOne({ username });
+    const existingEmail = await User.findOne({ email });
 
     if(existingUser)
     {
-      return res.status(400).json({message: 'usernmane already take. Please try another one!'});
+      return res.status(400).json({message: 'usernmane already taken. Please try another one.'});
+    }
+
+    if (existingEmail)
+    {
+      return res.status(400).json({message: 'email already taken. Please try another one.'});
     }
 
     else
@@ -486,9 +497,8 @@ exports.setApp = function (app, client) {
         from: 'critterhunt@zohomail.com',
         to: email,
         subject: 'Password reset request',
-        text: `Please click on the following link to reset your password: ${resetLink} \nreset token: ${resetToken} `,
-        html: `<p>Please click on the following link to reset your password:</p><p><a href="${resetLink}">${resetLink}</a></p>
-                <br><p>reset token: ${resetToken} </p>`
+        text: `Please use the following reset token to reset your password: ${resetToken} `,
+        html: `<p>Please use the following reset token to reset your password: ${resetToken} </p>`
       };
 
       transporter.sendMail(mailOptions, (error, info) => 
