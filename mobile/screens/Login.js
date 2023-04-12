@@ -71,6 +71,7 @@ export default function Login({ navigation }) {
             />
             <Button title="Login" onPress={doLogin} />
             <Button title="Create Account" onPress={() => navigation.navigate('SignUp')} />
+            <Button title="Forgot Password?" onPress={() => navigation.navigate('ForgotPass')} />
             <StatusBar style="auto" />
         </View>
     );
