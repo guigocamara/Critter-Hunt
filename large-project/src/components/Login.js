@@ -51,14 +51,14 @@ function Login() {
           <div>
             <span className="login-form-title">Login</span>
             <div className="wrap-input">
-              <input type="text" className="input" name="Username" id="loginName" placeholder="Username" required ref={(c) => loginName = c} /><br/>
+              <input type="text" className="input" name="Username" id="loginName" placeholder="Username" required ref={(c) => loginName = c} />
               <span className="focus-input"></span>
               <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true">< /i> </span>
             </div>
 
 
             <div className="wrap-input">
-              <input type="password" className="input" name="pass" id="loginPassword" placeholder="Password" required ref={(c) => loginPassword = c} /><br />
+              <input type="password" className="input" name="pass" id="loginPassword" placeholder="Password" required ref={(c) => loginPassword = c} />
               <span className="focus-input"></span>
               <span className="symbol-input"> <i className="fa fa-lock" aria-hidden="true"></i> </span>
             </div>
