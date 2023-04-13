@@ -6,11 +6,11 @@ function Signup() {
     var storage = require('../tokenStorage.js');
     var signUpName;
     var signUpPassword;
-    var favoriteAnimal;
+    var email;
     const [message, setMessage] = useState('');
     const dosignUp = async event => {
         event.preventDefault();
-        var obj = { username: signUpName.value, password: signUpPassword.value, favorite: favoriteAnimal.value };
+        var obj = { username: signUpName.value, password: signUpPassword.value, email: email.value };
         var js = JSON.stringify(obj);
         var config =
         {
@@ -36,9 +36,9 @@ function Signup() {
                     var ud = jwt.decode(storage.retrieveToken(), { complete: true });
                     var username = ud.payload.username;
                     var password = ud.payload.password;
-                    var favorite = ud.payload.favorite;
+                    var email = ud.payload.email;
 
-                    var user = { username: username, password: password, favorite: favorite }
+                    var user = { username: username, password: password, email: email }
                     localStorage.setItem('user_data', JSON.stringify(user));
                     window.location.href = '/cards';
                 }
@@ -68,7 +68,7 @@ function Signup() {
           </div>
 
           <div className="wrap-input">
-            <input type="text" className="input" name="favoriteAnimal" id="favoriteAnimal" placeholder="Favorite Critter " ref={(c) => favoriteAnimal = c} /><br/>
+            <input type="text" className="input" name="email" id="email" placeholder="Email Address" ref={(c) => email = c} /><br/>
             <span className="focus-input"></span>
             <span className="symbol-input"> <i className="fa fa-github-alt" aria-hidden="true">< /i> </span>
           </div>
