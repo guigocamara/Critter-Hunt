@@ -47,20 +47,29 @@ function Login() {
             });
     }
     return (
-            <div id="loginDiv" className="bg-green-200 flex-row text-center h-50 ml-10 mr-10">
-            
-                <div className="text-xl">
-                    <span className="" id="inner-title">PLEASE LOG IN</span><br />
-                    <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br
-                    />
-                    <input type="password" id="loginPassword" placeholder="Password" ref={(c) =>
-                        loginPassword = c} /><br />
-                    <input type="submit" id="loginButton" value="Do It"
-                        onClick={doLogin} />
-                    <span id="loginResult">{message}</span>
-                </div>
+
+          <div>
+            <span className="login-form-title">Login</span>
+            <div className="wrap-input">
+              <input type="text" className="input" name="Username" id="loginName" placeholder="Username" required ref={(c) => loginName = c} />
+              <span className="focus-input"></span>
+              <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true"></i> </span>
             </div>
 
+
+            <div className="wrap-input">
+              <input type="password" className="input" name="pass" id="loginPassword" placeholder="Password" required ref={(c) => loginPassword = c} />
+              <span className="focus-input"></span>
+              <span className="symbol-input"> <i className="fa fa-lock" aria-hidden="true"></i> </span>
+            </div>
+
+          <div className="login-form-btn-container">
+            <button className="login-form-btn" onClick={doLogin} >Login</button>
+          </div>
+
+          <span id="loginResult">{message}</span>
+
+        </div>
 
     );
 };
