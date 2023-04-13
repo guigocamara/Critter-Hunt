@@ -6,7 +6,7 @@ function Forgotpassword() {
     var storage = require('../tokenStorage.js');
     var email;
     const [message, setMessage] = useState('');
-    const doLogin = async event => {
+    const doForgotpassword = async event => {
         event.preventDefault();
         var obj = { email: email.value };
         var js = JSON.stringify(obj);
@@ -25,7 +25,7 @@ function Forgotpassword() {
                 var res = response.data;
                 if (res.error) {
                     console.log(res.error);
-                    setMessage('User/Password combination incorrect');
+                    setMessage('Email does not exist');
                 }
                 else {
 
@@ -54,4 +54,4 @@ function Forgotpassword() {
 
     );
 };
-export default Login;
+export default Forgot;
