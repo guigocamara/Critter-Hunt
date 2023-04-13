@@ -70,7 +70,7 @@ function Signup() {
           <div className="wrap-input">
             <input type="text" className="input" name="email" id="email" placeholder="Email Address" ref={(c) => email = c} />
             <span className="focus-input"></span>
-            <span className="symbol-input"> <i className="fa fa-github-alt" aria-hidden="true">< /i> </span>
+            <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true">< /i> </span>
           </div>
 
 
