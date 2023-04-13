@@ -30,7 +30,6 @@ function addAddress(critter_name, address) {
 const Map = ({ location, zoomLevel }) => (
     <div className="map">
       <NavBar></NavBar>
-      <h2  class="uppercase text-base p-2 text-center font-normal text-xl ">View your Critters!</h2>
       <br></br>
       <Modal></Modal>
       <div class='h-screen'>
