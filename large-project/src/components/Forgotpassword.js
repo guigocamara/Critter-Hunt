@@ -54,4 +54,4 @@ function Forgotpassword() {
 
     );
 };
-export default Forgot;
+export default Forgotpassword;

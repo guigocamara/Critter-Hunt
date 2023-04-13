@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from '../components/Forget';
+import Forgotpassword from '../components/Forgotpassword';
 import './style.css';
 import PenguinPicture from './PenguinPicture.png'
 const ForgetPage = () =>
@@ -17,7 +17,7 @@ const ForgetPage = () =>
               <span className="login-form-title">Forgot your password?</span>
               <span className="txt1">Enter your email and we'll send you a token to get back into your account.</span>
 
-
+                <Forgotpassword/>
 
                 <div className="text-center p-t-1">
                   <span className="txt1">Have an account?</span>
