@@ -25,6 +25,9 @@ const UserSchema = new Schema({
   */
   username: String,
   password: String,
+  email: String,
+  resetToken: String,
+  resetTokenExpiration: Date,
   /*
   favorite: {
    type: String,
