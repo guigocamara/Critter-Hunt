@@ -6,11 +6,11 @@ function Signup() {
     var storage = require('../tokenStorage.js');
     var signUpName;
     var signUpPassword;
-    var favoriteAnimal;
+    var email;
     const [message, setMessage] = useState('');
     const dosignUp = async event => {
         event.preventDefault();
-        var obj = { username: signUpName.value, password: signUpPassword.value, favorite: favoriteAnimal.value };
+        var obj = { username: signUpName.value, password: signUpPassword.value, email: email.value };
         var js = JSON.stringify(obj);
         var config =
         {
@@ -36,9 +36,9 @@ function Signup() {
                     var ud = jwt.decode(storage.retrieveToken(), { complete: true });
                     var username = ud.payload.username;
                     var password = ud.payload.password;
-                    var favorite = ud.payload.favorite;
+                    var email = ud.payload.email;
 
-                    var user = { username: username, password: password, favorite: favorite }
+                    var user = { username: username, password: password, email: email }
                     localStorage.setItem('user_data', JSON.stringify(user));
                     window.location.href = '/cards';
                 }
@@ -48,18 +48,37 @@ function Signup() {
             });
     }
     return (
-        <div id="loginDiv">
-            <span id="inner-title">Sign up</span><br />
-            <input type="text" id="signUpName" placeholder="Username" ref={(c) => signUpName = c} /><br
-            />
-            <input type="password" id="signUpPassword" placeholder="Password" ref={(c) =>
-                signUpPassword = c} /><br />
-            <input type="text" id="favoriteAnimal" placeholder="favoriteAnimal" ref={(c) =>
-                favoriteAnimal = c} /><br />
-            <input type="submit" id="signUpButton" value="Do It"
-                onClick={dosignUp} />
-            <span id="signUpResult">{message}</span>
+
+
+        <div>
+          <span className="login-form-title">Sign up</span>
+          <div className="wrap-input">
+            <input type="text" className="input" name="Username" id="signUpName" placeholder="Username" required ref={(c) => signUpName = c} />
+            <span className="focus-input"></span>
+            <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true">< /i> </span>
+          </div>
+
+
+
+
+          <div className="wrap-input">
+            <input type="password" className="input" name="pass" id="signUpPassword" placeholder="Password" required ref={(c) => signUpPassword = c} />
+            <span className="focus-input"></span>
+            <span className="symbol-input"> <i className="fa fa-lock" aria-hidden="true"></i> </span>
+          </div>
+
+          <div className="wrap-input">
+            <input type="text" className="input" name="email" id="email" placeholder="Email Address" ref={(c) => email = c} />
+            <span className="focus-input"></span>
+            <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true">< /i> </span>
+          </div>
+
+
+        <div className="login-form-btn-container">
+          <button className="login-form-btn" onClick={dosignUp} >Sign up</button>
         </div>
+      </div>
+
 
 
     );
