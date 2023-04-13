@@ -1,67 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import React, { useState } from 'react';
+import { Button, StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 
+const ForgotPass = () => {
+  const [email, setEmail] = useState('');
 
-export default function ForgotPass({ navigation }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-
-    const requestOptions = {
+  const handleResetPassword = async () => {
+    try {
+      const response = await fetch('http://critterhunt.herokuapp.com/api/forgotpassword', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username, password: password, email: email })
-    };
+        body: JSON.stringify({ email })
+      });
 
-    const doSignUp = async () => {
-        try {
-            await fetch('http://critterhunt.herokuapp.com/api/signUp', requestOptions)
-                .then(response => {
-                    response.json()
-                        .then(data => {
-                            if (data.error) {
-                                Alert.alert("Error", data.error);
-                            }
-                            else {
-                                navigation.navigate('Welcome', { username: data.us });
-                            }
-                        });
-                })
-        }
-        catch (error) {
-            console.error(error);
-        }
+      const data = await response.json();
+      // Handle success response
+    } catch (error) {
+      // Handle error response
     }
+  };
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-                style={styles.input}
-                onChangeText={setEmail}
-                value={email}
-                autoCapitalize="none"
-            />
-            <Text style={styles.label}>Username</Text>
-            <TextInput
-                style={styles.input}
-                onChangeText={setUsername}
-                value={username}
-                autoCapitalize="none"
-            />
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-                style={styles.input}
-                onChangeText={setPassword}
-                value={password}
-                secureTextEntry
-            />
-            <Button title="Create new account" onPress={doSignUp} />
-            <StatusBar style="auto" />
-        </View>
-    );
-}
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>Email</Text>
+      <TextInput
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+      />
+      <Button
+        title="Send Password Reset Token"
+        onPress={handleResetPassword}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -85,3 +58,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 })
+
+export default ForgotPass;
+
