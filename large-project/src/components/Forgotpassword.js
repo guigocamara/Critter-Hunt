@@ -45,7 +45,7 @@ function Forgotpassword() {
             </div>
 
           <div className="login-form-btn-container">
-            <button className="login-form-btn" onClick={doForgotpassword} >Send Token</button>
+            <button className="login-form-btn" onClick={doForgotpassword} >Send Tokenm</button>
           </div>
 
           <span id="forgotResult">{message}</span>
