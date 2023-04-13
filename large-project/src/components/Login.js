@@ -39,7 +39,7 @@ function Login() {
 
                     var user = { username: username, password: password, favorite: favorite }
                     localStorage.setItem('user_data', JSON.stringify(user));
-                    window.location.href = '/cards';
+                    window.location.href = '/map';
                 }
             })
             .catch(function (error) {
