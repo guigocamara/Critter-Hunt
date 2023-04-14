@@ -39,7 +39,7 @@ function Login() {
 
                     var user = { username: username, password: password, favorite: favorite }
                     localStorage.setItem('user_data', JSON.stringify(user));
-                    window.location.href = '/cards';
+                    window.location.href = '/map';
                 }
             })
             .catch(function (error) {
@@ -53,7 +53,7 @@ function Login() {
             <div className="wrap-input">
               <input type="text" className="input" name="Username" id="loginName" placeholder="Username" required ref={(c) => loginName = c} />
               <span className="focus-input"></span>
-              <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true">< /i> </span>
+              <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true"></i> </span>
             </div>
 
 

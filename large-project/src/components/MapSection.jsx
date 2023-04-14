@@ -3,6 +3,7 @@ import GoogleMapReact from 'google-map-react'
 import Geocode from 'react-geocode'
 //import './map.css'
 import { Icon } from '@iconify/react'
+import NavBar from './NavBar';
 //import Modal from './Modal'
 
 
@@ -28,7 +29,7 @@ function addAddress(critter_name, address) {
 
 const Map = ({ location, zoomLevel }) => (
     <div className="map">
-      <h2  class="uppercase text-base p-2 text-center font-normal text-xl ">View your Critters!</h2>
+      <NavBar></NavBar>
       <br></br>
       <Modal></Modal>
       <div class='h-screen'>

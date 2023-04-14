@@ -55,7 +55,7 @@ function Signup() {
           <div className="wrap-input">
             <input type="text" className="input" name="Username" id="signUpName" placeholder="Username" required ref={(c) => signUpName = c} />
             <span className="focus-input"></span>
-            <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true">< /i> </span>
+            <span className="symbol-input"> <i className="fa fa-user" aria-hidden="true"></i> </span>
           </div>
 
 
@@ -70,7 +70,7 @@ function Signup() {
           <div className="wrap-input">
             <input type="text" className="input" name="email" id="email" placeholder="Email Address" ref={(c) => email = c} />
             <span className="focus-input"></span>
-            <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true">< /i> </span>
+            <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true"></i> </span>
           </div>
 
 
