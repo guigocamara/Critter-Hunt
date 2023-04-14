@@ -34,6 +34,8 @@ export default function Login({ navigation }) {
                                 userData = JSON.stringify(userData);
                                 // save the string to secure local storage
                                 save("userData", userData);
+                                // userId is not sent in token
+                                save("userId", data.userId);
                                 navigation.navigate('Welcome');
                             }
                         });

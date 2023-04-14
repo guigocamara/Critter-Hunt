@@ -19,6 +19,7 @@ export default function Welcome({ navigation }) {
 
     const doLogout = async () => {
         await SecureStore.deleteItemAsync('userData');
+        await SecureStore.deleteItemAsync('userId');
         navigation.navigate('Login');
     }
 

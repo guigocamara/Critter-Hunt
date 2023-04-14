@@ -19,8 +19,8 @@ async function deleteValueFor(key) {
 
 export default function AddPost({ route, navigation }) {
     const [postTitle, setPostTitle] = useState('');
-    const [username, setUsername] = useState('');
-    const [location, setLocation] = useState([0, 0]);
+    const [userId, setUserId] = useState('');
+    const [location, setLocation] = useState(['28.219001', '-81.395626']);
     const [picture, setPicture] = useState(''); // store the actual image somehow
     const { image_uri } = route.params;
 
@@ -28,13 +28,12 @@ export default function AddPost({ route, navigation }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            critterid: "N/A",
-            likes: 0,
-            comments: "N/A",
             crittername: postTitle,
-            author: username,
+            author: userId,
+            likes: 0,
+            comments: [],
             location: location,
-            picture: image_uri
+            picture: "image"
         })
     };
 
@@ -59,18 +58,17 @@ export default function AddPost({ route, navigation }) {
         }
     }
 
-    const getUsername = async () => {
-        let result = await SecureStore.getItemAsync('userData');
+    const getUserId = async () => {
+        let result = await SecureStore.getItemAsync('userId');
         if (result) {
-            let userData = JSON.parse(result);
-            setUsername(userData.username);
+            setUserId(result);
         } else {
-            setUsername('');
+            setUserId('');
         }
     }
 
     useEffect(() => {
-        getUsername();
+        getUserId();
     }, [])
 
     return (
