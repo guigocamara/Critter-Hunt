@@ -13,21 +13,19 @@ export default function AllPosts(){
     var bp = require('../components/Path.js');
 
     const handleChange = (e) => {
-        console.log(searchInput.value);
         //fetch all the posts from the database.
         searchPosts();
-        console.log(postsList);
         //Call the search api!
     };
 
     const searchPosts = async event => {
         var storage = require('../tokenStorage.js');
         var obj = { search: searchInput.value, jwtToken: storage.retrieveToken() };
-        console.log(obj);
         var js = JSON.stringify(obj);
         try {
             const response = await fetch(bp.buildPath('api/searchposts'),
                 { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
+            console.log(response);
             var txt = await response.text();
             var res = JSON.parse(txt);
             var _results = res.results;
