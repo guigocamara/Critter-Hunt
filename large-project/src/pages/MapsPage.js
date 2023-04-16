@@ -1,5 +1,7 @@
 import React from 'react'
 import Map from '../components/MapSection';
+import NavBar from '../components/NavBar';
+import AllPosts from '../components/AllPosts';
 
 const location = {
   address: 'UCF',
@@ -9,16 +11,17 @@ const location = {
 
 // convert address to coordinates function...
 
-const MapsPage = () =>
+
+export default function MapsPage()
 {
     return(
-      <div>
-        <div>
-            
-        </div>
-        <Map location={location} zoomLevel={10}/>
+      <div class="h-screen">
+        <NavBar></NavBar>
+        
+        <div class="flex flex-row h-full">
+          <AllPosts></AllPosts>
+          <Map location={location} zoomLevel={10}/>
+        </div>  
       </div>
     );
 };
-
-export default MapsPage;
