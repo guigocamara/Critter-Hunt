@@ -22,7 +22,8 @@ export default function AllPosts(){
 
     const searchPosts = async event => {
         var storage = require('../tokenStorage.js');
-        var obj = { search: searchInput.value };
+        var obj = { search: searchInput.value, jwtToken: storage.retrieveToken() };
+        console.log(obj);
         var js = JSON.stringify(obj);
         try {
             const response = await fetch(bp.buildPath('api/searchposts'),
@@ -35,22 +36,23 @@ export default function AllPosts(){
         }
         catch (e) {
             console.log(e.toString());
+            storage.storeToken(res.jwtToken);
         }
     };
 
     return(
-    <div class="w-4/12 flex flex-col bg-[#57B846] items-center">
-        <input class="w-5/6 h-10 rounded p-2" type="text" placeholder="Search for posts!" onChange={handleChange} value={searchInput} ref={(c) => searchInput = c}/>
-        <div class="h-full w-full flex flex-col items-center overflow-y-scroll">
-        <div class="m-5 h-96 w-80 bg-white rounded">
-                <div class="h-2/12 text-sm mt-3 ml-3 mr-3"> 
+    <div className="w-4/12 flex flex-col bg-[#57B846] items-center">
+        <input className="w-5/6 h-10 rounded p-2" type="text" placeholder="Search for posts!" onChange={handleChange} value={searchInput.value} ref={(c) => searchInput = c}/>
+        <div className="h-full w-full flex flex-col items-center overflow-y-scroll">
+        <div className="m-5 h-96 w-80 bg-white rounded">
+                <div className="h-2/12 text-sm mt-3 ml-3 mr-3"> 
                     <div>Jacob Rosen</div>
                     <div>Critter: Horse</div>
                 </div>
-                <div class="h-8/12 text-sm">
+                <div className="h-8/12 text-sm">
                     <img src={"https://cdn.britannica.com/96/1296-050-4A65097D/gelding-bay-coat.jpg"}/>
                 </div>
-                <div class="h-4/12 text-sm mb-3 ml-3 mr-3">
+                <div className="h-4/12 text-sm mb-3 ml-3 mr-3">
                     <Icon icon="mdi:cards-heart"/>
                     The comments
                 </div>

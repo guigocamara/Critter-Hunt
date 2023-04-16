@@ -15,10 +15,10 @@ const location = {
 export default function MapsPage()
 {
     return(
-      <div class="h-screen">
+      <div className="h-screen">
         <NavBar></NavBar>
         
-        <div class="flex flex-row h-full">
+        <div className="flex flex-row h-full">
           <AllPosts></AllPosts>
           <Map location={location} zoomLevel={10}/>
         </div>  

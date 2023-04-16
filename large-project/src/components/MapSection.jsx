@@ -27,7 +27,7 @@ function addAddress(critter_name, address) {
 
 
 const Map = ({ location, zoomLevel }) => (
-      <div class='h-full w-8/12'>
+      <div className='h-full w-8/12'>
         <GoogleMapReact id="map"
           bootstrapURLKeys={{ key: apiKey }}
           defaultCenter={location}
@@ -43,9 +43,9 @@ const Map = ({ location, zoomLevel }) => (
 )
 
 const LocationPin = ({ text }) => (
-    <div class="flex-1 items-center w-40">
-        <Icon icon= "mdi-light:home" class="text-6xl" />
-            <p class="text-xl">{text}</p>
+    <div className="flex-1 items-center w-40">
+        <Icon icon= "mdi-light:home" className="text-6xl" />
+            <p className="text-xl">{text}</p>
     </div>
 )
 
