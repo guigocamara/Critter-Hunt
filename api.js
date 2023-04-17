@@ -87,14 +87,16 @@ exports.setApp = function (app, client) {
 
     else
     {
-      const newUser = new User({username: username, password: password, email: email});
+      const newUser = new User({username: username, password: password, email: email, createdAt: new Date().toLocaleDateString()});
       try
       {    
         await newUser.save();
         const userId = newUser._id; //added to retriev userId
+        const dateJoined = newUser.createdAt; //added to show date joined
         const token = require('./createJWT.js');
         const ret = token.createToken(username, password, email);
         ret.userId = userId; //added to retriev userId
+        ret.dateJoined = dateJoined; //added to show date joined
         res.status(200).json(ret);
       }
       catch (e)
@@ -540,6 +542,37 @@ exports.setApp = function (app, client) {
   
     res.json({ message: 'Password reset successfully' });
   });
+
+  // Retrieve the number of posts for each user
+app.get('/api/users/rank', async (req, res) => {
+  try {
+    const users = await User.aggregate([
+      {
+        $lookup: {
+          from: 'Posts',
+          localField: '_id',
+          foreignField: 'author',
+          as: 'Posts'
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          username: 1,
+          email: 1,
+          numPosts: { $size: '$Posts' }
+        }
+      },
+      {
+        $sort: { numPosts: -1 }
+      }
+    ]);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
   
   
 
