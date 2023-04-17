@@ -34,17 +34,22 @@ const Map = ({ location, zoomLevel }) => (
           defaultZoom={zoomLevel}
         >
           <LocationPin
-            lat={location.lat}
-            lng={location.lng}
+            lat={28.6}
+            lng={-81.2}
             text={location.address}
+          />
+          <LocationPin
+            lat={29.602869503700095}
+            lng={-81.20011172453141}
+            text={'B'}
           />
         </GoogleMapReact>
       </div>
 )
 
 const LocationPin = ({ text }) => (
-    <div className="flex-1 items-center w-40">
-        <Icon icon= "mdi-light:home" className="text-6xl" />
+    <div className="flex flex-col items-center w-40">
+        <Icon icon= "ic:baseline-place" className="text-6xl" />
             <p className="text-xl">{text}</p>
     </div>
 )

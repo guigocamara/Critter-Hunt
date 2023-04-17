@@ -20,7 +20,7 @@ export default function MapsPage()
         
         <div className="flex flex-row h-full">
           <AllPosts></AllPosts>
-          <Map location={location} zoomLevel={10}/>
+          <Map location={location} zoomLevel={15}/>
         </div>  
       </div>
     );
