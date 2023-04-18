@@ -8,6 +8,9 @@ import Welcome from './screens/Welcome';
 import SignUp from './screens/SignUp';
 import CameraScreen from './screens/CameraScreen';
 import AddPost from './screens/AddPost';
+import Profile from './screens/ProfileScreen';
+import ForgotPass from './screens/ForgotPass';
+import ResetPass from './screens/ResetPass';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +24,9 @@ export default function App() {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AddPost" component={AddPost} options={{ title: 'Post' }} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="ForgotPass" component={ForgotPass} />
+        <Stack.Screen name="ResetPass" component={ResetPass} />
       </Stack.Navigator>
     </NavigationContainer>
   );

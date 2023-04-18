@@ -6,11 +6,12 @@ import React, { useState } from 'react';
 export default function SignUp({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
 
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username, password: password })
+        body: JSON.stringify({ username: username, password: password, email: email })
     };
 
     const doSignUp = async () => {
@@ -35,6 +36,13 @@ export default function SignUp({ navigation }) {
 
     return (
         <View style={styles.container}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+                style={styles.input}
+                onChangeText={setEmail}
+                value={email}
+                autoCapitalize="none"
+            />
             <Text style={styles.label}>Username</Text>
             <TextInput
                 style={styles.input}
