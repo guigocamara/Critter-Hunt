@@ -67,23 +67,36 @@ exports.setApp = function (app, client) {
 
     const { username, password, email } = req.body;
 
+    if(!username || !password || !email)
+    {
+      return res.status(400).json({message: 'Please fill all the required fields'});
+    }
+
     const existingUser = await User.findOne({ username });
+    const existingEmail = await User.findOne({ email });
 
     if(existingUser)
     {
-      return res.status(400).json({message: 'usernmane already take. Please try another one!'});
+      return res.status(400).json({message: 'usernmane already taken. Please try another one.'});
+    }
+
+    if (existingEmail)
+    {
+      return res.status(400).json({message: 'email already taken. Please try another one.'});
     }
 
     else
     {
-      const newUser = new User({username: username, password: password, email: email});
+      const newUser = new User({username: username, password: password, email: email, createdAt: new Date().toLocaleDateString()});
       try
       {    
         await newUser.save();
         const userId = newUser._id; //added to retriev userId
+        const dateJoined = newUser.createdAt; //added to show date joined
         const token = require('./createJWT.js');
         const ret = token.createToken(username, password, email);
         ret.userId = userId; //added to retriev userId
+        ret.dateJoined = dateJoined; //added to show date joined
         res.status(200).json(ret);
       }
       catch (e)
@@ -486,9 +499,8 @@ exports.setApp = function (app, client) {
         from: 'critterhunt@zohomail.com',
         to: email,
         subject: 'Password reset request',
-        text: `Please click on the following link to reset your password: ${resetLink} \nreset token: ${resetToken} `,
-        html: `<p>Please click on the following link to reset your password:</p><p><a href="${resetLink}">${resetLink}</a></p>
-                <br><p>reset token: ${resetToken} </p>`
+        text: `Please use the following reset token to reset your password: ${resetToken} `,
+        html: `<p>Please use the following reset token to reset your password: ${resetToken} </p>`
       };
 
       transporter.sendMail(mailOptions, (error, info) => 
@@ -530,6 +542,37 @@ exports.setApp = function (app, client) {
   
     res.json({ message: 'Password reset successfully' });
   });
+
+  // Retrieve the number of posts for each user
+app.get('/api/users/rank', async (req, res) => {
+  try {
+    const users = await User.aggregate([
+      {
+        $lookup: {
+          from: 'Posts',
+          localField: '_id',
+          foreignField: 'author',
+          as: 'Posts'
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          username: 1,
+          email: 1,
+          numPosts: { $size: '$Posts' }
+        }
+      },
+      {
+        $sort: { numPosts: -1 }
+      }
+    ]);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
   
   
 
