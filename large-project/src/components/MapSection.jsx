@@ -36,7 +36,6 @@ export default function Map ({ postsList, location, zoomLevel }) {
         >
           { postsList.map(post => {
               return(
-              
                 post.location.length != 0 &&
                 <LocationPin
                 lat={post.location[0]}
