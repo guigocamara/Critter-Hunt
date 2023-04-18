@@ -257,11 +257,11 @@ exports.setApp = function (app, client) {
     
     //const db = client.db();
     //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
-    let results = await Post.find({ "crittername": { $regex: _search + '.*', $options: 'r' } });
+    let results = await Post.find({ "crittername": { $regex: _search + '.*'} });
     
     var _ret = [];
     if(results.length == 0){
-      results = await Post.find({ "": { $regex: _search + '.*', $options: 'r' } });
+      results = await Post.find({ "": { $regex: _search + '.*'} });
     }
 
     for( var i=0; i<results.length; i++ )
