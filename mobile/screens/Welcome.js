@@ -34,6 +34,7 @@ export default function Welcome({ navigation }) {
             <Button title="Log out" onPress={() => doLogout()} />
             <Button title="Go to camera" onPress={() => navigation.navigate('Camera')} />
             <Button title="Feed" onPress={() => navigation.navigate('PostFeed')} />
+            <Button title="Go to profile" onPress={() => navigation.navigate('Profile')} />
             <StatusBar style="auto" />
         </View>
     );
