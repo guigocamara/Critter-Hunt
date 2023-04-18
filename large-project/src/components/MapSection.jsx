@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import GoogleMapReact from 'google-map-react'
 import Geocode from 'react-geocode'
 //import './map.css'
@@ -12,40 +12,45 @@ Geocode.setLanguage('en');
 
 
 // converts address to coordinates and adds pin to map
-function addAddress(critter_name, address) {
-  console.log("entered");
-  Geocode.fromAddress(address).then( 
-    (response) => {
-      const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
-    },
-    (error) => {
-      console.error(error);
-    }
-  );
-}
+// function addAddress(critter_name, address) {
+//   console.log("entered");
+//   Geocode.fromAddress(address).then( 
+//     (response) => {
+//       const { lat, lng } = response.results[0].geometry.location;
+//       console.log(lat, lng);
+//     },
+//     (error) => {
+//       console.error(error);
+//     }
+//   );
+// }
 
 
-const Map = ({ location, zoomLevel }) => (
+export default function Map ({ postsList, location, zoomLevel }) {
+  return(
       <div className='h-full w-8/12'>
         <GoogleMapReact id="map"
           bootstrapURLKeys={{ key: apiKey }}
           defaultCenter={location}
           defaultZoom={zoomLevel}
         >
-          <LocationPin
-            lat={28.6}
-            lng={-81.2}
-            text={location.address}
-          />
-          <LocationPin
-            lat={29.602869503700095}
-            lng={-81.20011172453141}
-            text={'B'}
-          />
+          { postsList.map(post => {
+              return(
+              
+                post.location.length != 0 &&
+                <LocationPin
+                lat={post.location[0]}
+                lng={post.location[1]}
+                text={post.crittername}
+                />
+              
+              );
+            })
+          }
         </GoogleMapReact>
       </div>
-)
+  );
+}
 
 const LocationPin = ({ text }) => (
     <div className="flex flex-col items-center w-40">
@@ -120,5 +125,3 @@ const LocationPin = ({ text }) => (
 //   return {critterName, conatString};
 
 // }
-
-export default Map
