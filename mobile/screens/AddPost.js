@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput 
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import * as Location from 'expo-location';
+import * as FileSystem from 'expo-file-system';
 
 
 export default function AddPost({ route, navigation }) {
@@ -10,9 +11,9 @@ export default function AddPost({ route, navigation }) {
     const [userId, setUserId] = useState('');
     const [location, setLocation] = useState(null);
     const [locationArray, setLocationArray] = useState(null);
-    const [picture, setPicture] = useState(''); // store the actual image somehow
     const [errorMsg, setErrorMsg] = useState(null); // location error message
     const { image_uri } = route.params;
+
 
     const requestOptions = {
         method: 'POST',
@@ -23,7 +24,7 @@ export default function AddPost({ route, navigation }) {
             likes: 0,
             comments: [],
             location: locationArray,
-            picture: "image"
+            picture: "image" // image filename goes here
         })
     };
 
@@ -38,14 +39,21 @@ export default function AddPost({ route, navigation }) {
                             }
                             else {
                                 console.log("Successfully posted!");
-                                navigation.navigate('Welcome');
                             }
                         });
                 })
+            const response = await FileSystem.uploadAsync(`http://critterhunt.herokuapp.com/upload`, image_uri, {
+                fieldName: 'file',
+                httpMethod: 'POST',
+                uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+            });
+            console.log(JSON.stringify(response, null, 4));
+            navigation.navigate('Welcome');
         }
         catch (error) {
             console.error(error);
         }
+
     }
 
     const getUserId = async () => {
