@@ -88,14 +88,14 @@ exports.setApp = function (app, client) {
     try {
       const file = await bucket.find({ filename: imageName }).toArray();
       if (!file || !file.length) {
-        res.status(404).send('Image not found');
+        res.status(400).send('Image not found');
         return;
       }
 
       const downloadStream = bucket.openDownloadStreamByName(imageName);
       downloadStream.pipe(res);
       console.log(`Image with id ${file[0]._id.toString()} fetched successfully`);
-      res.status(200).json(file[0]._id.toString());
+      //res.status(200).json(file[0]._id.toString());
     } catch (err) {
       console.log(err);
       res.status(500).send('An error occurred while fetching the image');
@@ -653,6 +653,23 @@ app.get('/api/users/rank', async (req, res) => {
   }
 });
 
+
+app.get('/api/datejoined/:id', async (req, res) => {
+  const infoId = req.params.id;
+
+  try {
+    const info = await User.findById(infoId);
+    if (!info) {
+      return res.status(404).json({ message: 'Information not found' });
+    }
+
+    const dateJoined = info.createdAt; 
+
+    res.status(200).json({ dateJoined });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
   
   
 
