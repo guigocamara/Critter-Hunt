@@ -81,9 +81,7 @@ export default function AddPost({ route, navigation }) {
         text = errorMsg;
     }
     else if (location) {
-        text = "" + location.coords.longitude + ", " + location.coords.latitude;
-
-
+        text = "Location retrieved!";
     }
 
     return (
@@ -106,7 +104,7 @@ export default function AddPost({ route, navigation }) {
                     onChangeText={setPostTitle}
                     value={postTitle}
                 />
-                <Text>{"" + locationArray}</Text>
+                <Text>{text}</Text>
 
                 <Button title='Submit' onPress={() => doPost()} />
 
