@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ForgetPage from './pages/ForgetPage';
 import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +14,7 @@ function App() {
       <Route path="/Signup" index element={<SignupPage />} />
       <Route path="/ForgetPage" index element={<ForgetPage />} />
       <Route path="/map" index element={<HomePage />} />
+      <Route path="/profile" index element={<ProfilePage />} />
     </Routes>
   </BrowserRouter>
 );
