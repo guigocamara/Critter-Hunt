@@ -1,26 +1,106 @@
 require('express');
 require('mongodb');
+const multer = require('multer');
+const { GridFsStorage } = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
 
+// load user model
 const User = require("./models/user.js");
-//load card model
 
+// load card model
 //const Card = require("./models/card.js");
+
+// load post model
 const Post = require("./models/post.js");
 
 const Comment = require("./models/comment.js");
 
 const Critter = require("./models/critter.js");
 
+// load image model
+const Image = require("./models/image.js");
+
+const url = process.env.MONGODB_URI;
+
+// Set up the GridFS stream
+const conn = mongoose.createConnection(url, {useNewUrlParser: true, useUnifiedTopology: true});
+
+let gfs;
+conn.once('open', () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+
+// Create a GridFS storage engine
+const storage = new GridFsStorage({
+  url: url,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      const filename = file.originalname;
+      const fileInfo = {
+        filename: filename,
+        bucketName: 'uploads',
+        metadata: { uploader: req.body.uploader }
+      };
+      resolve(fileInfo);
+    });
+  },
+});
+
+
+
 exports.setApp = function (app, client) {
-
-
   /*COMMENTS
     For now we are leaving out some of the calls to the jwtTokens in the api calls. This needs to be reimplemented once combined witht the frontend!
   */
 
+  // Create a Multer instance using the GridFS storage engine for file uploads
+  const upload = multer({ storage });
 
+  // Upload endpoint
+  app.post('/upload', upload.single('file'), (req, res) => {
+    const {filename} = req.file;
+    const newImage = new Image({filename});
 
+    try
+    {
+      // await newImage.save();
+      const imageId = newImage._id; //added to retriev userId
+      // ret.imageId = imageId; //added to retriev userId
+      res.status(200).json(imageId);
+    }
+    catch (e)
+    {
+      //ret = { error: e.message };
+      res.status(400).json(e.message);
+    } 
+    // res.status(200).json({ ret, message: 'File uploaded successfully' });
+  });
 
+  // Fetch image endpoint
+  app.get('/image/:name', async (req, res) => {
+    const imageName = req.params.name;
+    const bucket = new mongoose.mongo.GridFSBucket(conn.db, {
+      bucketName: 'uploads'
+    });
+
+    try {
+      const file = await bucket.find({ filename: imageName }).toArray();
+      if (!file || !file.length) {
+        res.status(404).send('Image not found');
+        return;
+      }
+
+      const downloadStream = bucket.openDownloadStreamByName(imageName);
+      downloadStream.pipe(res);
+      console.log(`Image with id ${file[0]._id.toString()} fetched successfully`);
+      res.status(200).json(file[0]._id.toString());
+    } catch (err) {
+      console.log(err);
+      res.status(500).send('An error occurred while fetching the image');
+    }
+  });
 
   app.post('/api/login', async (req, res, next) => {
     // incoming: login, password
