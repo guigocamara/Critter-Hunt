@@ -2,26 +2,16 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
-
-async function getValueFor(key) {
-    let result = await SecureStore.getItemAsync(key);
-    if (result) {
-        alert("🔐 Here's your value 🔐 \n" + result);
-    } else {
-        alert('No values stored under that key.');
-    }
-}
-
-async function deleteValueFor(key) {
-    await SecureStore.deleteItemAsync(key);
-}
+import * as Location from 'expo-location';
 
 
 export default function AddPost({ route, navigation }) {
     const [postTitle, setPostTitle] = useState('');
     const [userId, setUserId] = useState('');
-    const [location, setLocation] = useState(['28.219001', '-81.395626']);
+    const [location, setLocation] = useState(null);
+    const [locationArray, setLocationArray] = useState(null);
     const [picture, setPicture] = useState(''); // store the actual image somehow
+    const [errorMsg, setErrorMsg] = useState(null); // location error message
     const { image_uri } = route.params;
 
     const requestOptions = {
@@ -32,7 +22,7 @@ export default function AddPost({ route, navigation }) {
             author: userId,
             likes: 0,
             comments: [],
-            location: location,
+            location: locationArray,
             picture: "image"
         })
     };
@@ -69,7 +59,32 @@ export default function AddPost({ route, navigation }) {
 
     useEffect(() => {
         getUserId();
+        (async () => {
+
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location);
+            let locationString = [];
+            locationString.push(location.coords.latitude + "");
+            locationString.push(location.coords.longitude + "");
+            setLocationArray(locationString);
+        })();
     }, [])
+
+    let text = "Getting location...";
+    if (errorMsg) {
+        text = errorMsg;
+    }
+    else if (location) {
+        text = "" + location.coords.longitude + ", " + location.coords.latitude;
+
+
+    }
 
     return (
         <KeyboardAvoidingView
@@ -91,6 +106,7 @@ export default function AddPost({ route, navigation }) {
                     onChangeText={setPostTitle}
                     value={postTitle}
                 />
+                <Text>{"" + locationArray}</Text>
 
                 <Button title='Submit' onPress={() => doPost()} />
 
