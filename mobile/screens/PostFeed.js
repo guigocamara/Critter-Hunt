@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Alert, SafeAreaView, FlatList, Image, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
-const Item = ({ title, picture, navigation }) => (
-    <Pressable onPress={() => Alert.alert(title)}>
+const Item = ({ title, picture, navigation, postID }) => (
+    <Pressable onPress={() => navigation.navigate('PostDetails', { postID: postID })}>
         <View style={styles.item}>
             <Image
                 style={styles.image}
@@ -53,7 +53,7 @@ export default function PostFeed({ navigation }) {
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={results}
-                renderItem={({ item }) => <Item title={item.crittername} picture={item.picture} />}
+                renderItem={({ item }) => <Item title={item.crittername} picture={item.picture} navigation={navigation} postID={item._id} />}
                 keyExtractor={item => item._id}
                 numColumns={2}
             />
