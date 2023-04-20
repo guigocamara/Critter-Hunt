@@ -2,12 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Alert, SafeAreaView, FlatList, Image, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
-const Item = ({ title, navigation }) => (
+const Item = ({ title, picture, navigation }) => (
     <Pressable onPress={() => Alert.alert(title)}>
         <View style={styles.item}>
             <Image
                 style={styles.image}
-                source={{ uri: 'https://media.discordapp.net/attachments/1094306153313353948/1095103189822480524/image.png' }}
+                source={{ uri: 'http://critterhunt.herokuapp.com/image/' + picture }}
             />
             <Text style={styles.title}>{title}</Text>
         </View>
@@ -53,7 +53,7 @@ export default function PostFeed({ navigation }) {
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={results}
-                renderItem={({ item }) => <Item title={item.crittername} />}
+                renderItem={({ item }) => <Item title={item.crittername} picture={item.picture} />}
                 keyExtractor={item => item._id}
                 numColumns={2}
             />
