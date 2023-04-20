@@ -19,6 +19,7 @@
     "heroku": "^7.68.3",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.0",
+    "mdb-react-ui-kit": "^6.0.0",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.1",
     "mongoose-int32": "^0.6.0",
