@@ -14,7 +14,6 @@ export default function AddPost({ route, navigation }) {
     const [errorMsg, setErrorMsg] = useState(null); // location error message
     const { image_uri } = route.params;
 
-
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -24,7 +23,7 @@ export default function AddPost({ route, navigation }) {
             likes: 0,
             comments: [],
             location: locationArray,
-            picture: "image" // image filename goes here
+            picture: image_uri.replace(/^.*[\\\/]/, '')
         })
     };
 
