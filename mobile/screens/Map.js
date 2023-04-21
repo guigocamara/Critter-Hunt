@@ -32,8 +32,8 @@ export default function Map() {
       style={styles.map}
       provider={PROVIDER_GOOGLE} // Use the Google Maps provider
       initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: 28.6024,
+        longitude: -81.2001,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
