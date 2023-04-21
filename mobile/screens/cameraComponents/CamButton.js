@@ -6,7 +6,10 @@ export default function CamButton({ title, onPress, icon, color, round }) {
     return (
         <TouchableOpacity onPress={onPress} style={round ? styles.roundButton1 : styles.button}>
             <Entypo name={icon} size={28} color={color ? color : '#f1f1f1'} />
-            <Text style={styles.text}>{title}</Text>
+            {title ?
+                <Text style={styles.text}>{title}</Text> : null
+            }
+
         </TouchableOpacity>
     )
 }
@@ -19,6 +22,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     roundButton1: {
+        alignSelf: 'center',
         width: 70,
         height: 70,
         flexDirection: 'row',

@@ -19,6 +19,7 @@ export default function Welcome({ navigation }) {
 
     const doLogout = async () => {
         await SecureStore.deleteItemAsync('userData');
+        await SecureStore.deleteItemAsync('userId');
         navigation.navigate('Login');
     }
 
@@ -32,6 +33,7 @@ export default function Welcome({ navigation }) {
             <Text>Welcome, {username}</Text>
             <Button title="Log out" onPress={() => doLogout()} />
             <Button title="Go to camera" onPress={() => navigation.navigate('Camera')} />
+            <Button title="Feed" onPress={() => navigation.navigate('PostFeed')} />
             <Button title="Go to profile" onPress={() => navigation.navigate('Profile')} />
             <StatusBar style="auto" />
         </View>

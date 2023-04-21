@@ -48,6 +48,15 @@ export default function CameraScreen({ navigation }) {
                     flashMode={flash}
                     ref={cameraRef}
                 >
+                    <View style={{
+                        flex: 1,
+                        flexDirection: 'column',
+                        justifyContent: 'flex-end',
+                        padding: 30
+                    }}>
+                        <CamButton icon="camera" onPress={takePicture} color={'#06301A'} round={true} />
+                    </View>
+
                 </Camera>
                 :
                 <Image source={{ uri: image }} style={styles.camera} />
@@ -63,7 +72,7 @@ export default function CameraScreen({ navigation }) {
                         <CamButton title={"Post"} icon="check" onPress={() => navigation.navigate('AddPost', { image_uri: image })} color={'#06301A'} />
                     </View>
                     :
-                    <CamButton icon="camera" onPress={takePicture} color={'#06301A'} />
+                    <View></View>
                 }
 
             </View>
