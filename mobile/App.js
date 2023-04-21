@@ -13,6 +13,7 @@ import ForgotPass from './screens/ForgotPass';
 import ResetPass from './screens/ResetPass';
 import PostFeed from './screens/PostFeed';
 import PostDetails from './screens/PostDetails';
+import Map from './screens/Map';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ export default function App() {
         <Stack.Screen name="ForgotPass" component={ForgotPass} />
         <Stack.Screen name="ResetPass" component={ResetPass} />
         <Stack.Screen name="PostFeed" component={PostFeed} options={{ title: 'Feed' }} />
+        <Stack.Screen name="Map" component={Map} />
       </Stack.Navigator>
     </NavigationContainer>
   );
