@@ -14,17 +14,29 @@ const Leaderboard = () => {
     fetchUsers();
   }, []);
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item, index }) => (
     <View style={styles.userContainer}>
-      <Text style={styles.username}>{item.username}</Text>
-      <Text style={styles.rank}>#{item.rank}</Text>
-      <Text style={styles.numPosts}>{item.numPosts} posts</Text>
+      {index === 0 ? (
+        <Text style={[styles.rank, styles.gold]}>{index + 1}.</Text>
+      ) : index === 1 ? (
+        <Text style={[styles.rank, styles.silver]}>{index + 1}.</Text>
+      ) : index === 2 ? (
+        <Text style={[styles.rank, styles.bronze]}>{index + 1}.</Text>
+      ) : (
+        <Text style={styles.rank}>{index + 1}.</Text>
+      )}
+      <Text style={[styles.username, { fontWeight: 'bold' }]}>
+        {item.username}
+      </Text>
+      <Text style={[styles.numPosts, { fontWeight: 'bold' }]}>
+        {item.numPosts} posts
+      </Text>
     </View>
   );
-
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Leaderboard</Text>
+    <View style={[styles.container, { backgroundColor: '#128c4b' }]}>
+      <Text style={[styles.title, { fontWeight: 'bold' }]}>Leaderboard</Text>
       <FlatList
         data={users}
         renderItem={renderItem}
@@ -41,8 +53,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 20,
+    color: 'white'
   },
   userContainer: {
     flexDirection: 'row',
@@ -54,17 +66,31 @@ const styles = StyleSheet.create({
   username: {
     flex: 2,
     fontSize: 18,
+    color: 'white'
   },
   rank: {
     flex: 1,
     fontSize: 18,
     textAlign: 'center',
+    color: 'white'
   },
   numPosts: {
     flex: 2,
     fontSize: 18,
     textAlign: 'right',
+    color: 'white'
   },
+  gold: {
+    color: 'gold',
+  },
+  silver: {
+    color: 'silver',
+  },
+  bronze: {
+    color: '#cd7f32',
+  },
+  
 });
 
 export default Leaderboard;
+

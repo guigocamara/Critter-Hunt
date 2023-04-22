@@ -64,7 +64,7 @@ export default function Profile({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'green',
+    backgroundColor: '#128c4b',
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingTop: 70,
