@@ -9,7 +9,9 @@ const ProfilePage = () => {
     return (
         <div>
             <NavBar></NavBar>
-            <ProfileCard></ProfileCard>
+            <div className='w-50 h-50'>
+                <ProfileCard></ProfileCard>
+            </div>
         </div>
         
     )
