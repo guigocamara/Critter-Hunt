@@ -7,6 +7,7 @@ export default function AllPosts({postsList}){
     let [currentPostLikes, setCurrentPostLikes] = useState(0);
     let [currentPostId, setCurrentPostId] = useState("");
     let [currentPostComments, setCurrentPostComments] = useState([]);
+    <div>test</div>
 
     // const updatePost = async event => {
     //     var obj = { postsId: currentPostId, newLikes: currentPostLikes, newComments: currentPostComments };
