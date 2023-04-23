@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import * as Location from 'expo-location';
@@ -111,9 +111,9 @@ export default function AddPost({ route, navigation }) {
                     onChangeText={setPostTitle}
                     value={postTitle}
                 />
-                <Text>{text}</Text>
+                <Text style={styles.loc}>{text}</Text>
 
-                <Button title='Submit' onPress={() => doPost()} />
+                <Pressable style={styles.submit} onPress={() => doPost()}><Text style={{ color: '#128c4b', fontSize: 18 }}>Submit</Text></Pressable>
 
             </View>
 
@@ -125,7 +125,7 @@ export default function AddPost({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#128c4b',
     },
     top: {
         flex: 1,
@@ -139,7 +139,9 @@ const styles = StyleSheet.create({
     },
     img: {
         height: 300,
-        width: 300
+        width: 300,
+        borderColor: '#fff',
+        borderWidth: 4
     },
     textInput: {
         height: 40,
@@ -148,5 +150,16 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 20,
         paddingLeft: 10,
+        backgroundColor: '#fff',
     },
+    loc: {
+        color: '#fff',
+        fontWeight: 'bold'
+    },
+    submit: {
+        backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 5,
+        margin: 10
+    }
 });
