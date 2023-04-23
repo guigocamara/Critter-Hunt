@@ -38,7 +38,6 @@ export default function Map ({ postsList, location, zoomLevel }) {
               return(
                 post.location.length != 0 &&
                 <LocationPin
-                key={post._id}
                 lat={post.location[0]}
                 lng={post.location[1]}
                 text={post.crittername}
