@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text} from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import { SearchBar } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native';
+
 
 export default function Map() {
   const [posts, setPosts] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const navigation = useNavigation();
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -73,16 +78,19 @@ export default function Map() {
       >
         {filteredPosts.map((post) => (
           <Marker
-            key={post._id}
-            coordinate={{
-              latitude: parseFloat(post.location[0]),
-              longitude: parseFloat(post.location[1]),
-            }}
-          >
-            <Callout>
-              <Text>{post.crittername}</Text>
-            </Callout>
-          </Marker>
+          key={post._id}
+          coordinate={{
+            latitude: parseFloat(post.location[0]),
+            longitude: parseFloat(post.location[1]),
+          }}
+          onPress={() => navigation.navigate('PostDetails', { postID: post._id })}
+        >
+          <Callout>
+            <Text>{post.crittername}</Text>
+          </Callout>
+        </Marker>
+        
+        
         ))}
       </MapView>
     </>
