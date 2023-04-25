@@ -187,6 +187,99 @@ exports.setApp = function (app, client) {
   });
 
 
+  /*
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+
+app.post('/api/signUp', async (req, res, next) => {
+    var error = '';
+
+    const { username, password, email } = req.body;
+
+    if(!username || !password || !email)
+    {
+        return res.status(400).json({message: 'Please fill all the required fields'});
+    }
+
+    const existingUser = await User.findOne({ username });
+    const existingEmail = await User.findOne({ email });
+
+    if(existingUser)
+    {
+        return res.status(400).json({message: 'Username already taken. Please try another one.'});
+    }
+
+    if(existingEmail)
+    {
+        return res.status(400).json({message: 'Email already taken. Please try another one.'});
+    }
+
+  //  const token = crypto.randomBytes(20).toString('hex');
+    const verificationLink = `http://localhost5000/api/verifyEmail/${token}`;
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.zoho.com',
+        port: 465,
+        secure: true,
+        auth: 
+        {
+            user: 'critterhunt@zohomail.com',
+            pass: 'Critterhunt1234!'
+        }
+    });
+
+    const mailOptions = 
+    {
+        from: 'critterhunt@zohomail.com',
+        to: email,
+        subject: 'Email Verification Link',
+        html: `Please click <a href="${verificationLink}">here</a> to verify your email address.`
+    };
+
+    try 
+    {
+        await transporter.sendMail(mailOptions);
+
+        const newUser = new User({username: username, password: password, email: email, createdAt: new Date().toLocaleDateString(), verificationToken: token});
+
+        await newUser.save();
+        const userId = newUser._id; //added to retrieve userId
+        const dateJoined = newUser.createdAt; //added to show date joined
+        const token = require('./createJWT.js');
+        const ret = token.createToken(username, password, email);
+        ret.userId = userId; //added to retrieve userId
+        ret.dateJoined = dateJoined; //added to show date joined
+        res.status(200).json(ret);
+    } 
+    catch (e) 
+    {
+        ret = { error: e.message };
+    }
+});
+
+app.get('/api/verifyEmail/:token', async (req, res, next) => 
+{
+    const token = req.params.token;
+
+    const user = await User.findOne({ verificationToken: token });
+
+    if (!user) 
+    {
+        return res.status(400).json({ message: 'Invalid verification link' });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = null;
+
+    await user.save();
+
+    res.status(200).json({ message: 'Email verified successfully' });
+});
+
+
+  */
+
+
 
 
 
@@ -624,8 +717,10 @@ exports.setApp = function (app, client) {
   });
 
   // Retrieve the number of posts for each user
-app.get('/api/users/rank', async (req, res) => {
-  try {
+app.get('/api/users/rank', async (req, res) => 
+{
+  try 
+  {
     const users = await User.aggregate([
       {
         $lookup: {
@@ -648,26 +743,52 @@ app.get('/api/users/rank', async (req, res) => {
       }
     ]);
     res.status(200).json(users);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
 
 
-app.get('/api/datejoined/:id', async (req, res) => {
+app.get('/api/datejoined/:id', async (req, res) => 
+{
   const infoId = req.params.id;
 
-  try {
+  try 
+  {
     const info = await User.findById(infoId);
-    if (!info) {
-      return res.status(404).json({ message: 'Information not found' });
+    if (!info) 
+    {
+      return res.status(400).json({ message: 'Information not found' });
     }
 
     const dateJoined = info.createdAt; 
 
     res.status(200).json({ dateJoined });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } 
+  catch (error) 
+  {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.get('/api/getUsername/:id', async (req, res) => 
+{
+  const id = req.params.id;
+  try 
+  {
+    const user = await User.findOne({ _id: id });
+    if (!user) 
+    {
+      return res.status(400).json({ message: 'User not found with that ID' });
+    }
+    res.json({ username: user.username });
+  } 
+  catch (err) 
+  {
+    console.error(err);
+    res.status(400).json({ message: 'Internal server error' });
   }
 });
   
