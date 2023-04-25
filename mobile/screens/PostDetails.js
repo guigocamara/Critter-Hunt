@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Pressable, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import LikeButton from './cameraComponents/LikeButton';
@@ -8,6 +8,7 @@ export default function PostDetails() {
     const route = useRoute();
     const { postID } = route.params;
     const [post, setPost] = useState(null);
+    const [username, setUsername] = useState("");
 
     const requestOptions = {
         method: 'POST',
@@ -35,12 +36,15 @@ export default function PostDetails() {
         }
     }
 
-    // TODO: get author
-
+    const getUsername = async () => {
+        const response = await fetch(`http://critterhunt.herokuapp.com/api/getUsername/${post.author}`);
+        const jsonData = await response.json();
+        setUsername(jsonData.username);
+    }
 
     useEffect(() => {
-        getPost();
-    }, [])
+        { post ? getUsername() : getPost() }
+    }, [post])
 
 
     return (
@@ -55,7 +59,7 @@ export default function PostDetails() {
                     </View>
                     <ScrollView style={styles.bottom}>
                         <Text style={styles.critterName}>{post.crittername}</Text>
-                        <Text style={styles.author}>Posted by: {post.author}</Text>
+                        <Text style={styles.author}>Posted by: {username}</Text>
                         <LikeButton icon={'star'} title={`Likes: ${post.likes}`} color={'#fff'} round={true} />
                     </ScrollView>
                 </>
