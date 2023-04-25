@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
+import LikeButton from './cameraComponents/LikeButton';
 
 export default function PostDetails() {
 
@@ -34,6 +35,8 @@ export default function PostDetails() {
         }
     }
 
+    // TODO: get author
+
 
     useEffect(() => {
         getPost();
@@ -50,11 +53,10 @@ export default function PostDetails() {
                             source={{ uri: 'http://critterhunt.herokuapp.com/image/' + post.picture }}
                         />
                     </View>
-                    <ScrollView >
+                    <ScrollView style={styles.bottom}>
                         <Text style={styles.critterName}>{post.crittername}</Text>
                         <Text style={styles.author}>Posted by: {post.author}</Text>
-                        <Text>Likes: {post.likes}</Text>
-                        <Text>comments: {post.comments}</Text>
+                        <LikeButton icon={'star'} title={`Likes: ${post.likes}`} color={'#fff'} round={true} />
                     </ScrollView>
                 </>
                 : <View><Text>Getting post...</Text></View>}
@@ -66,7 +68,7 @@ export default function PostDetails() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#128c4b',
     },
     top: {
         flex: 1,
@@ -75,17 +77,19 @@ const styles = StyleSheet.create({
     },
     bottom: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: '#fff'
     },
     img: {
         height: 300,
         width: 300
     },
     critterName: {
-        fontSize: 30
+        fontSize: 30,
+        textAlign: 'center',
     },
     author: {
-        fontSize: 20
-    }
+        fontSize: 20,
+        borderWidth: 1,
+        paddingVertical: 6
+    },
 });
