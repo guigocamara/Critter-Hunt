@@ -23,13 +23,15 @@ export default function HomePage()
 
     useEffect(() => {
       // Update the document title using the browser API
+      console.log("updating....");
       searchPosts();
-    });
+    }, []);
 
     const searchPosts = async event => {
         var storage = require('../tokenStorage.js');
         var obj = { search: searchInput.value, jwtToken: storage.retrieveToken() };
         var js = JSON.stringify(obj);
+        console.log(js);
         try {
             const response = await fetch(bp.buildPath('api/searchposts'),
                 { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });

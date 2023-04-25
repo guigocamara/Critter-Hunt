@@ -24,7 +24,7 @@ function ProfileCard() {
         // Update the document title using the browser API
         searchPosts();
         console.log(userID);
-      });
+      },[]);
   
       const searchPosts = async event => {
           var storage = require('../tokenStorage.js');
