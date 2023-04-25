@@ -1,8 +1,8 @@
 import React from 'react';
-import Forgotpassword from '../components/Forgotpassword';
+import Resetpassword from '../components/Resetpassword';
 import './style.css';
-import PenguinPicture from './PenguinPicture.png'
-const ForgetPage = () =>
+import HorsePicture from './HorsePicture.png'
+const ResetPage = () =>
 {
     return(
       <div>
@@ -11,17 +11,17 @@ const ForgetPage = () =>
             <span className="page-title">Hunt Critter with Critter Hunt!</span>
             <div className="wrap-login">
 
-              <img src={PenguinPicture} className="login-pic" alt="IMG" />
+              <img src={HorsePicture} className="login-pic" alt="IMG" />
               <a className="login-form">
 
-              <span className="login-form-title">Forgot your password?</span>
-              <span className="txt1">Enter your email and we'll send you a token to get back into your account.</span> <br />
+              <span className="login-form-title">Reset your password?</span>
+              <span className="txt1">Enter your token and new password!.</span> <br />
 
-                <Forgotpassword/>
+                <Resetpassword/>
 
                 <div className="text-center p-t-1">
-                  <span className="txt1">Have an account?</span>
-                  <a href="/" className="txt2"> Login!</a>
+                  <span className="txt1">Change your mind? ?</span>
+                  <a href="/" className="txt2"> Return to ogin!</a>
                 </div>
 
                 <div class="text-center p-t-2">
@@ -35,4 +35,4 @@ const ForgetPage = () =>
       </div>
     );
 };
-export default ForgetPage;
+export default ResetPage;
