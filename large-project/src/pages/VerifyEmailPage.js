@@ -1,7 +1,7 @@
 import React from 'react';
 import EmailVerification from '../components/EmailVerification';
 import './style.css';
-import ProfilePictureMaker from './ProfilePictureMaker.png'
+import SharkPicture.png from './SharkPicture.png.png'
 const VerifyEmailPage = () =>
 {
     return(
@@ -11,11 +11,12 @@ const VerifyEmailPage = () =>
             <span className="page-title">Hunt Critter with Critter Hunt!</span>
             <div className="wrap-login">
 
-              <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
+              <img src={SharkPicture.png} className="login-pic" alt="IMG" />
               <a className="login-form">
 
-              <span className="login-form-title">Verify you email</span>
-              <span className="txt1">Enter the code that was emailed to you to get verified.</span> <br />
+              <span className="login-form-title">Final step!</span>
+              <span className="login-form-title">We need to verify your email!</span>
+              <span className="txt1">Please check your inbox for your verification code and enter it below.</span> <br />
 
                 <EmailVerification/>
 
