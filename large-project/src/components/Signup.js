@@ -37,8 +37,9 @@ function Signup() {
                     var username = ud.payload.username;
                     var password = ud.payload.password;
                     var email = ud.payload.email;
+                    var userID = res.userId;
 
-                    var user = { username: username, password: password, email: email }
+                    var user = { username: username, password: password, email: email, userID: userID }
                     localStorage.setItem('user_data', JSON.stringify(user));
                     window.location.href = '/cards';
                 }

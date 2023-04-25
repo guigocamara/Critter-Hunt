@@ -28,7 +28,8 @@ const UserSchema = new Schema({
   email: String,
   resetToken: String,
   resetTokenExpiration: Date,
-  createdAt: String
+  createdAt: String,
+  userID: String,
  //}, {timestamps: { createdAt: 'created_at', updatedAt: 'updated_at', timezone: 'America/New_York' }
 });
 module.exports = User = mongoose.model("Users", UserSchema, "Users");

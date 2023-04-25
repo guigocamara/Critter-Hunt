@@ -35,9 +35,10 @@ function Login() {
                     var ud = jwt.decode(storage.retrieveToken(), { complete: true });
                     var username = ud.payload.username;
                     var password = ud.payload.password;
-                    var favorite = ud.payload.favorite;
+                    //var favorite = ud.payload.favorite;
+                    var userID = res.userId;
 
-                    var user = { username: username, password: password, favorite: favorite }
+                    var user = { username: username, password: password, userID: userID };
                     localStorage.setItem('user_data', JSON.stringify(user));
                     window.location.href = '/map';
                 }

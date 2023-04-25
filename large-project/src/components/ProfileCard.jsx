@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
+
 import { MDBCol, 
     MDBContainer, 
     MDBRow, 
@@ -12,6 +13,37 @@ import './profilecard.css';
 
 
 function ProfileCard() {
+
+    const [postsList, setPostsList] = useState([]);
+    var bp = require('../components/Path.js');
+    var _ud = localStorage.getItem('user_data');
+    var ud = JSON.parse(_ud);
+    var userID = ud.userID;
+
+    useEffect(() => {
+        // Update the document title using the browser API
+        searchPosts();
+        console.log(userID);
+      });
+  
+      const searchPosts = async event => {
+          var storage = require('../tokenStorage.js');
+          var obj = { search: "", jwtToken: storage.retrieveToken() };
+          var js = JSON.stringify(obj);
+          try {
+              const response = await fetch(bp.buildPath('api/searchposts'),
+                  { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
+              var txt = await response.text();
+              var res = JSON.parse(txt);
+              var _results = res;
+  
+              setPostsList(_results._ret);
+          }
+          catch (e) {
+              console.log(e.toString());
+              storage.storeToken(res.jwtToken);
+          }
+      };
 
     return (
         <div className='h-screen grid place-items-center bg-gradient-to-r from-emerald-300 to-emerald-500'>
@@ -52,13 +84,22 @@ function ProfileCard() {
                                 <MDBCardText className="mb-0"><a href="#!" className="text-muted">Show all</a></MDBCardText>
                                 </div>
                                 <MDBRow className="g-2 grid grid-cols-3">
-                                <MDBCol className="mb-2">
-                                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                                    alt="image 1" className="w-full rounded-lg" />
-                                </MDBCol>
-                                <MDBCol className="mb-2">
+                                {postsList.map(post => {
+                                    return (
+                                        <div>
+                                        {post.author == userID && 
+                                        <MDBCol className="mb-2">
+                                            <MDBCardImage src={`http://critterhunt.herokuapp.com/image/${post.picture}`}
+                                        alt="image 1" className="w-full rounded-lg" />
+                                        </MDBCol>
+                                        }
+                                        </div>
+                                
+                                    )
+                                })};
+                                {/* <MDBCol className="mb-2">
                                     <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                                    alt="image 1" className="w-full rounded-lg" />
+                                    alt="ima)ge 1" className="w-full rounded-lg" />
                                 </MDBCol>
                                 <MDBCol className="mb-2">
                                     <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
@@ -71,7 +112,7 @@ function ProfileCard() {
                                 <MDBCol className="mb-2">
                                     <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
                                     alt="image 1" className="w-full rounded-lg" />
-                                </MDBCol>
+                                </MDBCol> */}
                                 </MDBRow>
                             </MDBCardBody>
                         </MDBCard>

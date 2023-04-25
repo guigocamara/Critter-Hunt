@@ -12,20 +12,20 @@ const LoginPage = () =>
             <div className="wrap-login">
 
               <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
-              <a href= "/" className="login-form">
+              {/* <a href= "/" className="login-form"> */}
 
                 <Login/>
 
 
                 <div className="text-center p-t-1">
                   <span className="txt1">Forgot</span>
-                  <a href="/" className="txt2"> Username / Password ?</a>
+                  {/* <a href="/" className="txt2"> Username / Password ?</a> */}
                 </div>
 
                 <div class="text-center p-t-2">
-                  <a href="/" className="txt2">Create Your Account <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a>
+                  {/* <a href="/" className="txt2">Create Your Account <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a> */}
                 </div>
-              </a>
+              {/* </a> */}
             </div>
 
           </div>
