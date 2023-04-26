@@ -20,6 +20,12 @@ export default function PostDetails({ navigation }) {
         body: JSON.stringify({ postsId: postID, jwtToken: "" }) // jwtToken left blajnk for now
     };
 
+    const deleteOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ PostsId: postID })
+    };
+
     const getPost = async () => {
         try {
             await fetch('http://critterhunt.herokuapp.com/api/getpost', requestOptions)
@@ -39,6 +45,34 @@ export default function PostDetails({ navigation }) {
             console.error(error);
         }
     }
+
+    const deletePost = async () => {
+        try {
+            await fetch('http://critterhunt.herokuapp.com/api/deletepost', deleteOptions)
+                .then(response => {
+                    response.json()
+                        .then(data => {
+                            navigation.goBack();
+                        });
+                })
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    const deletePrompt = () =>
+        Alert.alert("Hey!", "Are you sure you want to delete this post?", [
+            {
+                text: "Cancel",
+                onPress: () => console.log("Cancel pressed"),
+                style: "cancel"
+            },
+            {
+                text: "Delete",
+                onPress: () => deletePost()
+            }
+        ]);
 
     const getUsername = async () => {
         const response = await fetch(`http://critterhunt.herokuapp.com/api/getUsername/${post.author}`);
@@ -68,7 +102,7 @@ export default function PostDetails({ navigation }) {
                 navigation.setOptions({
                     headerRight: () => (
 
-                        <Button onPress={() => (Alert.alert("Hey!", "Are you sure you want to delete this post?"))} title="Delete" color={'#ff0000'} />
+                        <Button onPress={() => deletePrompt()} title="Delete" color={'#ff0000'} />
                     ),
                 })
                 :
