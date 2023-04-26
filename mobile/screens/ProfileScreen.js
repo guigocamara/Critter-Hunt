@@ -41,19 +41,21 @@ export default function Profile({ route, navigation }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ search: "", jwtToken: "", userId: userId }),
     };
-
+  
     try {
       const response = await fetch('http://critterhunt.herokuapp.com/api/searchposts', requestOptions);
       const data = await response.json();
       if (data.error) {
         console.error(data.error);
       } else {
-        setUserPosts(data._ret);
+        const filteredPosts = data._ret.filter(post => post.author === userId);
+        setUserPosts(filteredPosts);
       }
     } catch (error) {
       console.error('Error fetching user posts:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchData();
@@ -80,6 +82,7 @@ export default function Profile({ route, navigation }) {
     };
     fetchRank();
   }, []);
+
 
   return (
     <View style={styles.container}>
