@@ -98,7 +98,7 @@ exports.setApp = function (app, client) {
       //res.status(200).json(file[0]._id.toString());
     } catch (err) {
       console.log(err);
-      res.status(500).send('An error occurred while fetching the image');
+      res.status(400).send('An error occurred while fetching the image');
     }
   });
 
@@ -212,7 +212,7 @@ app.post('/api/verifyEmail', async (req, res, next) => {
   // Find user with email in database
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(400).json({ message: 'User not found' });
   }
 
   // Check verification code against saved code
@@ -375,11 +375,11 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     
     //const db = client.db();
     //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
-    let results = await Post.find({ "crittername": { $regex: _search + '.*'} });
+    let results = await Post.find({ "crittername": { $regex: _search + '.*', $options: 'i'} });
     
     var _ret = [];
     if(results.length == 0){
-      results = await Post.find({ "": { $regex: _search + '.*'} });
+      results = await Post.find({ "": { $regex: _search + '.*',$options: 'i'} });
     }
 
     for( var i=0; i<results.length; i++ )
@@ -576,7 +576,7 @@ app.post('/api/verifyEmail', async (req, res, next) => {
 
     if (!user) 
     {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(400).json({ error: 'User not found' });
     }
   
     //generate token function
