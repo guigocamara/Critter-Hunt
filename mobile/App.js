@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -26,7 +26,15 @@ export default function App() {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AddPost" component={AddPost} options={{ title: 'Post' }} />
-        <Stack.Screen name="PostDetails" component={PostDetails} options={{ title: 'Details' }} />
+        <Stack.Screen
+          name="PostDetails"
+          component={PostDetails}
+          options={({ navigation, route }) => ({
+            headerTitle: 'Details',
+            headerRight: () => (
+              <Button title="Delete" color={'#ff0000'} />
+            ),
+          })} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="ForgotPass" component={ForgotPass} />
         <Stack.Screen name="ResetPass" component={ResetPass} />
