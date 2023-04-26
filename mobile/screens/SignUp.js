@@ -24,7 +24,7 @@ export default function SignUp({ navigation }) {
                                 Alert.alert("Error", data.error);
                             }
                             else {
-                                navigation.navigate('Welcome', { username: data.us });
+                                navigation.navigate('VerifyEmail', { email: email });
                             }
                         });
                 })
@@ -33,6 +33,7 @@ export default function SignUp({ navigation }) {
             console.error(error);
         }
     }
+    
 
     return (
         <View style={styles.container}>
