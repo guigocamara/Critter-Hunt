@@ -24,6 +24,8 @@ export default function Profile({ route, navigation }) {
   const [dateJoined, setDateJoined] = useState('');
   const [rank, setRank] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
+  const [numPosts, setNumPosts] = useState(0);
+
 
   const fetchData = async () => {
     const userId = await getItem('userId');
@@ -74,8 +76,10 @@ export default function Profile({ route, navigation }) {
       try {
         const response = await fetch('http://critterhunt.herokuapp.com/api/users/rank');
         const data = await response.json();
+        const user = data.find(user => user._id === userId);
         const userRank = data.findIndex(user => user._id === userId) + 1;
         setRank(userRank);
+        setNumPosts(user.numPosts);
       } catch (error) {
         console.error('Error fetching rank:', error);
       }
@@ -91,14 +95,14 @@ export default function Profile({ route, navigation }) {
           style={styles.profileImage}
           source={require('mobile/assets/kermit.jpg')}
         />
-        <Text style={styles.text}>{"\n"}Number of critters caught:</Text>
+        <Text style={styles.text}>{"\n"}Number of critters caught: {numPosts}</Text>
         <Text style={styles.text}>
           {"\n"}Critter Hunter since: {dateJoined ? formatDate(dateJoined) : ''}
         </Text>
         {rank && <Text style={styles.text}>{"\n"}Current rank: {rank}</Text>}
       </View>
   
-      <Text style={styles.headerText}>{"\n"}Your Posts:</Text>
+      <Text style={styles.headerText}>{"\n"}Your Critters:</Text>
       <SafeAreaView style={styles.postsContainer}>
         <FlatList
           style={styles.postList}
