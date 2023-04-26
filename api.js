@@ -112,7 +112,7 @@ exports.setApp = function (app, client) {
 
     //const db = client.db();
     //const results = await db.collection('Users').find({ Login: login, Password: password }).toArray();
-    const results = await User.find({ username: username, password: password });
+    const results = await User.find({ username: username, password: password, emailVerified: "true" });
 
     var us = '';
     var pa = '';
@@ -124,6 +124,7 @@ exports.setApp = function (app, client) {
       pa = results[0].password;
       fa = results[0].favorite;
       const userId = results[0]._id; //added to retriev userId
+
       try {
         const token = require("./createJWT.js");
         ret = token.createToken(us, pa, fa);
@@ -134,154 +135,98 @@ exports.setApp = function (app, client) {
       }
     }
     else {
-      ret = { error: "Login/Password incorrect" };
+      ret = { error: "Login/Password incorrector email not verified" };
     }
 
     res.status(200).json(ret);
   });
 
-
-  app.post('/api/signUp', async (req, res, next) => {
-
-    var error = '';
-
-    const { username, password, email } = req.body;
-
-    if(!username || !password || !email)
-    {
-      return res.status(400).json({message: 'Please fill all the required fields'});
-    }
-
-    const existingUser = await User.findOne({ username });
-    const existingEmail = await User.findOne({ email });
-
-    if(existingUser)
-    {
-      return res.status(400).json({message: 'usernmane already taken. Please try another one.'});
-    }
-
-    if (existingEmail)
-    {
-      return res.status(400).json({message: 'email already taken. Please try another one.'});
-    }
-
-    else
-    {
-      const newUser = new User({username: username, password: password, email: email, createdAt: new Date().toLocaleDateString()});
-      try
-      {    
-        await newUser.save();
-        const userId = newUser._id; //added to retriev userId
-        const dateJoined = newUser.createdAt; //added to show date joined
-        const token = require('./createJWT.js');
-        const ret = token.createToken(username, password, email);
-        ret.userId = userId; //added to retriev userId
-        ret.dateJoined = dateJoined; //added to show date joined
-        res.status(200).json(ret);
-      }
-      catch (e)
-      {
-        ret = { error: e.message };
-      }
-    }
-  });
-
-
-  /*
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
-
 app.post('/api/signUp', async (req, res, next) => {
-    var error = '';
 
-    const { username, password, email } = req.body;
+  const { username, password, email } = req.body;
 
-    if(!username || !password || !email)
-    {
-        return res.status(400).json({message: 'Please fill all the required fields'});
-    }
+  // Validate input
+  if(!username || !password || !email) {
+    return res.status(400).json({message: 'Please fill all the required fields'});
+  }
 
-    const existingUser = await User.findOne({ username });
-    const existingEmail = await User.findOne({ email });
+  // Check if username or email is already taken
+  const existingUser = await User.findOne({ username });
+  const existingEmail = await User.findOne({ email });
+  if(existingUser) {
+    return res.status(400).json({message: 'Username already taken. Please try another one.'});
+  }
+  if(existingEmail) {
+    return res.status(400).json({message: 'Email already taken. Please try another one.'});
+  }
 
-    if(existingUser)
-    {
-        return res.status(400).json({message: 'Username already taken. Please try another one.'});
-    }
+  // Generate verification code
+  const verificationCode = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
 
-    if(existingEmail)
-    {
-        return res.status(400).json({message: 'Email already taken. Please try another one.'});
-    }
+  // Save new user with verification code
+  const newUser = new User({ username, password, email, verificationCode });
+  try {    
+    await newUser.save();
+    const userId = newUser._id;
+    const dateJoined = newUser.createdAt;
+    const token = require('./createJWT.js');
+    const ret = token.createToken(username, password, email);
+    ret.userId = userId;
+    ret.dateJoined = dateJoined;
 
-  //  const token = crypto.randomBytes(20).toString('hex');
-    const verificationLink = `http://localhost5000/api/verifyEmail/${token}`;
-
+    // Send verification email with code
+    const nodemailer = require('nodemailer');
     const transporter = nodemailer.createTransport({
-        host: 'smtp.zoho.com',
-        port: 465,
-        secure: true,
-        auth: 
-        {
-            user: 'critterhunt@zohomail.com',
-            pass: 'Critterhunt1234!'
-        }
+      host: 'smtp.zoho.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: 'critterhunt@zohomail.com',
+        pass: 'Critterhunt1234!'
+      }
+    });
+    const mailOptions = {
+      from: 'critterhunt@zohomail.com',
+      to: email,
+      subject: 'Email Verification Code',
+      text: `Your verification code is ${verificationCode}`
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
     });
 
-    const mailOptions = 
-    {
-        from: 'critterhunt@zohomail.com',
-        to: email,
-        subject: 'Email Verification Link',
-        html: `Please click <a href="${verificationLink}">here</a> to verify your email address.`
-    };
-
-    try 
-    {
-        await transporter.sendMail(mailOptions);
-
-        const newUser = new User({username: username, password: password, email: email, createdAt: new Date().toLocaleDateString(), verificationToken: token});
-
-        await newUser.save();
-        const userId = newUser._id; //added to retrieve userId
-        const dateJoined = newUser.createdAt; //added to show date joined
-        const token = require('./createJWT.js');
-        const ret = token.createToken(username, password, email);
-        ret.userId = userId; //added to retrieve userId
-        ret.dateJoined = dateJoined; //added to show date joined
-        res.status(200).json(ret);
-    } 
-    catch (e) 
-    {
-        ret = { error: e.message };
-    }
-});
-
-app.get('/api/verifyEmail/:token', async (req, res, next) => 
-{
-    const token = req.params.token;
-
-    const user = await User.findOne({ verificationToken: token });
-
-    if (!user) 
-    {
-        return res.status(400).json({ message: 'Invalid verification link' });
-    }
-
-    user.isVerified = true;
-    user.verificationToken = null;
-
-    await user.save();
-
-    res.status(200).json({ message: 'Email verified successfully' });
+    res.status(200).json(ret);
+  } catch (e) {
+    ret = { error: e.message };
+  }
 });
 
 
-  */
+app.post('/api/verifyEmail', async (req, res, next) => {
+  const { email, verificationCode } = req.body;
 
+  // Find user with email in database
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
 
+  // Check verification code against saved code
+  if (user.verificationCode !== verificationCode) {
+    return res.status(400).json({ message: 'Invalid verification code' });
+  }
 
+  // Update user record with verified email and clear verification code
+  user.emailVerified = true;
+  user.verificationCode = null;
+  await user.save();
 
+  return res.status(200).json({ message: 'Email verified successfully' });
+});
 
 
 
