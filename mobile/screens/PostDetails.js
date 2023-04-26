@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, ScrollView, Pressable, Alert, Button } f
 import { useRoute } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
+import * as SecureStore from 'expo-secure-store';
 import LikeButton from './cameraComponents/LikeButton';
 
 export default function PostDetails({ navigation }) {
@@ -11,6 +12,7 @@ export default function PostDetails({ navigation }) {
     const [post, setPost] = useState(null);
     const [username, setUsername] = useState("");
     const [address, setAddress] = useState("");
+    const [userIsPoster, setUserIsPoster] = useState(false);
 
     const requestOptions = {
         method: 'POST',
@@ -46,16 +48,38 @@ export default function PostDetails({ navigation }) {
         // get address from coords
         let addr = await Location.reverseGeocodeAsync({ latitude: parseFloat(post.location[0]), longitude: parseFloat(post.location[1]) });
         setAddress(addr[0].name + ", " + addr[0].city + " ");
+
+        checkUserIsPoster();
+    }
+
+    const checkUserIsPoster = async () => {
+        let id = await SecureStore.getItemAsync('userId');
+        if (id == post.author) {
+            setUserIsPoster(true);
+        } else {
+            setUserIsPoster(false);
+        }
     }
 
     useEffect(() => {
         { post ? getUsername() : getPost() }
-        navigation.setOptions({
-            headerRight: () => (
-                <Button onPress={() => (console.log("hi"))} title="Delete" color={'#ff0000'} />
-            ),
-        })
-    }, [navigation, post]);
+        {
+            userIsPoster ?
+                navigation.setOptions({
+                    headerRight: () => (
+
+                        <Button onPress={() => (Alert.alert("Hey!", "Are you sure you want to delete this post?"))} title="Delete" color={'#ff0000'} />
+                    ),
+                })
+                :
+                navigation.setOptions({
+                    headerRight: () => (
+                        <></>
+                    ),
+                })
+        }
+
+    }, [navigation, post, userIsPoster]);
 
 
     return (
