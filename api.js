@@ -164,7 +164,7 @@ app.post('/api/signUp', async (req, res, next) => {
   const verificationCode = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
 
   // Save new user with verification code
-  const newUser = new User({ username, password, email, verificationCode });
+  const newUser = new User({ username, password, email, verificationCode, createdAt: new Date().toLocaleDateString() });
   try {    
     await newUser.save();
     const userId = newUser._id;
