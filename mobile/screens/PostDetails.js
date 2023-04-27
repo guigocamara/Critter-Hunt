@@ -13,6 +13,7 @@ export default function PostDetails({ navigation }) {
     const [username, setUsername] = useState("");
     const [address, setAddress] = useState("");
     const [userIsPoster, setUserIsPoster] = useState(false);
+    const [numLikes, setNumLikes] = useState(0);
 
     const requestOptions = {
         method: 'POST',
@@ -95,6 +96,25 @@ export default function PostDetails({ navigation }) {
         }
     }
 
+    const likePost = async () => {
+        try {
+            await fetch('http://critterhunt.herokuapp.com/api/updatepost', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ postsId: postID, newLikes: numLikes + 1, newComments: [] })
+            })
+                .then(response => {
+                    response.json()
+                        .then(data => {
+                            setNumLikes(numLikes + 1);
+                        });
+                })
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(() => {
         { post ? getUsername() : getPost() }
         {
@@ -112,6 +132,7 @@ export default function PostDetails({ navigation }) {
                     ),
                 })
         }
+        { post ? setNumLikes(post.likes) : setNumLikes(0) }
 
     }, [navigation, post, userIsPoster]);
 
@@ -129,7 +150,7 @@ export default function PostDetails({ navigation }) {
                     <ScrollView style={styles.bottom}>
                         <Text style={styles.critterName}>{post.crittername}</Text>
                         <Text style={styles.author}>{username}</Text>
-                        <LikeButton icon={'star'} title={`Likes: ${post.likes}`} color={'#fff'} round={true} />
+                        <LikeButton icon={'star'} title={`Likes: ${numLikes}`} color={'#fff'} round={true} onPress={() => likePost()} />
                         <Text style={styles.address}>{address}</Text>
                     </ScrollView>
                 </>
