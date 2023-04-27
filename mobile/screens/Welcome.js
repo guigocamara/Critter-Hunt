@@ -35,6 +35,9 @@ export default function Welcome({ navigation }) {
             <Button title="Go to camera" onPress={() => navigation.navigate('Camera')} />
             <Button title="Feed" onPress={() => navigation.navigate('PostFeed')} />
             <Button title="Go to profile" onPress={() => navigation.navigate('Profile')} />
+            <Button title="Go to map" onPress={() => navigation.navigate('Map')} />
+            <Button title="Leaderboard" onPress={() => navigation.navigate('Leaderboard')} />
+
             <StatusBar style="auto" />
         </View>
     );

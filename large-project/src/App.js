@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ForgetPage from './pages/ForgetPage';
-import MapsPage from './pages/MapsPage';
+import HomePage from './pages/HomePage';
 function App() {
   return (
     <BrowserRouter>
@@ -12,7 +12,7 @@ function App() {
       <Route path="/" index element={<LoginPage />} />
       <Route path="/Signup" index element={<SignupPage />} />
       <Route path="/ForgetPage" index element={<ForgetPage />} />
-      <Route path="/map" index element={<MapsPage />} />
+      <Route path="/map" index element={<HomePage />} />
     </Routes>
   </BrowserRouter>
 );

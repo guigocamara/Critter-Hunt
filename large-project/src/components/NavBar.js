@@ -15,13 +15,13 @@ export default function NavBar(){
     };
     return (
         
-      <div class="flex flex-row bg-[#57B846] w-100% h-16 items-center justify-between">
-        <div class="flex flex-row">
-            <li class="text-lg list-none ml-5">
-                <Link class="text-white hover:text-sky-700" to='/map'>Home</Link>
+      <div className="flex flex-row bg-[#57B846] w-100% h-16 items-center justify-between">
+        <div className="flex flex-row">
+            <li className="text-lg list-none ml-5">
+                <Link className="text-white hover:text-sky-700" to='/map'>Home</Link>
             </li>
-            <li class="text-lg list-none ml-5">
-                <Link class="text-white h-100% hover:text-sky-700" to='/profile'>Profile</Link>
+            <li className="text-lg list-none ml-5">
+                <Link className="text-white h-100% hover:text-sky-700" to='/profile'>Profile</Link>
             </li>
         </div>
 
@@ -31,9 +31,9 @@ export default function NavBar(){
             </li><br />
         </div> */}
 
-        <div id="loggedInDiv" class = "flex flex-row">
-            <li type="button" id="logoutButton" class="buttons text-white list-none mr-5" onClick={doLogout}> 
-                <Link class="text-white hover:text-sky-700">Log out</Link>
+        <div id="loggedInDiv" className = "flex flex-row">
+            <li type="button" id="logoutButton" className="buttons text-white list-none mr-5" onClick={doLogout}> 
+                <Link className="text-white hover:text-sky-700">Log out</Link>
             </li>
         </div>
 
