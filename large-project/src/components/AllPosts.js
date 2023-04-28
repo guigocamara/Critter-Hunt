@@ -28,6 +28,12 @@ export default function AllPosts({postsList}){
         }
     }
 
+    const [rotateChevron, setRotateChevron] = useState(false);
+
+    const handleRotate = () => setRotateChevron(!rotateChevron);
+
+    const rotate = rotateChevron ? "rotate(360deg)" : "rotate(0)"
+
 
     return(
     <div className="w-4/12 flex flex-col bg-[#57B846] items-center">
@@ -45,7 +51,7 @@ export default function AllPosts({postsList}){
     
                 <div className="h-15 text-sm mb-3 ml-3 mr-3 flex items-center">
                     <div className="flex flex-col items-center" onClick={() => {updatePost(post._id, post.likes)}}>
-                        <Icon className="h-10 w-10" icon="material-symbols:star-rounded"/>
+                        <Icon style={{ transform: rotate, transition: "all .5s linear" }} color="#f7dc12" className="h-10 w-10" icon="material-symbols:star-rounded" onClick={() => {handleRotate()}}/>
                         <div>{post.likes}</div>
                     </div>
                 </div>
