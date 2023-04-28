@@ -6,7 +6,7 @@ import SignupPage from './pages/SignupPage';
 import ForgetPage from './pages/ForgetPage';
 import HomePage from './pages/HomePage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
-import LeardBoard from './pages/LeardBoard';
+import Leaderboard from './pages/Leaderboard';
 function App() {
   return (
     <BrowserRouter>
@@ -16,7 +16,7 @@ function App() {
       <Route path="/ForgetPage" index element={<ForgetPage />} />
       <Route path="/map" index element={<HomePage />} />
       <Route path="/VerifyEmailPage" index element={<VerifyEmailPage />} />
-      <Route path="/LeardBoard" index element={<LeardBoard />} />
+      <Route path="/Leaderboard" index element={<Leaderboard />} />
     </Routes>
   </BrowserRouter>
 );

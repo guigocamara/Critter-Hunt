@@ -40,7 +40,7 @@ function EmailVerification() {
     <div>
       <span className="login-form-title">Email Verification</span>
       <div className="wrap-input">
-        <input type="email" className="input" name="email" id="emailToken" placeholder="Verification Token" required ref={(c) => email = c} />
+        <input type="email" className="input" name="email" id="emailToken" placeholder="Verification Token" required ref={(c) => emailToken = c} />
         <span className="focus-input"></span>
         <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true"></i> </span>
       </div>
