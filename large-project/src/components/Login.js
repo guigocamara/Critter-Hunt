@@ -26,7 +26,7 @@ function Login() {
                 var res = response.data;
                 if (res.error) {
                     console.log(res.error);
-                    setMessage('User/Password combination incorrect');
+                    setMessage('User/Password combination incorrect or Email not verified');
                 }
                 else {
                     storage.storeToken(res);

@@ -58,7 +58,8 @@ function Signup() {
 
                     var user = { username: username, password: password, email: email }
                     localStorage.setItem('user_data', JSON.stringify(user));
-                    window.location.href = '/cards';
+                    localStorage.setItem('email', JSON.stringify(email));
+                    window.location.href = '/VerifyEmailPage';
                 }
             })
             .catch(function (error) {
