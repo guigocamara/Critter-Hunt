@@ -13,11 +13,13 @@ const location = {
 
 export default function HomePage()
 {
-    let searchInput = '';
+    //let searchInput = '';
+    let [searchInput, setSearchInput] = useState('');
     const [postsList, setPostsList] = useState([]);
     var bp = require('../components/Path.js');
 
     const handleChange = (e) => {
+        setSearchInput(e.target.value);
         searchPosts();
     };
 
@@ -28,7 +30,7 @@ export default function HomePage()
 
     const searchPosts = async event => {
         var storage = require('../tokenStorage.js');
-        var obj = { search: searchInput.value, jwtToken: storage.retrieveToken() };
+        var obj = { search: searchInput, jwtToken: storage.retrieveToken() };
         var js = JSON.stringify(obj);
         try {
             const response = await fetch(bp.buildPath('api/searchposts'),
@@ -49,11 +51,11 @@ export default function HomePage()
       <div className="h-screen">
         <NavBar></NavBar>
         <div className="flex justify-center w-full bg-[#57B846]">
-          <input className="w-4/6 h-10 rounded p-2 mb-4" type="text" placeholder="Search for posts!" onChange={handleChange} value={searchInput.value} ref={(c) => searchInput = c}/>
+          <input className="w-4/6 h-10 rounded p-2 mb-4" type="text" placeholder="Search for posts!" onChange={handleChange} value={searchInput}/>
         </div>
         <div className="flex flex-row h-full">
           <AllPosts postsList = {postsList}></AllPosts>
-          <Map postsList={postsList} location={location} zoomLevel={15}/>
+          <Map change={setSearchInput} postsList={postsList} location={location} zoomLevel={15}/>
         </div>  
       </div>
     );

@@ -26,7 +26,8 @@ Geocode.setLanguage('en');
 // }
 
 
-export default function Map ({ postsList, location, zoomLevel }) {
+export default function Map ({ change, postsList, location, zoomLevel }) {
+
   return(
       <div className='h-full w-8/12'>
         <GoogleMapReact id="map"
@@ -36,12 +37,12 @@ export default function Map ({ postsList, location, zoomLevel }) {
         >
           { postsList.map(post => {
               return(
-                post.location.length != 0 &&
                 <LocationPin
                 key={post._id}
                 lat={post.location[0]}
                 lng={post.location[1]}
                 text={post.crittername}
+                change={change}
                 />
               
               );
@@ -52,13 +53,18 @@ export default function Map ({ postsList, location, zoomLevel }) {
   );
 }
 
-const LocationPin = ({ text }) => (
+function LocationPin({ text, change }){
+  function func(text){
+    change(text);
+  }
+
+  return(
     <div className="flex flex-col items-center w-40">
-        <Icon icon= "ic:baseline-place" className="text-6xl" />
+        <Icon icon= "ic:baseline-place" className="text-6xl" onClick={() => {func(text)}} />
             <p className="text-xl">{text}</p>
     </div>
-)
-
+  );
+}
 
 // function Modal() {
   
