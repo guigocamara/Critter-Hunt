@@ -1,11 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as SecureStore from 'expo-secure-store';
 
+import Login from './Login';
+import CameraScreen from './CameraScreen';
+import AddPost from './AddPost';
+import Profile from './ProfileScreen';
+import PostFeed from './PostFeed';
+import PostDetails from './PostDetails';
+import Map from './Map';
+import Leaderboard from './Leaderboard';
 
 export default function Welcome({ navigation }) {
     const [username, setUsername] = useState('');
+    const Tab = createBottomTabNavigator();
 
     const getUsername = async () => {
         let result = await SecureStore.getItemAsync('userData');
@@ -29,17 +39,13 @@ export default function Welcome({ navigation }) {
     }, [])
 
     return (
-        <View style={styles.container}>
-            <Text>Welcome, {username}</Text>
-            <Button title="Log out" onPress={() => doLogout()} />
-            <Button title="Go to camera" onPress={() => navigation.navigate('Camera')} />
-            <Button title="Feed" onPress={() => navigation.navigate('PostFeed')} />
-            <Button title="Go to profile" onPress={() => navigation.navigate('Profile')} />
-            <Button title="Go to map" onPress={() => navigation.navigate('Map')} />
-            <Button title="Leaderboard" onPress={() => navigation.navigate('Leaderboard')} />
-
-            <StatusBar style="auto" />
-        </View>
+        <Tab.Navigator>
+            <Tab.Screen name="Leaderboard" component={Leaderboard} />
+            <Tab.Screen name="Map" component={Map} />
+            <Tab.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }} />
+            <Tab.Screen name="Feed" component={PostFeed} options={{ title: 'Feed' }} />
+            <Tab.Screen name="Profile" component={Profile} />
+        </Tab.Navigator>
     );
 }
 
