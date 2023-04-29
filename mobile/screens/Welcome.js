@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SecureStore from 'expo-secure-store';
 
 import Login from './Login';
@@ -42,10 +43,30 @@ export default function Welcome({ navigation }) {
         <Tab.Navigator>
             <Tab.Screen name="Leaderboard" component={Leaderboard} />
             <Tab.Screen name="Map" component={Map} />
-            <Tab.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Feed" component={PostFeed} options={{ title: 'Feed' }} />
+            <Tab.Screen name="CameraStack" component={CameraStack} options={{ headerShown: false, title: "Camera" }} />
+            <Tab.Screen name="Feed" component={PostStack} options={{ title: 'Feed', headerShown: false }} />
             <Tab.Screen name="Profile" component={Profile} />
         </Tab.Navigator>
+    );
+}
+
+const Stack = createNativeStackNavigator();
+
+function CameraStack() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="AddPost" component={AddPost} options={{ title: 'Post' }} />
+        </Stack.Navigator>
+    );
+}
+
+function PostStack() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="PostFeed" component={PostFeed} options={{ title: 'Feed' }} />
+            <Stack.Screen name="PostDetails" component={PostDetails} options={{ title: 'Details' }} />
+        </Stack.Navigator>
     );
 }
 
