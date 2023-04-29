@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
+import * as ImageManipulator from 'expo-image-manipulator';
 import CamButton from './cameraComponents/CamButton';
 
 export default function CameraScreen({ navigation }) {
@@ -26,7 +27,15 @@ export default function CameraScreen({ navigation }) {
             try {
                 const data = await cameraRef.current.takePictureAsync();
                 console.log(data);
-                setImage(data.uri);
+                // take the image, shrink it
+
+                let shrunk = await ImageManipulator.manipulateAsync(
+                    data.uri,
+                    [{ resize: { height: Math.floor(data.height / 4), width: Math.floor(data.width / 4) } }],
+                    { compress: 0.8, format: ImageManipulator.SaveFormat.JPEG }
+                );
+                console.log(shrunk);
+                setImage(shrunk.uri);
             } catch (e) {
                 console.log(e);
             }
