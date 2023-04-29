@@ -93,6 +93,8 @@ function Signup() {
             <button className="login-form-btn" onClick={dosignUp} >Sign up</button>
           </div>
 
+            <span id="signupResult">{message}</span>
+
         </div>
 
     );

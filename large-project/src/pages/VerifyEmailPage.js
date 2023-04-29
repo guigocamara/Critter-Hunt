@@ -16,12 +16,17 @@ const VerifyEmailPage = () =>
 
               <span className="login-form-title">Final step!</span>
               <span className="login-form-title">We need to verify your email!</span>
-              <span className="txt1">Please check your inbox for your verification code and enter it below.</span> <br />
+              <span className="txt1">Please check your inbox for your verification code and enter it below.</span> <br /><br />
 
                 <EmailVerification/>
 
+                <div class="text-center p-t-2">
+                  <a href="/" className="txt2"> </a>
+                </div>
               </a>
+
             </div>
+
 
           </div>
         </div>

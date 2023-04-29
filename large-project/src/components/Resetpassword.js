@@ -18,7 +18,7 @@ function Resetpassword() {
             return;
         }
 
-        if (signUpPassword.value !== passwordConfirmation.value) {
+        if (passwordConfirmation.value !== passwordConfirmation.value) {
             setMessage('Passwords do not match.');
             return;
         }

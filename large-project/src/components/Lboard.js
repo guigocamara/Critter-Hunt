@@ -27,7 +27,7 @@ const Lboard = () => {
       return (
         <tr key={item._id} className={rowClass}>
           <td>{startIndex + index + 1}</td>
-          <td>{item.username}</td>
+          <td style={{ width: "400px" }}>{item.username}</td>
           <td>{item.numPosts}</td>
         </tr>
       );
