@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Icon } from '@iconify/react'
 
 
-export default function AllPosts({postsList}){
+export default function AllPosts({postsListAllPosts}){
     var bp = require('../components/Path.js');
 
     const updatePost = async (postId, postLikes, event) => {
@@ -39,7 +39,7 @@ export default function AllPosts({postsList}){
     <div className="w-4/12 flex flex-col bg-[#57B846] items-center">
         <div className="h-full w-full flex flex-col items-center overflow-y-scroll">
 
-        {postsList.map(post => {
+        {postsListAllPosts.map(post => {
             return(
             <div key={post._id} className="m-5 h-full w-80 bg-white rounded">
                 <div className="h-10 text-sm mt-3 ml-3 mr-3"> 

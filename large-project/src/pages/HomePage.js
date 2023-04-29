@@ -15,17 +15,22 @@ export default function HomePage()
 {
     //let searchInput = '';
     let [searchInput, setSearchInput] = useState('');
-    const [postsList, setPostsList] = useState([]);
+    const [postsListMap, setPostsListMap] = useState([]);
+    const [postsListAllPosts, setPostsListAllPosts] = useState([]);
+    const [pinSelected, setPinSelected] = useState(false);
     var bp = require('../components/Path.js');
 
     const handleChange = (e) => {
         setSearchInput(e.target.value);
+        setPinSelected(false);
         searchPosts();
     };
 
     useEffect(() => {
       // Update the document title using the browser API
-      searchPosts();
+      if(!pinSelected){
+        searchPosts();
+      }
     });
 
     const searchPosts = async event => {
@@ -39,7 +44,10 @@ export default function HomePage()
             var res = JSON.parse(txt);
             var _results = res;
 
-            setPostsList(_results._ret);
+          
+            setPostsListMap(_results._ret);
+            setPostsListAllPosts(_results._ret);
+            
         }
         catch (e) {
             console.log(e.toString());
@@ -54,8 +62,8 @@ export default function HomePage()
           <input className="w-4/6 h-10 rounded p-2 mb-4" type="text" placeholder="Search for posts!" onChange={handleChange} value={searchInput}/>
         </div>
         <div className="flex flex-row h-full">
-          <AllPosts postsList = {postsList}></AllPosts>
-          <Map change={setSearchInput} postsList={postsList} location={location} zoomLevel={15}/>
+          <AllPosts postsListAllPosts = {postsListAllPosts}></AllPosts>
+          <Map setPostsListAllPosts={setPostsListAllPosts} setPinSelected={setPinSelected} pinSelected={pinSelected} postsListMap={postsListMap} location={location} zoomLevel={15}/>
         </div>  
       </div>
     );
