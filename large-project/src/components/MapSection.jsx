@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import GoogleMapReact from 'google-map-react'
 import Geocode from 'react-geocode'
 //import './map.css'
@@ -26,7 +26,9 @@ Geocode.setLanguage('en');
 // }
 
 
-export default function Map ({ postsList, location, zoomLevel }) {
+export default function Map ({ setPostsListAllPosts, setPinSelected, pinSelected, postsListMap, location, zoomLevel }) {
+  const [selectedPin, setSelectedPin] = useState("");
+
   return(
       <div className='h-full w-8/12'>
         <GoogleMapReact id="map"
@@ -34,16 +36,19 @@ export default function Map ({ postsList, location, zoomLevel }) {
           defaultCenter={location}
           defaultZoom={zoomLevel}
         >
-          { postsList.map(post => {
+          { postsListMap.map(post => {
               return(
-                post.location.length != 0 &&
                 <LocationPin
                 key={post._id}
                 lat={post.location[0]}
                 lng={post.location[1]}
                 text={post.crittername}
+                setPostsListAllPosts={setPostsListAllPosts}
+                setPinSelected={setPinSelected}
+                setSelectedPin={setSelectedPin}
+                selectedPin={selectedPin}
+                pinSelected={pinSelected}
                 />
-              
               );
             })
           }
@@ -52,13 +57,48 @@ export default function Map ({ postsList, location, zoomLevel }) {
   );
 }
 
-const LocationPin = ({ text }) => (
+function LocationPin({ text, setPostsListAllPosts, setPinSelected, setSelectedPin, selectedPin, pinSelected }){
+    var bp = require('../components/Path.js');
+    const [pinColor, setPinColor] = useState("#138808");
+
+    useEffect(() => {
+      if(selectedPin == text && pinSelected){
+        setPinColor("C00");
+      }else{
+        setPinColor("#138808");
+      }
+
+    });
+
+    const searchPosts = async event => {
+  
+      var storage = require('../tokenStorage.js');
+      var obj = { search: text, jwtToken: storage.retrieveToken() };
+      var js = JSON.stringify(obj);
+      try {
+          const response = await fetch(bp.buildPath('api/searchposts'),
+              { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
+          var txt = await response.text();
+          var res = JSON.parse(txt);
+          var _results = res;
+          setPinSelected(true);
+          setPostsListAllPosts(_results._ret);
+          setSelectedPin(text);
+      }
+      catch (e) {
+          console.log(e.toString());
+          storage.storeToken(res.jwtToken);
+    }
+  }
+
+
+  return(
     <div className="flex flex-col items-center w-40">
-        <Icon icon= "ic:baseline-place" className="text-6xl" />
+        <Icon icon= "ic:baseline-place" className="text-6xl" color={pinColor} onClick={() => {{searchPosts()}}} />
             <p className="text-xl">{text}</p>
     </div>
-)
-
+  );
+}
 
 // function Modal() {
   
