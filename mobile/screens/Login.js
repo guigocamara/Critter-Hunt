@@ -1,8 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import jwt_decode from 'jwt-decode';
+import Logo from '../components/Logo'
+import Header from '../components/Header'
+import TextInput from '../components/TextInput'
+import Background from '../components/Background'
+import Button from '../components/Button'
+import { theme } from '../core/theme'
 
 async function save(key, value) {
     await SecureStore.setItemAsync(key, value);
@@ -56,48 +62,60 @@ export default function Login({ navigation }) {
     }, [])
     */
     return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Username</Text>
+        <Background>
+            <Logo />
+            <Header>Get ready to Critter Hunt!</Header>
             <TextInput
-                style={styles.input}
+                label="Username"
+                returnKeyType="next"
                 onChangeText={setUsername}
                 value={username}
                 autoCapitalize="none"
             />
-            <Text style={styles.label}>Password</Text>
             <TextInput
-                style={styles.input}
+                label="Password"
+                returnKeyType="done"
                 onChangeText={setPassword}
                 value={password}
                 secureTextEntry
             />
-            <Button title="Login" onPress={doLogin} />
-            <Button title="Create Account" onPress={() => navigation.navigate('SignUp')} />
-            <Button title="Forgot Password?" onPress={() => navigation.navigate('ForgotPass')} />
-            <StatusBar style="auto" />
-        </View>
+            <View style={styles.forgotPassword}>
+            <TouchableOpacity
+            onPress={() => navigation.navigate('ForgotPass')}
+            >
+            <Text style={styles.forgot}>Forgot your password?</Text>
+            </TouchableOpacity>
+            </View>
+            <Button mode="contained" onPress={doLogin}>
+            Login
+            </Button>
+            <View style={styles.row}>
+            <Text>Don’t have an account? </Text>
+            <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
+            <Text style={styles.link}>Sign up</Text>
+            </TouchableOpacity>
+            </View>
+            <StatusBar style="auto" /> 
+        </Background>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        //justifyContent: 'center',
-        paddingHorizontal: 20,
-    },
-    label: {
-        fontSize: 18,
-        marginBottom: 5,
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 15,
-        paddingLeft: 5,
-    },
-    title: {
-        fontSize: 24,
+    forgotPassword: {
+        width: '100%',
+        alignItems: 'flex-end',
+        marginBottom: 24,
+      },
+      row: {
+        flexDirection: 'row',
+        marginTop: 4,
+      },
+      forgot: {
+        fontSize: 13,
+        color: theme.colors.secondary,
+      },
+      link: {
         fontWeight: 'bold',
-    },
+        color: theme.colors.primary,
+      },
 })
