@@ -42,6 +42,7 @@ export default function Welcome({ navigation }) {
 
     return (
         <Tab.Navigator
+            initialRouteName='ProfileStack'
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
