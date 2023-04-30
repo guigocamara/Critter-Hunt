@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SecureStore from 'expo-secure-store';
+import { Ionicons } from '@expo/vector-icons';
 
 import Login from './Login';
 import CameraScreen from './CameraScreen';
@@ -40,7 +41,29 @@ export default function Welcome({ navigation }) {
     }, [])
 
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+
+                    if (route.name === 'Leaderboard') {
+                        iconName = focused ? 'medal' : 'medal-outline';
+                    } else if (route.name === 'MapStack') {
+                        iconName = focused ? 'map' : 'map-outline';
+                    } else if (route.name === 'CameraStack') {
+                        iconName = focused ? 'camera' : 'camera-outline';
+                    } else if (route.name === 'Feed') {
+                        iconName = focused ? 'grid' : 'grid-outline';
+                    } else if (route.name === 'ProfileStack') {
+                        iconName = focused ? 'person' : 'person-outline';
+                    }
+
+                    // You can return any component that you like here!
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: 'green',
+                tabBarInactiveTintColor: 'gray',
+            })}>
             <Tab.Screen name="Leaderboard" component={Leaderboard} />
             <Tab.Screen name="MapStack" component={MapStack} options={{ headerShown: false, title: "Map" }} />
             <Tab.Screen name="CameraStack" component={CameraStack} options={{ headerShown: false, title: "Camera" }} />
