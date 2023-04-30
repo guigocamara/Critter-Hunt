@@ -47,7 +47,7 @@ export default function AddPost({ route, navigation }) {
                 uploadType: FileSystem.FileSystemUploadType.MULTIPART,
             });
             console.log(JSON.stringify(response, null, 4));
-            navigation.navigate('Welcome');
+            navigation.navigate('Camera');
         }
         catch (error) {
             console.error(error);

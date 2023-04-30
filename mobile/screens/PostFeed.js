@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Alert, SafeAreaView, FlatList, Image, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
 
 const Item = ({ title, picture, navigation, postID }) => (
@@ -47,6 +48,11 @@ export default function PostFeed({ navigation }) {
 
     useEffect(() => {
         getPosts();
+        navigation.setOptions({
+            headerRight: () => (
+                <Ionicons name="refresh" size={24} color="green" onPress={getPosts} />
+            ),
+        })
     }, [])
 
     return (
