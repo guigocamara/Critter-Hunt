@@ -42,10 +42,10 @@ export default function Welcome({ navigation }) {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Leaderboard" component={Leaderboard} />
-            <Tab.Screen name="Map" component={Map} />
+            <Tab.Screen name="MapStack" component={MapStack} options={{ headerShown: false, title: "Map" }} />
             <Tab.Screen name="CameraStack" component={CameraStack} options={{ headerShown: false, title: "Camera" }} />
             <Tab.Screen name="Feed" component={PostStack} options={{ title: 'Feed', headerShown: false }} />
-            <Tab.Screen name="Profile" component={Profile} />
+            <Tab.Screen name="ProfileStack" component={ProfileStack} options={{ title: 'Profile', headerShown: false }} />
         </Tab.Navigator>
     );
 }
@@ -70,6 +70,23 @@ function PostStack() {
     );
 }
 
+function MapStack() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Map" component={Map} />
+            <Stack.Screen name="PostDetails" component={PostDetails} options={{ title: 'Details' }} />
+        </Stack.Navigator>
+    );
+}
+
+function ProfileStack() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="PostDetails" component={PostDetails} options={{ title: 'Details' }} />
+        </Stack.Navigator>
+    );
+}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
