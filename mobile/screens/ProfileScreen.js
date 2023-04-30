@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View, SafeAreaView, FlatList, Pressable, ScrollView } from 'react-native';
+import { Image, StyleSheet, Text, View, SafeAreaView, FlatList, Pressable, ScrollView, Button } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import { Ionicons } from '@expo/vector-icons';
 
 async function getItem(key) {
   return await SecureStore.getItemAsync(key);
@@ -26,6 +27,11 @@ export default function Profile({ route, navigation }) {
   const [userPosts, setUserPosts] = useState([]);
   const [numPosts, setNumPosts] = useState(0);
 
+  const doLogout = async () => {
+    await SecureStore.deleteItemAsync('userData');
+    await SecureStore.deleteItemAsync('userId');
+    navigation.navigate('Login');
+  }
 
   const fetchData = async () => {
     const userId = await getItem('userId');
@@ -43,7 +49,7 @@ export default function Profile({ route, navigation }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ search: "", jwtToken: "", userId: userId }),
     };
-  
+
     try {
       const response = await fetch('http://critterhunt.herokuapp.com/api/searchposts', requestOptions);
       const data = await response.json();
@@ -57,11 +63,19 @@ export default function Profile({ route, navigation }) {
       console.error('Error fetching user posts:', error);
     }
   };
-  
+
 
   useEffect(() => {
     fetchData();
     fetchUserPosts();
+    navigation.setOptions({
+      headerLeft: () => (
+        <Ionicons name="log-out-outline" size={24} color="red" onPress={doLogout} />
+      ),
+      headerRight: () => (
+        <Ionicons name="refresh-outline" size={24} color="green" onPress={fetchUserPosts} />
+      ),
+    })
   }, []);
 
   const formatDate = (dateString) => {
@@ -101,7 +115,7 @@ export default function Profile({ route, navigation }) {
         </Text>
         {rank && <Text style={styles.text}>{"\n"}Current rank: {rank}</Text>}
       </View>
-  
+
       <Text style={styles.headerText}>{"\n"}Your Critters:</Text>
       <SafeAreaView style={styles.postsContainer}>
         <FlatList
@@ -122,7 +136,7 @@ export default function Profile({ route, navigation }) {
       <StatusBar style="auto" />
     </View>
   );
-  
+
 }
 
 
