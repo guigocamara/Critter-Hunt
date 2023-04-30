@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Icon } from '@iconify/react'
 
 
-export default function AllPosts({postsListAllPosts}){
+export default function AllPosts({postsListAllPosts, setLikesUpdate, likesUpdate}){
     var bp = require('../components/Path.js');
 
     const updatePost = async (postId, postLikes, event) => {
-        console.log(postId);
+        setLikesUpdate(true);
         var obj = { postsId: postId, newLikes: postLikes + 1, newComments: [] };
         //var storage = require('../tokenStorage.js');
         var js = JSON.stringify(obj);
@@ -41,7 +41,7 @@ export default function AllPosts({postsListAllPosts}){
 
         {postsListAllPosts.map(post => {
             return(
-            <div key={post._id} className="m-5 h-full w-80 bg-white rounded">
+            <div key={post._id} className="m-5 w-80 bg-white rounded">
                 <div className="h-10 text-sm mt-3 ml-3 mr-3"> 
                     <div>{post.crittername}</div>
                     <div>{}</div>

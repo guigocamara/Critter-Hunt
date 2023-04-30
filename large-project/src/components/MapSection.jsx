@@ -67,7 +67,6 @@ function LocationPin({ text, setPostsListAllPosts, setPinSelected, setSelectedPi
       }else{
         setPinColor("#138808");
       }
-
     });
 
     const searchPosts = async event => {
