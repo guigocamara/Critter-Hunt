@@ -13,7 +13,6 @@ export default function AllPosts({postsListAllPosts, setLikesUpdate, likesUpdate
         try {
             const response = await fetch(bp.buildPath('api/updatepost'),
                 { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
-            console.log(response);
             var txt = await response.text();
             var res = JSON.parse(txt);
             if (res.error && res.error.length > 0) {
@@ -34,7 +33,7 @@ export default function AllPosts({postsListAllPosts, setLikesUpdate, likesUpdate
 
     const rotate = rotateChevron ? "rotate(360deg)" : "rotate(0)"
 
-
+    
     return(
     <div className="w-4/12 flex flex-col bg-[#57B846] items-center">
         <div className="h-full w-full flex flex-col items-center overflow-y-scroll">
@@ -47,7 +46,7 @@ export default function AllPosts({postsListAllPosts, setLikesUpdate, likesUpdate
                     <div>{}</div>
                 </div>
 
-                <img className="w-80 h-80" src={`http://critterhunt.herokuapp.com/image/${post.picture}`}/>
+                <img className="w-80 h-80" alt="" src={`http://critterhunt.herokuapp.com/image/${post.picture}`}/>
     
                 <div className="h-15 text-sm mb-3 ml-3 mr-3 flex items-center">
                     <div className="flex flex-col items-center" onClick={() => {updatePost(post._id, post.likes)}}>

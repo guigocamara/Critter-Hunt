@@ -32,7 +32,6 @@ export default function HomePage()
       if(!pinSelected){
         searchPosts();
       }
-      setLikesUpdate(false);
     }, [pinSelected, searchInput, likesUpdate]);
 
     const searchPosts = async event => {

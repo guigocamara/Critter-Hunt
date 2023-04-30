@@ -62,7 +62,7 @@ function LocationPin({ text, setPostsListAllPosts, setPinSelected, setSelectedPi
     const [pinColor, setPinColor] = useState("#138808");
 
     useEffect(() => {
-      if(selectedPin == text && pinSelected){
+      if(selectedPin === text && pinSelected){
         setPinColor("C00");
       }else{
         setPinColor("#138808");
@@ -93,7 +93,7 @@ function LocationPin({ text, setPostsListAllPosts, setPinSelected, setSelectedPi
 
   return(
     <div className="flex flex-col items-center w-40">
-        <Icon icon= "ic:baseline-place" className="text-6xl" color={pinColor} onClick={() => {{searchPosts()}}} />
+        <Icon icon= "ic:baseline-place" className="text-6xl" color={pinColor} onClick={() => {searchPosts()}} />
             <p className="text-xl">{text}</p>
     </div>
   );
