@@ -8,7 +8,7 @@ const Lboard = () => {
 
   const fetchUsers = async () => {
     const response = await fetch(
-      "http://critterhunt.herokuapp.com/api/users/rank"
+      "https://critterhunt.herokuapp.com/api/users/rank"
     );
     const data = await response.json();
     setUsers(data);

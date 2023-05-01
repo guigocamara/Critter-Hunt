@@ -19,7 +19,7 @@ function EmailVerification() {
               body: JSON.stringify({ email: userEmail, verificationCode: parseInt(emailToken.value) })
 
           };
-          await fetch('http://critterhunt.herokuapp.com/api/verifyEmail', requestOptions)
+          await fetch('https://critterhunt.herokuapp.com/api/verifyEmail', requestOptions)
               .then(response => {
                   if (response.ok) {
                       setMessage('Your email was successfully verified!');
