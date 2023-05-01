@@ -46,7 +46,7 @@ export default function AllPosts({postsListAllPosts, setLikesUpdate, likesUpdate
                     <div>{}</div>
                 </div>
 
-                <img className="w-80 h-80" alt="" src={`http://critterhunt.herokuapp.com/image/${post.picture}`}/>
+                <img className="w-80 h-80" alt="" src={`https://critterhunt.herokuapp.com/image/${post.picture}`}/>
     
                 <div className="h-15 text-sm mb-3 ml-3 mr-3 flex items-center">
                     <div className="flex flex-col items-center" onClick={() => {updatePost(post._id, post.likes)}}>

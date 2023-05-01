@@ -76,7 +76,7 @@ function ProfileCard() {
         //setDateJoined("June 87, 2305");
 
         try {
-            let response = await fetch(`http://critterhunt.herokuapp.com/api/datejoined/${userID}`);
+            let response = await fetch(`https://critterhunt.herokuapp.com/api/datejoined/${userID}`);
             var txt = await response.json();
             console.log(txt);
             setDateJoined(txt.dateJoined);
@@ -183,7 +183,7 @@ function ProfileCard() {
 
                                     <div className='mb-2'> 
                                         {post.author == userID &&
-                                        <img src={`http://critterhunt.herokuapp.com/image/${post.picture}`}
+                                        <img src={`https://critterhunt.herokuapp.com/image/${post.picture}`}
                                         alt="image 1" className="w-full rounded-lg" />
                                         }
                                         <div className='h-15 mb-3 flex items-center'>
