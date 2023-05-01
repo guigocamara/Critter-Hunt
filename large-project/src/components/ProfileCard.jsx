@@ -78,7 +78,7 @@ function ProfileCard() {
         try {
             let response = await fetch(`http://critterhunt.herokuapp.com/api/datejoined/${userID}`);
             var txt = await response.json();
-            //console.log(txt.dateJoined);
+            console.log(txt);
             setDateJoined(txt.dateJoined);
         } catch (e) {
             console.log(e);
@@ -132,26 +132,42 @@ function ProfileCard() {
 
       return (
 
-        <div className='h-screen grid place-items-center bg-gradient-to-r from-emerald-300 to-emerald-500'>
+        <div className='h-screen grid place-items-center bg-neutral-300'>
 
+            <div className=''>
+                <div className='w-auto rounded-lg flex'>
 
-            <div className='w-1/2 bg-black bg-opacity-50 rounded-lg'>
-                <img src="https://vetmed.illinois.edu/wp-content/uploads/2021/04/pc-keller-hedgehog.jpg" 
-                className='w-1/2 rounded-full block mb-10 ml-10'>
-                </img> 
+                    <div className='grid place-items-end flex pr-1 '>
+                        <img src="https://vetmed.illinois.edu/wp-content/uploads/2021/04/pc-keller-hedgehog.jpg" 
+                        className='w-1/2 rounded-full h-full outline '/> 
+                    </div>
+                    
 
-                <div className='bg-slate-50 grid place-items-center rounded-lg max-w-1/2'>
-                    <div className=''>Critter Hunter: {ud.username} </div>
-                    <br></br>
-                    <div className=''>Critters Caught: {postsList.length} </div>
-                    <br></br>
-                    <div className=''>Date Joined: {dateJoined} </div>
-                    <br></br>
-                    <div className=''>Current Rank: {rank} </div>
+                    <div className='bg-slate-50 grid place-items-left rounded-lg space-y-5 flex w-1/2 outline'>
+
+                        <div className='flex'>
+                            <Icon icon="ph:bug-bold"/> 
+                            <div className='pl-2 pr-3'>Critter Hunter: {ud.username} </div> 
+                        </div>
+
+                        <div className='flex'>
+                            <Icon icon="mdi:counter"/>
+                        <div className='pl-2 pr-3'>Critters Caught: {postsList.length}</div> 
+                        </div>
+
+                        <div className='flex'>
+                            <Icon icon="mdi:clock-time-eight"/> 
+                        <div className='pl-2 pr-3'>Date Joined: {dateJoined}</div>
+                        </div>
+
+                        <div className='flex'>
+                            <Icon icon="icon-park:ranking"/>
+                            <div className='pl-2 pr-3'>Current Rank: {rank}</div> 
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div className='bg-slate-50 bg-opacity-70 w-2/3'>
+            <div className='bg-slate-50 bg-opacity-70 w-1/2'>
                 <MDBCardBody className="text-black p-4">
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <MDBCardText className="lead fw-normal mb-0">Critters</MDBCardText>
