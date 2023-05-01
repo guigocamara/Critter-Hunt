@@ -105,6 +105,7 @@ function ProfileCard() {
       };
 
       // delete post
+      // hello hello
       async function deletePost(postID) {
         //console.log("deleting posts...");
         console.log(typeof postID);
