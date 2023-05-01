@@ -29,6 +29,7 @@ const UserSchema = new Schema({
   resetToken: String,
   resetTokenExpiration: Date,
   createdAt: String,
+  userID: String,
   verificationCode: Number,
   emailVerified: String,
  //}, {timestamps: { createdAt: 'created_at', updatedAt: 'updated_at', timezone: 'America/New_York' }

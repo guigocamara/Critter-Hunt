@@ -56,8 +56,9 @@ function Signup() {
                     var username = ud.payload.username;
                     var password = ud.payload.password;
                     var email = ud.payload.email;
-
-                    var user = { username: username, password: password, email: res.email }
+                    var userID = res.userId;
+                    
+                    var user = { username: username, password: password, email: res.email, userID: userID}
                     var emailString = {email: singupemail.value}
                     localStorage.setItem('user_data', JSON.stringify(user));
                     localStorage.setItem('EMAIL', JSON.stringify(emailString));
