@@ -76,7 +76,7 @@ function ProfileCard() {
         //setDateJoined("June 87, 2305");
 
         try {
-            let response = await fetch(`http://critterhunt.herokuapp.com/api/datejoined/${userID}`);
+            let response = await fetch(`https://critterhunt.herokuapp.com/api/datejoined/${userID}`);
             var txt = await response.json();
             console.log(txt);
             setDateJoined(txt.dateJoined);
