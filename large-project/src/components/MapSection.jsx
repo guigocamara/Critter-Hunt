@@ -92,7 +92,7 @@ function LocationPin({ text, setPostsListAllPosts, setPinSelected, setSelectedPi
 
 
   return(
-    <div className="flex flex-col items-center w-40">
+    <div className="flex flex-col items-center w-40" style={{ transform: "translate(-50%, -50%)", position: "absolute" }}>
         <Icon icon= "ic:baseline-place" className="text-6xl" color={pinColor} onClick={() => {searchPosts()}} />
             <p className="text-xl">{text}</p>
     </div>
