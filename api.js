@@ -182,7 +182,7 @@ app.post('/api/signUp', async (req, res, next) => {
       secure: true,
       auth: {
         user: 'critterhunt@zohomail.com',
-        pass: 'Critterhunt1234!'
+        pass: 'Ch%2574667'
       }
     });
     const mailOptions = {
@@ -608,7 +608,7 @@ app.post('/api/verifyEmail', async (req, res, next) => {
         auth: 
         {
           user: 'critterhunt@zohomail.com',
-          pass: 'Critterhunt1234!'
+          pass: 'Ch%2574667'
         }
       });
 
