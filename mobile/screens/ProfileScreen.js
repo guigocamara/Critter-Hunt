@@ -107,7 +107,7 @@ export default function Profile({ route, navigation }) {
       <View style={styles.profileContent}>
         <Image
           style={styles.profileImage}
-          source={require('mobile/assets/kermit.jpg')}
+          source={require('mobile/assets/rickL.jpg')}
         />
         <Text style={styles.text}>{"\n"}Number of critters caught: {numPosts}</Text>
         <Text style={styles.text}>
