@@ -15,7 +15,7 @@ const ForgetPage = () =>
               <a className="login-form">
 
               <span className="login-form-title">Forgot your password?</span>
-              <span className="txt1">Enter your email and we'll send you a token to get back into your account.</span>
+              <span className="txt1">Enter your email and we'll send you a token to get back into your account.</span> <br />
 
                 <Forgotpassword/>
 
