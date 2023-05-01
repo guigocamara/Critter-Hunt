@@ -18,8 +18,10 @@ const LoginPage = () =>
 
 
                 <div className="text-center p-t-1">
-                  <span className="txt1">Forgot</span>
-                  {/* <a href="/" className="txt2"> Username / Password ?</a> */}
+                  <a href="/ForgetPage" className="txt2"> Forgot your username or password?</a>
+                </div>
+                <div className="text-center p-t-1">
+                  <a href="/VerifyEmailPage" className="txt2"> Need to verify your email?</a>
                 </div>
 
                 <div class="text-center p-t-2">

@@ -28,7 +28,8 @@ function Forgotpassword() {
                     setMessage('Email does not exist');
                 }
                 else {
-
+                    setMessage('Sending token');
+                    window.location.href = '/ResetPage';
                 }
             })
             .catch(function (error) {

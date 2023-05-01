@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
     "start": "node server.js",
     "heroku-postbuild": " NPM_CONFIG_PRODUCTION=false npm install --prefix large-project && npm run build --prefix large-project"
   },
@@ -16,6 +17,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "google-map-react": "^2.2.0",
+    "gridfs-stream": "^1.1.1",
     "heroku": "^7.68.3",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.0",
@@ -23,6 +25,7 @@
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.1",
     "mongoose-int32": "^0.6.0",
+    "multer-gridfs-storage": "^5.0.2",
     "nodemailer": "^6.9.1",
     "npm": "^9.6.0",
     "react-geocode": "^0.2.3",
@@ -32,13 +35,16 @@
     "@iconify/react": "^4.1.0",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
+    "cross-env": "^7.0.3",
     "crypto-browserify": "^3.12.0",
     "https-browserify": "^1.0.0",
+    "jest": "^27.5.1",
     "os-browserify": "^0.3.0",
     "process": "^0.11.10",
     "react-app-rewired": "^2.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
+    "supertest": "^6.3.3",
     "url": "^0.11.0"
   }
 }

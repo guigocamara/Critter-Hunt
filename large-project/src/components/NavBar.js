@@ -14,7 +14,7 @@ export default function NavBar(){
         window.location.href = '/';
     };
     return (
-        
+
       <div className="flex flex-row bg-[#57B846] w-100% h-16 items-center justify-between">
         <div className="flex flex-row">
             <li className="text-lg list-none ml-5">
@@ -22,6 +22,9 @@ export default function NavBar(){
             </li>
             <li className="text-lg list-none ml-5">
                 <Link className="text-white h-100% hover:text-sky-700" to='/profile'>Profile</Link>
+            </li>
+            <li className="text-lg list-none ml-5">
+                <Link className="text-white h-100% hover:text-sky-700" to='/Leaderboard'>Leaderboard</Link>
             </li>
         </div>
 
@@ -32,7 +35,7 @@ export default function NavBar(){
         </div> */}
 
         <div id="loggedInDiv" className = "flex flex-row">
-            <li type="button" id="logoutButton" className="buttons text-white list-none mr-5" onClick={doLogout}> 
+            <li type="button" id="logoutButton" className="buttons text-white list-none mr-5" onClick={doLogout}>
                 <Link className="text-white hover:text-sky-700">Log out</Link>
             </li>
         </div>
