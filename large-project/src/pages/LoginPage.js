@@ -12,7 +12,7 @@ const LoginPage = () =>
             <div className="wrap-login">
 
               <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
-              <a href= "/" className="login-form">
+              <a className="login-form">
 
                 <Login/>
 
