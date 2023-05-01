@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function EmailVerification(props) {
+function EmailVerification() {
   var bp = require('./Path.js');
   var storage = require('../tokenStorage.js');
   var emailToken;
@@ -16,13 +16,14 @@ function EmailVerification(props) {
           const requestOptions = {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: userEmail, verificationCode: emailToken.value })
+              body: JSON.stringify({ email: userEmail, verificationCode: parseInt(emailToken.value) })
 
           };
           await fetch('http://critterhunt.herokuapp.com/api/verifyEmail', requestOptions)
               .then(response => {
                   if (response.ok) {
                       setMessage('Your email was successfully verified!');
+                      window.location.href = '/';
                   } else {
                       setMessage('Invalid verification code');
                   }
@@ -33,9 +34,6 @@ function EmailVerification(props) {
       }
   }
 
-  const goToLogin = () => {
-      window.location.href = '/';
-  }
   return (
     <div>
       <div className="wrap-input">
