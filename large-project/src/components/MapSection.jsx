@@ -37,6 +37,7 @@ export default function Map ({ setPostsListAllPosts, setPinSelected, pinSelected
           defaultZoom={zoomLevel}
         >
           { postsListMap.map(post => {
+
               return(
                 <LocationPin
                 key={post._id}
