@@ -74,7 +74,7 @@ exports.setApp = function (app, client) {
     {
       //ret = { error: e.message };
       res.status(400).json(e.message);
-    } 
+    }
     // res.status(200).json({ ret, message: 'File uploaded successfully' });
   });
 
@@ -165,7 +165,7 @@ app.post('/api/signUp', async (req, res, next) => {
 
   // Save new user with verification code
   const newUser = new User({ username, password, email, verificationCode, createdAt: new Date().toLocaleDateString() });
-  try {    
+  try {
     await newUser.save();
     const userId = newUser._id;
     const dateJoined = newUser.createdAt;
@@ -260,14 +260,14 @@ app.post('/api/verifyEmail', async (req, res, next) => {
 
     const newPost = new Post({  crittername: crittername, author: author, likes: likes, comments: comments, location: location, picture: picture });
     var error = '';
-    try 
+    try
     {
       newPost.save();
       //Temporary retruning code for the newpost
       var ret = { newPost };
       res.status(200).json(ret);
     }
-      catch (e) 
+      catch (e)
     {
       error = e.toString();
     }
@@ -284,7 +284,7 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     // {
     //   console.log(e.message);
     // }
-    
+
     //var ret = { error: error, jwtToken: refreshedToken };
     //res.status(200).json(ret);
   });
@@ -295,8 +295,8 @@ app.post('/api/verifyEmail', async (req, res, next) => {
 
 
 
-  
-  app.delete('/api/deletepost', async (req, res, next) => 
+
+  app.delete('/api/deletepost', async (req, res, next) =>
   {
         //Try catch block is to make sure user is logged in.
     //try
@@ -314,16 +314,16 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     // }
 
     const { PostsId } = req.body;
-    try 
+    try
     {
       const deletedPost = await Post.findByIdAndDelete(PostsId);
 
-      if (!deletedPost) 
+      if (!deletedPost)
       {
         return res.status(400).json({ message: "no post found" });
       }
       res.status(200).json({ message: "Post deleted." });
-    } 
+    }
     catch (e)
     {
       ret = { error: e.message };
@@ -339,7 +339,7 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     // {
     //   console.log(e.message);
     // }
-    
+
     //var ret = { error: error, jwtToken: refreshedToken };
     //res.status(200).json(ret);
   });
@@ -350,11 +350,11 @@ app.post('/api/verifyEmail', async (req, res, next) => {
 
 
 
-  
-  app.post('/api/searchposts', async (req, res, next) => 
-  {  
+
+  app.post('/api/searchposts', async (req, res, next) =>
+  {
     var error = '';
-    
+
     //userid was being read in here, but why?
     const { search, jwtToken } = req.body;
     // try
@@ -370,13 +370,13 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     // {
     //   console.log(e.message);
     // }
-    
+
     var _search = search.trim();
-    
+
     //const db = client.db();
     //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
     let results = await Post.find({ "crittername": { $regex: _search + '.*', $options: 'i'} });
-    
+
     var _ret = [];
     if(results.length == 0){
       results = await Post.find({ "": { $regex: _search + '.*',$options: 'i'} });
@@ -386,7 +386,7 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     {
       _ret.push( results[i] );
     }
-    
+
     var ret = { _ret };
     res.status(200).json(ret);
 
@@ -399,9 +399,9 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     // {
     //   console.log(e.message);
     // }
-  
+
     // var ret = { results:_ret, error: error, jwtToken: refreshedToken };
-    
+
     // res.status(200).json(ret);
   });
 
@@ -415,10 +415,10 @@ app.post('/api/verifyEmail', async (req, res, next) => {
 
 
 
-  app.post('/api/updatepost', async (req, res, next) => 
-  {  
+  app.post('/api/updatepost', async (req, res, next) =>
+  {
     var error = '';
-    
+
     const { postsId, newLikes, newComments } = req.body;
     const filter = { _id: postsId };
     const update = { likes: newLikes, comments: newComments }
@@ -441,65 +441,65 @@ app.post('/api/verifyEmail', async (req, res, next) => {
 
     const newComment = new Comment({  author: author, parentpost: parentpost, content: content, likes: likes });
     var error = '';
-    try 
+    try
     {
       newComment.save();
       //Temporary retruning code for the newpost
       var ret = { newComment };
       res.status(200).json(ret);
     }
-      catch (e) 
+      catch (e)
     {
       error = e.toString();
     }
   });
 
 
-  app.delete('/api/deletecomment', async (req, res, next) => 
+  app.delete('/api/deletecomment', async (req, res, next) =>
   {
     const { commentsId } = req.body;
-    try 
+    try
     {
       const deletedComment = await Comment.findByIdAndDelete(commentsId);
 
-      if (!deletedComment) 
+      if (!deletedComment)
       {
         return res.status(400).json({ message: "no comment found" });
       }
       res.status(200).json({ message: "Comment deleted." });
-    } 
+    }
     catch (e)
     {
       ret = { error: e.message };
     }
   });
 
-  app.post('/api/getcomment', async (req, res, next) => 
-  {  
-    
+  app.post('/api/getcomment', async (req, res, next) =>
+  {
+
     const { commentsId, jwtToken } = req.body;
-    
+
 
     let result = await Comment.findById( commentsId );
     if(result == null){
       return res.status(400).json({ message: "No comment found" });
     }
-    
+
     res.status(200).json(result);
   });
 
 
-  app.post('/api/getpost', async (req, res, next) => 
-  {  
-    
+  app.post('/api/getpost', async (req, res, next) =>
+  {
+
     const { postsId, jwtToken } = req.body;
-    
+
 
     let result = await Post.findById( postsId );
     if(result == null){
       return res.status(400).json({ message: "No post found" });
     }
-    
+
     res.status(200).json(result);
   });
 
@@ -511,32 +511,32 @@ app.post('/api/verifyEmail', async (req, res, next) => {
 
     const newCritter = new Critter({  crittername: crittername, category: category, likes: likes, foodcount: foodcount });
     var error = '';
-    try 
+    try
     {
       newCritter.save();
       //Temporary retruning code for the newpost
       var ret = { newCritter };
       res.status(200).json(ret);
     }
-      catch (e) 
+      catch (e)
     {
       error = e.toString();
     }
   });
 
-  app.post('/api/searchcritters', async (req, res, next) => 
-  {  
+  app.post('/api/searchcritters', async (req, res, next) =>
+  {
     var error = '';
-    
+
     //userid was being read in here, but why?
     const { search, jwtToken } = req.body;
-    
+
     var _search = search.trim();
-    
+
     //const db = client.db();
     //const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
     let results = await Critter.find({ "crittername": { $regex: _search + '.*', $options: 'r' } });
-    
+
     var _ret = [];
     if(results.length == 0){
       results = await Critter.find({ "": { $regex: _search + '.*', $options: 'r' } });
@@ -546,7 +546,7 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     {
       _ret.push( results[i] );
     }
-    
+
     var ret = { _ret };
     res.status(200).json(ret);
 
@@ -567,23 +567,23 @@ app.post('/api/verifyEmail', async (req, res, next) => {
 
 
 
-  app.post('/api/forgotpassword', async (req, res) => 
+  app.post('/api/forgotpassword', async (req, res) =>
   {
     const { email } = req.body;
-  
+
     // find user by email
     const user = await User.findOne({ email: email });
 
-    if (!user) 
+    if (!user)
     {
       return res.status(400).json({ error: 'User not found' });
     }
-  
+
     //generate token function
     const crypto = require('crypto');
 
     // Generate a random token with the specified length
-    function generateResetToken(length = 20) 
+    function generateResetToken(length = 20)
     {
       return crypto.randomBytes(length).toString('hex');
     }
@@ -596,23 +596,23 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     user.resetToken = resetToken;
     await user.save();
 
-  
+
     const nodemailer = require('nodemailer');
 
-    function sendResetEmail(email, resetLink) 
+    function sendResetEmail(email, resetLink)
     {
       const transporter = nodemailer.createTransport({
         host: 'smtp.zoho.com',
         port: 465,
         secure: true,
-        auth: 
+        auth:
         {
           user: 'critterhunt@zohomail.com',
           pass: 'Ch%2574667'
         }
       });
 
-      const mailOptions = 
+      const mailOptions =
       {
         from: 'critterhunt@zohomail.com',
         to: email,
@@ -621,13 +621,13 @@ app.post('/api/verifyEmail', async (req, res, next) => {
         html: `<p>Please use the following reset token to reset your password: ${resetToken} </p>`
       };
 
-      transporter.sendMail(mailOptions, (error, info) => 
+      transporter.sendMail(mailOptions, (error, info) =>
       {
-        if (error) 
+        if (error)
         {
           console.log(error);
-        } 
-        else 
+        }
+        else
         {
           console.log(`Email sent: ${info.response}`);
         }
@@ -639,32 +639,32 @@ app.post('/api/verifyEmail', async (req, res, next) => {
     // send email with reset link
     const resetLink = `http://localhost:3000/api/resetpassword?token=${resetToken}`;
     sendResetEmail(email, resetLink);
-  
+
     res.json({ message: 'Password reset email sent' });
   });
 
-  app.post('/api/resetpassword', async (req, res) => 
+  app.post('/api/resetpassword', async (req, res) =>
   {
     const { token, password } = req.body;
-  
+
     // find user by reset token
     const user = await User.findOne({ resetToken: token });
-  
+
     // check if token is expired
     // if (Date.now() > user.resetTokenExpiration) {
     //   return res.status(400).json({ message: 'Reset token expired' });
     // }
-  
+
     // update user with new password and clear reset token
     await user.updateOne({ password, token: null, resetTokenExpiration: null });
-  
+
     res.json({ message: 'Password reset successfully' });
   });
 
   // Retrieve the number of posts for each user
-app.get('/api/users/rank', async (req, res) => 
+app.get('/api/users/rank', async (req, res) =>
 {
-  try 
+  try
   {
     const users = await User.aggregate([
       {
@@ -688,55 +688,55 @@ app.get('/api/users/rank', async (req, res) =>
       }
     ]);
     res.status(200).json(users);
-  } 
-  catch (error) 
+  }
+  catch (error)
   {
     res.status(400).json({ error: error.message });
   }
 });
 
 
-app.get('/api/datejoined/:id', async (req, res) => 
+app.get('/api/datejoined/:id', async (req, res) =>
 {
   const infoId = req.params.id;
 
-  try 
+  try
   {
     const info = await User.findById(infoId);
-    if (!info) 
+    if (!info)
     {
       return res.status(400).json({ message: 'Information not found' });
     }
 
-    const dateJoined = info.createdAt; 
+    const dateJoined = info.createdAt;
 
     res.status(200).json({ dateJoined });
-  } 
-  catch (error) 
+  }
+  catch (error)
   {
     res.status(400).json({ message: error.message });
   }
 });
 
-app.get('/api/getUsername/:id', async (req, res) => 
+app.get('/api/getUsername/:id', async (req, res) =>
 {
   const id = req.params.id;
-  try 
+  try
   {
     const user = await User.findOne({ _id: id });
-    if (!user) 
+    if (!user)
     {
       return res.status(400).json({ message: 'User not found with that ID' });
     }
     res.json({ username: user.username });
-  } 
-  catch (err) 
+  }
+  catch (err)
   {
     console.error(err);
     res.status(400).json({ message: 'Internal server error' });
   }
 });
-  
-  
+
+
 
 }
