@@ -18,52 +18,28 @@ function ProfileCard() {
     const [rank, setRank] = useState(null);
     var bp = require('../components/Path.js');
     var _ud = localStorage.getItem('user_data');
-    console.log("user data is....");
-    console.log(localStorage.getItem('user_data'));
+    const jwt = require("jsonwebtoken");
+    // console.log("user data is....");
+    // console.log(localStorage.getItem('user_data'));
     var ud = JSON.parse(_ud);
-    console.log(ud);
     var userID = ud.userID;
     //console.log(userID);
+    // var du = jwt.decode(token,{complete:true});
+    // var huh = du.payload.pa;
+    // console.log(huh);
 
-    let jsonArray = [];
-    jsonArray = [
-        {
-            image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-            critter_name: "bumblebee"
-        },
-        {
-            image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-            critter_name: "bumblebee"
-        },
-        {
-            image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-            critter_name: "bumblebee"
-        },
-        {
-            image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-            critter_name: "bumblebee"
-        },
-        {
-            image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-            critter_name: "bumblebee"
-        },
-        {
-            image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-            critter_name: "bumblebee"
-        }
-    ];
 
 
 
     useEffect(() => {
         // Update the document title using the browser API
         searchPosts();
-        //getRank();
+        getRank();
         fetchDate();
       },[]);
   
       const searchPosts = async event => {
-        console.log("invoked");
+        //console.log("invoked");
 
         var storage = require('../tokenStorage.js');
         var obj = { search: "", jwtToken: storage.retrieveToken() };
@@ -72,11 +48,10 @@ function ProfileCard() {
         try {
             const response = await fetch(bp.buildPath('api/searchposts'),
                 { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
+            //console.log(response);
             var txt = await response.text();
             var res = JSON.parse(txt);
             var _results = res;
-            // console.log("result.....")
-            // console.log(_results);
             
             const posts = new Array();
 
@@ -86,7 +61,6 @@ function ProfileCard() {
                 }
             }
             
-            console.log(posts);
             setPostsList(posts);
         } catch (e) {
             console.log(e.toString());
@@ -99,48 +73,57 @@ function ProfileCard() {
         var obj = { search: "", jwtToken: "", userId: userID };
         var js = JSON.stringify(obj);
 
+        //setDateJoined("June 87, 2305");
+
         try {
-            const response = await fetch(bp.buildPath(`http://critterhunt.herokuapp.com/api/datejoined/${userID}`),
-                { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
+            let response = await fetch(`http://critterhunt.herokuapp.com/api/datejoined/${userID}`);
             var txt = await response.json();
+            //console.log(txt.dateJoined);
             setDateJoined(txt.dateJoined);
         } catch (e) {
-            console.log(e.toString());
+            console.log(e);
         }
       }
 
       const getRank = async event => {
 
         try {
-            const response = await fetch(bp.buildPath('/api/users/rank'));
-            var txt = await response.json();
+            const response = await fetch(bp.buildPath('api/users/rank'));
+            const txt = await response.json();
+            const user = txt.find(user => user._id === userID);
+            //console.log("sojfkoajf....")
+            console.log(txt);
+            const userRank = txt.findIndex(user => user._id === userID) + 1;
+            setRank(userRank);
+
             
         } catch (e) {
             console.log(e);
-            console.log(e.toString());
+            //console.log(e.toString());
 
         }
       };
 
       // delete post
       async function deletePost(postID) {
-        console.log("deleting posts...");
-        console.log(postID);
+        //console.log("deleting posts...");
+        console.log(typeof postID);
 
-        var storage = require('../tokenStorage.js');
-        var obj = { postID: postID };
+        var obj = { PostsId: postID };
         var js = JSON.stringify(obj);
-        console.log(js)
+        console.log(js);
+
 
         try {
-            const response = await fetch(bp.buildPath(`api/deletepost`),
+            const response = await fetch(bp.buildPath('api/deletepost'),
                 { method: 'DELETE', body: js, headers: { 'Content-Type': 'application/json' } });
             //console.log(response);
             var txt = await response.json();
+            console.log(txt);
 
             searchPosts(); // reload the posts
         } catch (e) {
-            console.log(e.toString());
+            console.log(e);
 
         }
 
@@ -164,7 +147,7 @@ function ProfileCard() {
                     <br></br>
                     <div className=''>Date Joined: {dateJoined} </div>
                     <br></br>
-                    <div className=''>Current Rank: {} </div>
+                    <div className=''>Current Rank: {rank} </div>
                 </div>
             </div>
 
@@ -177,9 +160,9 @@ function ProfileCard() {
                         {postsList.map(post => {
                             return (
                                 <div className="mb-2 mr-2 relative">
-                                    <div className='absolute w-full h-full mt-0 ml-0 bg-black bg-opacity-0 text-white rounded-lg flex flex-col items-center justify-center hover:bg-opacity-60'>
+                                    {/* <div className='absolute w-full h-full mt-0 ml-0 bg-black bg-opacity-0 text-white rounded-lg flex flex-col items-center justify-center hover:bg-opacity-60'>
                                         <div>{post.crittername}</div>
-                                    </div>
+                                    </div> */}
 
 
                                     <div className='mb-2'> 
@@ -187,25 +170,28 @@ function ProfileCard() {
                                         <img src={`http://critterhunt.herokuapp.com/image/${post.picture}`}
                                         alt="image 1" className="w-full rounded-lg" />
                                         }
+                                        <div className='h-15 mb-3 flex items-center'>
+                                             <button type='button' onClick={() => deletePost(post._id)}><Icon icon="material-symbols:delete-forever-rounded"/></button>
+                                        </div>
                                     </div>
                                 </div>
                                     )})}
-                        { jsonArray.map(array => {
+                        {/* { jsonArray.map(array => {
                                 return (
                                     <div className="mb-2 mr-2 relative">
-                                        {/* <div className='absolute w-full h-full mt-0 ml-0 bg-black bg-opacity-0 text-white rounded-lg flex flex-col items-center justify-center hover:bg-opacity-60'>
+                                        <div className='absolute w-full h-full mt-0 ml-0 bg-black bg-opacity-0 text-white rounded-lg flex flex-col items-center justify-center hover:bg-opacity-60'>
                                             <div className=''>{array.critter_name}</div>
-                                        </div> */}
+                                        </div>
                                         <img src={array.image}
                                         alt="image 1" className="w-full rounded-lg" />
                                         
                                         <div className='h-15 mb-3 flex items-center'>
                                              <button type='button' onClick={() => deletePost('54545')}><Icon icon="material-symbols:delete-forever-rounded"/></button>
-                                             {/* will be post.id for paramater */}
+                                
                                         </div>
                                     </div>
                                 )
-                            })}        
+                            })} */}
                     </div>
                 </MDBCardBody>
 
@@ -219,138 +205,3 @@ function ProfileCard() {
 
 
 export default ProfileCard;
-
-
-// import React, { useState, useEffect } from 'react';
-// import { MDBCol, 
-//     MDBContainer, 
-//     MDBRow, 
-//     MDBCard, 
-//     MDBCardText, 
-//     MDBCardBody, 
-//     MDBCardImage, 
-//     MDBBtn, 
-//     MDBTypography } from 'mdb-react-ui-kit';
-// import './profilecard.css';
-// import AllPosts from './AllPosts';
-
-
-// function ProfileCard() {
-//     const [postsList, setPostsList] = useState([]);
-    
-
-//     let searchInput = '';
-//     var bp = require('../components/Path.js');
-
-//     async function searchPosts () {
-//         var storage = require('../tokenStorage.js');
-//         var obj = { search: searchInput.value, jwtToken: storage.retrieveToken() };
-//         var js = JSON.stringify(obj);
-//         try {
-//             const response = await fetch(bp.buildPath('api/searchposts'),
-//                 { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
-//             var txt = await response.text();
-//             var res = JSON.parse(txt);
-//             var _results = res;
-
-//             setPostsList(_results._ret);
-//         }
-//         catch (e) {
-//             console.log(e.toString());
-//             storage.storeToken(res.jwtToken);
-//         }
-//     };
-
-//     var i = 0;
-
-//     for (i = 0; i < postsList.length; i++) {
-//         console.log(postsList[i]);
-//     }
-
-
-//     let jsonArray = [];
-//     jsonArray = [
-//         {
-//             image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-//             critter_name: "bumblebee"
-//         },
-//         {
-//             image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-//             critter_name: "bumblebee"
-//         },
-//         {
-//             image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-//             critter_name: "bumblebee"
-//         },
-//         {
-//             image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-//             critter_name: "bumblebee"
-//         },
-//         {
-//             image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-//             critter_name: "bumblebee"
-//         },
-//         {
-//             image: "https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp",
-//             critter_name: "bumblebee"
-//         }
-//     ];
-
-
-
-
-//     return (
-
-//         <div className='h-screen grid place-items-center bg-gradient-to-r from-emerald-300 to-emerald-500'>
-
-//             <div className='h-30 w-60 bg-black bg-opacity-50 rounded-lg'>
-//                 <img src="https://thumbs.dreamstime.com/b/cartoon-hippo-open-mouth-profile-flat-color-vector-ilustration-isolated-white-background-children-kids-238612925.jpg" className='w-25'></img>
-//                 <div className='bg-slate-50'>
-//                     Critter Hunter Bob
-//                     <div className=''>
-//                         <div className='bg-red-300 rounded w-1/2'>
-//                             Friends: 100
-//                             <br></br>
-//                             Posts: 20
-//                         </div>
-
-//                         <div className='bg-red-300 w-1/2'>
-//                             Points: 2050
-//                             <br></br>
-//                             Current Rank: Beginner
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-
-//             <div className='bg-slate-50 bg-opacity-70'>
-//                 <MDBCardBody className="text-black p-4">
-//                     <div className="d-flex justify-content-between align-items-center mb-4">
-//                         <MDBCardText className="lead fw-normal mb-0">Critters</MDBCardText>
-//                         <button className='mb-0 text-muted' onClick={searchPosts}>Show all</button> 
-//                     </div>
-//                         <div className="g-2 grid grid-cols-3">
-//                             { jsonArray.map(array => {
-//                                 return (
-//                                     <div className="mb-2 mr-2 relative">
-//                                         <div className='absolute w-full h-full mt-0 ml-0 bg-black bg-opacity-0 text-white rounded-lg flex flex-col items-center justify-center hover:bg-opacity-60'>
-//                                             <div className=''>{array.critter_name}</div>
-//                                         </div>
-//                                         <img src={array.image}
-//                                         alt="image 1" className="w-full rounded-lg" />
-//                                     </div>
-//                                 )
-//                             })}
-//                         </div>
-//                 </MDBCardBody>
-
-//             </div>
-//         </div>
-
-        
-
-//     );
-// }
-
-
-// export default ProfileCard;
