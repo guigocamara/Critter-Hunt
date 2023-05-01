@@ -135,11 +135,11 @@ function ProfileCard() {
         <div className='h-screen grid place-items-center bg-neutral-300'>
 
             <div className=''>
-                <div className='w-auto rounded-lg flex'>
+                <div className='w-auto rounded-lg flex grid place-items-center'>
 
                     <div className='grid place-items-end flex pr-1 '>
-                        <img src="https://vetmed.illinois.edu/wp-content/uploads/2021/04/pc-keller-hedgehog.jpg" 
-                        className='w-1/2 rounded-full h-full outline '/> 
+                        <img src="https://www.cs.ucf.edu/wp-content/uploads/2022/04/Richard-Leinecker622edit-scaled.jpg" 
+                        className='w-1/4 rounded-full outline'/> 
                     </div>
                     
 
