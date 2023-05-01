@@ -18,6 +18,7 @@ export default function HomePage()
     const [postsListMap, setPostsListMap] = useState([]);
     const [postsListAllPosts, setPostsListAllPosts] = useState([]);
     const [pinSelected, setPinSelected] = useState(false);
+    const [likesUpdate, setLikesUpdate] = useState(false);
     var bp = require('../components/Path.js');
 
     const handleChange = (e) => {
@@ -31,7 +32,7 @@ export default function HomePage()
       if(!pinSelected){
         searchPosts();
       }
-    });
+    }, [pinSelected, searchInput, likesUpdate]);
 
     const searchPosts = async event => {
         var storage = require('../tokenStorage.js');
@@ -62,7 +63,7 @@ export default function HomePage()
           <input className="w-4/6 h-10 rounded p-2 mb-4" type="text" placeholder="Search for posts!" onChange={handleChange} value={searchInput}/>
         </div>
         <div className="flex flex-row h-full">
-          <AllPosts postsListAllPosts = {postsListAllPosts}></AllPosts>
+          <AllPosts postsListAllPosts = {postsListAllPosts} setLikesUpdate={setLikesUpdate} likesUpdate={likesUpdate}></AllPosts>
           <Map setPostsListAllPosts={setPostsListAllPosts} setPinSelected={setPinSelected} pinSelected={pinSelected} postsListMap={postsListMap} location={location} zoomLevel={15}/>
         </div>  
       </div>
