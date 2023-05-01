@@ -117,7 +117,7 @@ export default function Profile({ route, navigation }) {
           style={styles.profileImage}
           source={require('mobile/assets/rickL.jpg')}
         />
-        <Text style={styles.text}>{"\n"}Hunter name: {username}</Text>
+        <Text style={styles.username}>{username}</Text>
         <Text style={styles.text}>{"\n"}Number of critters caught: {numPosts}</Text>
         <Text style={styles.text}>
           {"\n"}Critter Hunter since: {dateJoined ? formatDate(dateJoined) : ''}
@@ -204,6 +204,12 @@ const styles = StyleSheet.create({
   profileContent: {
     alignItems: 'center',
   },
+  username: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  
 });
 
 
