@@ -26,6 +26,7 @@ export default function Profile({ route, navigation }) {
   const [rank, setRank] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
   const [numPosts, setNumPosts] = useState(0);
+  const [username, setUsername] = useState('');
 
   const doLogout = async () => {
     await SecureStore.deleteItemAsync('userData');
@@ -39,7 +40,14 @@ export default function Profile({ route, navigation }) {
     const response = await fetch(`http://critterhunt.herokuapp.com/api/datejoined/${userId}`);
     const data = await response.json();
     setDateJoined(data.dateJoined);
+    getUsername(userId);
   };
+
+  const getUsername = async (userId) => {
+    const response = await fetch(`http://critterhunt.herokuapp.com/api/getUsername/${userId}`);
+    const jsonData = await response.json();
+    setUsername(jsonData.username);
+  }
 
   // Fetch user's posts
   const fetchUserPosts = async () => {
@@ -109,6 +117,7 @@ export default function Profile({ route, navigation }) {
           style={styles.profileImage}
           source={require('mobile/assets/rickL.jpg')}
         />
+        <Text style={styles.text}>{"\n"}Hunter name: {username}</Text>
         <Text style={styles.text}>{"\n"}Number of critters caught: {numPosts}</Text>
         <Text style={styles.text}>
           {"\n"}Critter Hunter since: {dateJoined ? formatDate(dateJoined) : ''}
