@@ -4,7 +4,7 @@ import axios from 'axios';
 function Resetpassword() {
     var bp = require('./Path.js');
     var storage = require('../tokenStorage.js');
-    var email;
+    var token;
     var password;
     var passwordConfirmation;
     const [message, setMessage] = useState('');
@@ -18,12 +18,12 @@ function Resetpassword() {
             return;
         }
 
-        if (passwordConfirmation.value !== passwordConfirmation.value) {
+        if (password.value !== passwordConfirmation.value) {
             setMessage('Passwords do not match.');
             return;
         }
 
-        var obj = { email: email.value, password: password.value, passwordConfirmation: passwordConfirmation.value};
+        var obj = { token: token.value, password: password.value, passwordConfirmation: passwordConfirmation.value};
         var js = JSON.stringify(obj);
         var config =
         {
@@ -44,8 +44,6 @@ function Resetpassword() {
                 }
                 else {
                     setMessage('Password changed sucessfully!');
-                    storage.storeToken(res);
-                    var jwt = require('jsonwebtoken');
                     window.location.href = '/';
                 }
             })
@@ -57,7 +55,7 @@ function Resetpassword() {
 
           <div>
             <div className="wrap-input">
-              <input type="text" className="input" name="token" id="token" placeholder="Token" required ref={(c) => email = c} />
+              <input type="text" className="input" name="token" id="token" placeholder="Token" required ref={(c) => token = c} />
               <span className="focus-input"></span>
               <span className="symbol-input"> <i className="fa fa-safari" aria-hidden="true">< /i> </span>
             </div>
@@ -69,7 +67,7 @@ function Resetpassword() {
             </div>
 
             <div className="wrap-input">
-              <input type="text" className="input" name="password" id="passwordConfirmation" placeholder="Confirm password" required ref={(c) => password = c} />
+              <input type="text" className="input" name="passwordConfirmation" id="passwordConfirmation" placeholder="Confirm password" required ref={(c) => passwordConfirmation = c} />
               <span className="focus-input"></span>
               <span className="symbol-input"> <i className="fa fa-lock" aria-hidden="true">< /i> </span>
             </div>

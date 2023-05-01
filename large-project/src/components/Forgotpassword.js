@@ -29,8 +29,6 @@ function Forgotpassword() {
                 }
                 else {
                     setMessage('Sending token');
-                    storage.storeToken(res);
-                    var jwt = require('jsonwebtoken');
                     window.location.href = '/ResetPage';
                 }
             })

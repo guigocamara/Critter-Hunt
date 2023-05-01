@@ -43,37 +43,40 @@ const Lboard = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="title">Leaderboard</h1>
-      {users.length > 0 ? (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Username</th>
-                <th>Number of Posts</th>
-              </tr>
-            </thead>
-            <tbody>{renderUsers()}</tbody>
-          </table>
-          <div className="buttons">
-            <button onClick={handlePrevClick} disabled={startIndex === 0}>
-              Prev
-            </button>
-            <button
-              onClick={handleNextClick}
-              disabled={startIndex + 10 >= users.length}
-            >
-              Next
-            </button>
+      <div className="container">
+        <h1 className="title"></h1>
+        {users.length > 0 ? (
+          <div>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Number of Posts</th>
+                  </tr>
+                </thead>
+                <tbody>{renderUsers()}</tbody>
+              </table>
+            </div>
+            <div className="buttons">
+              <button onClick={handlePrevClick} disabled={startIndex === 0}>
+                Prev
+              </button>
+              <button
+                onClick={handleNextClick}
+                disabled={startIndex + 10 >= users.length}
+              >
+                Next
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <p className="loading">Loading...</p>
-      )}
-    </div>
-  );
+        ) : (
+          <p className="loading">Loading...</p>
+        )}
+      </div>
+    );
+
 };
 
 export default Lboard;

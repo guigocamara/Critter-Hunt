@@ -7,13 +7,13 @@ function Signup() {
     var signUpName;
     var signUpPassword;
     var signUpPasswordConfirmation;
-    var email;
+    var singupemail;
     const [message, setMessage] = useState('');
     const dosignUp = async event => {
         event.preventDefault();
 
         const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (!emailRegex.test(email.value)) {
+        if (!emailRegex.test(singupemail.value)) {
             setMessage('Invalid Email');
             return;
         }
@@ -28,8 +28,9 @@ function Signup() {
             setMessage('Passwords do not match.');
             return;
         }
-        var obj = { username: signUpName.value, password: signUpPassword.value, email: email.value };
+        var obj = { username: signUpName.value, password: signUpPassword.value, email: singupemail.value };
         var js = JSON.stringify(obj);
+
         var config =
         {
             method: 'post',
@@ -56,9 +57,10 @@ function Signup() {
                     var password = ud.payload.password;
                     var email = ud.payload.email;
 
-                    var user = { username: username, password: password, email: email }
+                    var user = { username: username, password: password, email: res.email }
+                    var emailString = {email: singupemail.value}
                     localStorage.setItem('user_data', JSON.stringify(user));
-                    localStorage.setItem('email', JSON.stringify(email));
+                    localStorage.setItem('EMAIL', JSON.stringify(emailString));
                     window.location.href = '/VerifyEmailPage';
                 }
             })
@@ -85,7 +87,7 @@ function Signup() {
                 <span className="symbol-input"> <i className="fa fa-lock" aria-hidden="true"></i> </span>
             </div>
             <div className="wrap-input">
-                <input type="text" className="input" name="email" id="email" placeholder="Email Address" ref={(c) => email = c} />
+                <input type="text" className="input" name="email" id="singupemail" placeholder="Email Address" ref={(c) => singupemail = c} />
             <span className="focus-input"></span>
             <span className="symbol-input"> <i className="fa fa-envelope" aria-hidden="true">< /i> </span>
           </div>

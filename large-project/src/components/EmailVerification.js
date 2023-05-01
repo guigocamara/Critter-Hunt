@@ -1,41 +1,41 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function EmailVerification() {
+function EmailVerification(props) {
   var bp = require('./Path.js');
   var storage = require('../tokenStorage.js');
   var emailToken;
   const [message, setMessage] = useState('');
 
-  const doVerification = async event => {
-    event.preventDefault();
-    var email = localStorage.getItem('email')
-    var obj = {email: email, emailToken: emailToken.value };
-    var js = JSON.stringify(obj);
-    var config = {
-      method: 'post',
-      url: bp.buildPath('api/verifyEmail'),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: js
-    };
-    axios(config)
-      .then(function (response) {
-        var res = response.data;
-        if (res.error) {
-          console.log(res.error);
-          setMessage('Email verification failed');
-        } else {
-          setMessage('Email verification succeeded');
-          window.location.href = '/';
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const doVerification = async () => {
+    const userDataString = localStorage.getItem('EMAIL');
+    const userData = JSON.parse(userDataString);
+    const userEmail = userData.email;
+    console.log(userEmail);
+      try {
+          const requestOptions = {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: userEmail, verificationCode: emailToken.value })
+
+          };
+          await fetch('http://critterhunt.herokuapp.com/api/verifyEmail', requestOptions)
+              .then(response => {
+                  if (response.ok) {
+                      setMessage('Your email was successfully verified!');
+                  } else {
+                      setMessage('Invalid verification code');
+                  }
+              })
+      }
+      catch (error) {
+          console.error(error);
+      }
   }
 
+  const goToLogin = () => {
+      window.location.href = '/';
+  }
   return (
     <div>
       <div className="wrap-input">

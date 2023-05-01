@@ -6,8 +6,11 @@ import './style.css';
 const Leaderboard = () => {
   return (
     <div>
+
       <NavBar></NavBar>
-      <Lboard />
+      <div>
+        <Lboard />
+      </div>
     </div>
   );
 };
