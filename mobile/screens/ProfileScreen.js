@@ -118,11 +118,19 @@ export default function Profile({ route, navigation }) {
           source={require('mobile/assets/rickL.jpg')}
         />
         <Text style={styles.username}>{username}</Text>
-        <Text style={styles.text}>{"\n"}Number of critters caught: {numPosts}</Text>
+        <View style={styles.followersContainer}>
+          <View style={styles.followers}>
+            <Text style={styles.followersNumber}>{numPosts}</Text>
+            <Text style={styles.followersText}>critters</Text>
+          </View>
+          <View style={styles.followers}>
+            <Text style={styles.followersNumber}>{rank}</Text>
+            <Text style={styles.followersText}>rank</Text>
+          </View>
+        </View>
         <Text style={styles.text}>
           {"\n"}Critter Hunter since: {dateJoined ? formatDate(dateJoined) : ''}
         </Text>
-        {rank && <Text style={styles.text}>{"\n"}Current rank: {rank}</Text>}
       </View>
 
       <Text style={styles.headerText}>{"\n"}Your Critters:</Text>
@@ -209,6 +217,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
+  followersContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  followers: {
+    marginHorizontal: 20,
+    alignItems: 'center',
+  },
+  followersNumber: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  followersText: {
+    fontSize: 12,
+    color: 'white',
+  },
+  
   
 });
 
