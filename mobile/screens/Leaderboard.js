@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-const Leaderboard = () => {
+const Leaderboard = ({ navigation }) => {
   const [users, setUsers] = useState([]);
 
   const fetchUsers = async () => {
@@ -12,6 +13,11 @@ const Leaderboard = () => {
 
   useEffect(() => {
     fetchUsers();
+    navigation.setOptions({
+      headerRight: () => (
+        <Ionicons name="refresh-outline" size={24} color="green" onPress={fetchUsers} style={{ paddingRight: 16 }} />
+      ),
+    })
   }, []);
 
   const renderItem = ({ item, index }) => (
@@ -33,7 +39,7 @@ const Leaderboard = () => {
       </Text>
     </View>
   );
-  
+
   return (
     <View style={[styles.container, { backgroundColor: '#128c4b' }]}>
       <Text style={[styles.title, { fontWeight: 'bold' }]}>Leaderboard</Text>
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
   bronze: {
     color: '#cd7f32',
   },
-  
+
 });
 
 export default Leaderboard;
