@@ -12,7 +12,7 @@ const LoginPage = () =>
             <div className="wrap-login">
 
               <img src={ProfilePictureMaker} className="login-pic" alt="IMG" />
-              {/* <a href= "/" className="login-form"> */}
+              <a href= "/" className="login-form">
 
                 <Login/>
 
@@ -25,9 +25,9 @@ const LoginPage = () =>
                 </div>
 
                 <div class="text-center p-t-2">
-                  {/* <a href="/" className="txt2">Create Your Account <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a> */}
+                  <a href="/SignUp" className="txt2">Create Your Account <i className="fa fa-long-arrow-right " aria-hidden="true"></i></a>
                 </div>
-              {/* </a> */}
+              </a>
             </div>
 
           </div>
