@@ -132,86 +132,76 @@ function ProfileCard() {
 
       return (
 
-        <div className='h-screen grid place-items-center bg-neutral-300'>
+        <div className='h-screen grid place-items-center bg-gradient-to-r to-[#57b846] from-[#f7dc12]'>
 
-            <div className=''>
-                <div className='w-auto rounded-lg flex grid place-items-center'>
+            <div className='w-1/2 rounded-lg flex grid place-items-center bg-white outline mb-20'>
 
-                    <div className='grid place-items-end flex pr-1 '>
-                        <img src="https://www.cs.ucf.edu/wp-content/uploads/2022/04/Richard-Leinecker622edit-scaled.jpg" 
-                        className='w-1/4 rounded-full outline'/> 
+                <div className='grid place-items-center flex'>
+                    <img src="https://www.cs.ucf.edu/wp-content/uploads/2022/04/Richard-Leinecker622edit-scaled.jpg" 
+                    className='w-1/2 rounded-full'/> 
+                </div>
+                
+
+                <div className='bg-slate-100 grid place-items-left rounded-lg space-y-5 flex w-full'>
+
+                    <div className='flex'>
+                        <Icon icon="ph:bug-bold"/> 
+                        <div className='pl-2 pr-3 flex space-x-2'><div className='text-green-600'>Critter Hunter: </div> <div className='underline font-medium hover:text-sky-400'>{ud.username}</div> </div> 
                     </div>
-                    
 
-                    <div className='bg-slate-50 grid place-items-left rounded-lg space-y-5 flex w-1/2 outline'>
+                    <div className='flex'>
+                        <Icon icon="mdi:counter"/>
+                    <div className='pl-2 pr-3 flex space-x-2'> <div className='text-green-600'>Critters Caught:</div>  <div className='underline font-medium hover:text-sky-400'>{postsList.length} </div> </div> 
+                    </div>
 
-                        <div className='flex'>
-                            <Icon icon="ph:bug-bold"/> 
-                            <div className='pl-2 pr-3'>Critter Hunter: {ud.username} </div> 
-                        </div>
+                    <div className='flex'>
+                        <Icon icon="mdi:clock-time-eight"/> 
+                    <div className='pl-2 pr-3 flex space-x-2'> <div className='text-green-600'>Date Joined:</div> <div className='underline font-medium hover:text-sky-400'>{dateJoined}</div> </div>
+                    </div>
 
-                        <div className='flex'>
-                            <Icon icon="mdi:counter"/>
-                        <div className='pl-2 pr-3'>Critters Caught: {postsList.length}</div> 
-                        </div>
-
-                        <div className='flex'>
-                            <Icon icon="mdi:clock-time-eight"/> 
-                        <div className='pl-2 pr-3'>Date Joined: {dateJoined}</div>
-                        </div>
-
-                        <div className='flex'>
-                            <Icon icon="icon-park:ranking"/>
-                            <div className='pl-2 pr-3'>Current Rank: {rank}</div> 
-                        </div>
+                    <div className='flex'>
+                        <Icon icon="icon-park:ranking"/>
+                        <div className='pl-2 pr-3 flex space-x-2'> <div className='text-green-600'>Current Rank:</div> <div className='underline font-medium hover:text-sky-400'>{rank}</div></div> 
                     </div>
                 </div>
             </div>
-            <div className='bg-slate-50 bg-opacity-70 w-1/2'>
-                <MDBCardBody className="text-black p-4">
-                    <div className="d-flex justify-content-between align-items-center mb-4">
-                        <MDBCardText className="lead fw-normal mb-0">Critters</MDBCardText>
-                    </div>
-                    <div className="g-2 grid grid-cols-3">
-                        {postsList.map(post => {
-                            return (
-                                <div className="mb-2 mr-2 relative">
-                                    {/* <div className='absolute w-full h-full mt-0 ml-0 bg-black bg-opacity-0 text-white rounded-lg flex flex-col items-center justify-center hover:bg-opacity-60'>
-                                        <div>{post.crittername}</div>
-                                    </div> */}
+            
+            <div className='w-7/12 bg-black absolute rounded'>
+                
+            </div>
+                <div className='bg-white bg-opacity-70 w-1/2 outline rounded'>
+                    <MDBCardBody className="text-black p-4">
+                        <div className="d-flex justify-content-between align-items-center mb-4">
+                            <MDBCardText className="lead fw-normal mb-0 text-2xl"> Critters </MDBCardText>
+                        </div>
+                        <div className="g-2 grid grid-cols-3">
+                            {postsList.map(post => {
 
-
-                                    <div className='mb-2'> 
-                                        {post.author == userID &&
-                                        <img src={`https://critterhunt.herokuapp.com/image/${post.picture}`}
-                                        alt="image 1" className="w-full rounded-lg" />
-                                        }
-                                        <div className='h-15 mb-3 flex items-center'>
-                                             <button type='button' onClick={() => deletePost(post._id)}><Icon icon="material-symbols:delete-forever-rounded"/></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                    )})}
-                        {/* { jsonArray.map(array => {
                                 return (
                                     <div className="mb-2 mr-2 relative">
-                                        <div className='absolute w-full h-full mt-0 ml-0 bg-black bg-opacity-0 text-white rounded-lg flex flex-col items-center justify-center hover:bg-opacity-60'>
-                                            <div className=''>{array.critter_name}</div>
-                                        </div>
-                                        <img src={array.image}
-                                        alt="image 1" className="w-full rounded-lg" />
                                         
-                                        <div className='h-15 mb-3 flex items-center'>
-                                             <button type='button' onClick={() => deletePost('54545')}><Icon icon="material-symbols:delete-forever-rounded"/></button>
-                                
+
+
+                                        <div className='mb-2'> 
+                                            {post.author == userID &&
+                                            <div> 
+                                                <div className='w-full h-full mt-0 ml-0 bg-black bg-opacity-60 text-white rounded-lg flex flex-col items-center justify-center mb-1'>
+                                                    <div>{post.crittername}</div>
+                                                </div>
+
+                                                <img src={`http://critterhunt.herokuapp.com/image/${post.picture}`}
+                                                alt="image 1" className="w-full rounded-lg" /> 
+                                            </div>
+                                            }
+                                            <div className='h-15 mb-3 grid place-items-center'>
+                                                <button type='button' onClick={() => deletePost(post._id)} className='bg-black mt-1 flex hover:bg-red-600'><Icon icon="ic:round-delete" className='mt-1 mr-1'/>DELETE</button>
+                                            </div>
                                         </div>
                                     </div>
-                                )
-                            })} */}
-                    </div>
-                </MDBCardBody>
-
-            </div>
+                                        )})}
+                        </div>
+                    </MDBCardBody>
+                </div>
         </div>
 
         
