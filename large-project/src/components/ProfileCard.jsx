@@ -105,27 +105,31 @@ function ProfileCard() {
       };
 
       // delete post
-      async function deletePost(postID) {
-        //console.log("deleting posts...");
-        console.log(typeof postID);
-
+      async function deletePost(postID, crittername) {
         var obj = { PostsId: postID };
         var js = JSON.stringify(obj);
-        console.log(js);
 
+        const choice = window.confirm("Are you sure you want to delete " + crittername + " ?");
 
-        try {
-            const response = await fetch(bp.buildPath('api/deletepost'),
-                { method: 'DELETE', body: js, headers: { 'Content-Type': 'application/json' } });
-            //console.log(response);
-            var txt = await response.json();
-            console.log(txt);
-
-            searchPosts(); // reload the posts
-        } catch (e) {
-            console.log(e);
-
+        if (choice) {
+            try {
+                const response = await fetch(bp.buildPath('api/deletepost'),
+                    { method: 'DELETE', body: js, headers: { 'Content-Type': 'application/json' } });
+                //console.log(response);
+                var txt = await response.json();
+                console.log(txt);
+    
+                searchPosts(); // reload the posts
+            } catch (e) {
+                console.log(e);
+    
+            }
+        } else {
+            return;
         }
+
+
+
 
       };
       
@@ -194,7 +198,7 @@ function ProfileCard() {
                                             </div>
                                             }
                                             <div className='h-15 mb-3 grid place-items-center'>
-                                                <button type='button' onClick={() => deletePost(post._id)} className='bg-black mt-1 flex hover:bg-red-600'><Icon icon="ic:round-delete" className='mt-1 mr-1'/>DELETE</button>
+                                                <button type='button' onClick={() => deletePost(post._id, post.crittername)} className='bg-black mt-1 flex hover:bg-red-600'><Icon icon="ic:round-delete" className='mt-1 mr-1'/>DELETE</button>
                                             </div>
                                         </div>
                                     </div>
