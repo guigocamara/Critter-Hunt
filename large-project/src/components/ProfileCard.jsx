@@ -180,6 +180,7 @@ function ProfileCard() {
                         </div>
                         <div className="g-2 grid grid-cols-3">
                             {postsList.map(post => {
+
                                 return (
                                     <div className="mb-2 mr-2 relative">
                                         
