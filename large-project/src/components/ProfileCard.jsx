@@ -178,15 +178,19 @@ function ProfileCard() {
                             {postsList.map(post => {
                                 return (
                                     <div className="mb-2 mr-2 relative">
-                                        {/* <div className='absolute w-full h-full mt-0 ml-0 bg-black bg-opacity-0 text-white rounded-lg flex flex-col items-center justify-center hover:bg-opacity-60'>
-                                            <div>{post.crittername}</div>
-                                        </div> */}
+                                        
 
 
                                         <div className='mb-2'> 
                                             {post.author == userID &&
-                                            <img src={`http://critterhunt.herokuapp.com/image/${post.picture}`}
-                                            alt="image 1" className="w-full rounded-lg" />
+                                            <div> 
+                                                <div className='w-full h-full mt-0 ml-0 bg-black bg-opacity-60 text-white rounded-lg flex flex-col items-center justify-center mb-1'>
+                                                    <div>{post.crittername}</div>
+                                                </div>
+
+                                                <img src={`http://critterhunt.herokuapp.com/image/${post.picture}`}
+                                                alt="image 1" className="w-full rounded-lg" /> 
+                                            </div>
                                             }
                                             <div className='h-15 mb-3 grid place-items-center'>
                                                 <button type='button' onClick={() => deletePost(post._id)} className='bg-black mt-1 flex hover:bg-red-600'><Icon icon="ic:round-delete" className='mt-1 mr-1'/>DELETE</button>
