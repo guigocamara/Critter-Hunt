@@ -15,8 +15,8 @@ Critter Hunt is an app that allows you to network with friends and find all sort
 
 ### App Walkthrough GIF - Web
 
-<img src="http://g.recordit.co/GrxLW9UQ4G.gif" width=250><br>
+![Alt Text](http://g.recordit.co/GrxLW9UQ4G.gif)
 
 ### App Walkthrough GIF - Mobile
 
-<img src="http://g.recordit.co/Y8qxDJRIFF.gif" width=250><br>
+![Alt Text](http://g.recordit.co/Y8qxDJRIFF.gif)
